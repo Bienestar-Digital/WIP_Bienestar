@@ -1,11 +1,11 @@
 import React from 'react'
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../../components/SideMenu'
 
 function CrearUsuario() {
   return (
     <div className='row'>
-        <SideMenu />
-        <div className='col-10 homeDiv'>
+        
+        <div className='homeDiv'>
             <h1>Nuevo usuario</h1>
             <form action="">
                 <div className='row formInput' >

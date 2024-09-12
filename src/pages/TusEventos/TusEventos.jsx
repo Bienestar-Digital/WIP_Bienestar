@@ -1,13 +1,12 @@
 import React from 'react'
-import SideMenu from '../components/SideMenu'
+import SideMenu from '../../components/SideMenu'
 import './TusEventos.css'
-import EventCard from '../components/EventCard'
+import EventCard from '../../components/EventCard'
 
 function TusEventos() {
   return (
     <div className='row'>
-        <SideMenu/>
-        <div className='col-10 homeDiv'>
+        <div className='homeDiv'>
             <h1>Tus eventos</h1>
             <div className='eventsContainer'>
             <EventCard />

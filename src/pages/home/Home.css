@@ -63,11 +63,11 @@ tr {
 tr:last-child td {
   border: none;
 }
-svg{
+.homeDivP svg{
   width: 24px;
   height: 24px;
 }
-svg:hover {
+.homeDivP svg:hover {
   cursor: pointer;
   color: var(--primary-color);
 }

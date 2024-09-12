@@ -21,6 +21,7 @@ body{
     #94B43B;
     --button-secondary-color: #94B43B1A;
     --button-unavailable-color: #94B43B80;
+    --error: #AA0C00;
   }
   button{
     border: none;

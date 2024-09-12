@@ -9,20 +9,25 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css'
 import Home from './pages/home/Home.jsx';
-import CrearEvento from "./pages/CrearEvento.jsx";
-import CrearUsuario from "./pages/user/UserCreate.jsx";
-import TusEventos from "./pages/TusEventos.jsx";
-import Login from "./pages/login/Login.jsx";
-import CargaAsistencia from "./pages/CargaAsistencia.jsx";
+import CrearEvento from "./pages/Crear/CrearEvento.jsx";
+import CrearUsuario from "./pages/Crear/CrearUsuario.jsx";
+import TusEventos from "./pages/TusEventos/TusEventos.jsx";
+import CargaAsistencia from "./pages/CargaAsistencia/CargaAsistencia.jsx";
+import Layout from "./components/Layout.jsx";
+import CrearSuccess from "./pages/Crear/CrearSuccess.jsx";
+import CrearFailed from "./pages/Crear/CrearFailed.jsx";
+import CargaSuccess from "./pages/CargaAsistencia/CargaSuccess.jsx";
+import CargaFailed from "./pages/CargaAsistencia/CargaFailed.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Layout />,
     children: [
-      {
+      /* {
           path: "/",
           element: <Login />
-      },
+      }, */
       {
         path: "/home",
         element: <Home />
@@ -36,12 +41,28 @@ const router = createBrowserRouter([
         element: <CrearUsuario />
       },
       {
+        path: "/userSuccess",
+        element: <CrearSuccess />
+      },
+      {
+        path: "/userFailed",
+        element: <CrearFailed />
+      },
+      {
         path: "/tusEventos",
         element: <TusEventos />
       },
       {
         path: "/cargaAsistencia",
         element: <CargaAsistencia />
+      },
+      {
+        path: "/cargaSuccess",
+        element: <CargaSuccess/>
+      },
+      {
+        path: "/cargaFailed",
+        element: <CargaFailed/>
       }
     ]
   },

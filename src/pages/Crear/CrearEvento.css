@@ -47,3 +47,37 @@ label{
     font-size: 20px;
     justify-self: center;
 }
+.userProcess{
+    display: grid;
+    justify-content: center;
+    height: 100%;
+    gap: 4rem;
+    align-content: center;
+    justify-items: center;
+}
+.userProcess h1{
+    font-size: 40px;
+}
+#success{
+    color: var(--button-color);
+}
+#error{
+    color: var(--error);
+}
+
+.userProcess svg{
+    width: 180px;
+    height: 180px;
+}
+
+.successIcon{
+    color: var(--button-color);
+}
+.errorIcon{
+    color: var(--error);
+}
+.userProcess a{
+    text-decoration: none;
+    color: var(--button-color);
+    font-size: 24px;
+}

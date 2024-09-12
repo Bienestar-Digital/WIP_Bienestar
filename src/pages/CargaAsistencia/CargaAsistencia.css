@@ -6,6 +6,9 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.modal-content .row{
+    width: 100%;
+}
 .cargaAsis h1{
     color: var(--primary-color);
     font-size: 32px;
@@ -26,3 +29,13 @@
     .buttonS:hover {
         background-color: #94b43b30;
     }
+.manualForm{
+    width: 100%;
+}
+.modalTitle{
+    color: var(--primary-color);
+    font-size: 36px;
+}
+.buttonModal{
+    width: 25%;
+}
