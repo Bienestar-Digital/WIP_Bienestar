@@ -10,7 +10,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './index.css'
 import Home from './pages/home/Home.jsx';
 import CrearEvento from "./pages/CrearEvento.jsx";
-import CrearUsuario from "./pages/CrearUsuario.jsx";
+import CrearUsuario from "./pages/user/UserCreate.jsx";
 import TusEventos from "./pages/TusEventos.jsx";
 import Login from "./pages/login/Login.jsx";
 import CargaAsistencia from "./pages/CargaAsistencia.jsx";

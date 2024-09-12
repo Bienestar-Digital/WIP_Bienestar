@@ -5,8 +5,13 @@ import { HiMiniUsers } from "react-icons/hi2";
 import { LuUserCheck } from "react-icons/lu";
 import { FaRegUserCircle } from "react-icons/fa";
 import "./SideMenu.css";
+import { useNavigate } from "react-router-dom";
 
 function SideMenu() {
+const navigate = useNavigate(); 
+
+
+
   return (
     <div className="col-2 sideMenu">
       <nav>
@@ -18,7 +23,7 @@ function SideMenu() {
           <MdHomeFilled />
           Home
         </ul>
-        <ul className="borderSec">
+        <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
           <HiMiniUsers />
           Usuarios
         </ul>

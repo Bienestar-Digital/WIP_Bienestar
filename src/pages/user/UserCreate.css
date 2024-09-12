@@ -1,0 +1,35 @@
+form{
+    display: block !important;
+}
+
+/* Agrega esto a tu archivo CSS o dentro de una etiqueta <style> */
+.header {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center;     /* Centra verticalmente (opcional) */
+    margin-bottom: 50px;     /* Espacio debajo del encabezado, opcional */
+}
+
+.header h1 {
+    margin: 0; /* Elimina el margen predeterminado del h1 */
+    font-weight: bold;
+}
+
+.form-alin{
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; 
+
+}
+
+.text-center{
+    padding-top: 30px;
+}
+
+.text-center button{
+    width: 100%;
+    height: 60px;
+    font-weight: bold;
+    font-size: large;
+
+}
