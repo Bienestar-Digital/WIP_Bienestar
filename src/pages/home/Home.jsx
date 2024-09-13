@@ -58,22 +58,20 @@ function Home() {
   
   
 
-  // useEffect para cargar los datos cuando el componente se monte
   useEffect(() => {
-    // Función para cargar los datos de la tabla
-    const fetchTableData = async () => {     
+    const fetchUser = async () => {
       try {
-        const response = await fetch('http://localhost:20000/user/1', { // Asegúrate de que esta URL sea correcta
+        const response = await fetch('http://localhost:20000/user/1', {
           method: 'GET',
           headers: {
+            'Authorization': `Bearer ${token}`, // Agrega el token a los headers
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
-          }
+          },
         });
 
         if (response.ok) {
           const data = await response.json();
-          setTableData(data.events)
+          setTableData(data.events) // Actualiza el estado con los datos del usuario
           setUserData(data)
         } else if (response.status === 401) {
           // Token no válido o no autorizado
@@ -90,7 +88,7 @@ function Home() {
     };
 
     if (token) {
-      fetchTableData(); // Llama a la función para cargar los datos
+      fetchUser();
     } else {
       navigate('/'); // Redirige si no hay token
     }
