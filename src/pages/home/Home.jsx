@@ -100,6 +100,10 @@ function Home() {
     setCurrentPage(page);
   };
 
+  const handleClickCrearEvento = () => {
+    navigate('/crearEvento');
+  };
+
   return (
     <div className="row">
       <SideMenu />
@@ -107,7 +111,7 @@ function Home() {
         <div className="header">
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {userData.lastLogin}</span>
-          <button className="buttonP crearHbtn">
+          <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
             <FaPlus />
             Crear evento
           </button>

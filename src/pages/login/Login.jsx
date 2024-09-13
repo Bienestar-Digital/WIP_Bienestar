@@ -38,8 +38,6 @@ const Login = () => {
         setValidated(true);
     };
 
-
-
     const doCall = async () => {
         const loginData = { username, password };
 
@@ -80,7 +78,9 @@ const Login = () => {
 
             if (data.token) {
                 sessionStorage.setItem('token', data.token);
+                sessionStorage.setItem('username', username);
                 console.log('Inicio de sesión exitoso:', data);
+                console.log('User:', username);
                 navigate('/home');
             } else {
                 alert('Error al recibir el token de autenticación.');
