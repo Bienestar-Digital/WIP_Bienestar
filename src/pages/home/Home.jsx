@@ -33,7 +33,8 @@ function Home() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+      const data = await response.json();
+      console.log("Data fetch User:", data);
       // Manejar la respuesta como un archivo binario
       const contentType = response.headers.get('Content-Type');
       if (contentType && (contentType.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') || contentType.includes('application/octet-stream'))) {
@@ -60,8 +61,9 @@ function Home() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      const token = sessionStorage.getItem('token'); 
       try {
-        const response = await fetch('http://localhost:20000/user/1', {
+        const response = await fetch(`http://localhost:20000/user/1`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`, // Agrega el token a los headers

@@ -3,11 +3,18 @@ import { useState } from "react";
 import "./CargaAsistencia.css";
 import Modal from "react-bootstrap/Modal";
 import ModalComponent from '../../components/ModalComponent';
-import { useNavigate } from "react-router-dom"
+import SideMenu from '../../components/SideMenu'
+import { useNavigate, useParams } from "react-router-dom"
 
 function CargaAsistencia() {
 
   const token = sessionStorage.getItem('token'); 
+  //const { eventId } = useParams();
+  const eventId = sessionStorage.getItem('eventId'); 
+  console.log("eventId", eventId);
+  const eventName = sessionStorage.getItem('eventName'); 
+  console.log("eventId", eventName);
+
 
   const [cargaManual, setCargaManual] = React.useState(false);
   const [valueID, setValueID] = useState("");
@@ -38,50 +45,66 @@ function CargaAsistencia() {
   const handleClose = () => setCargaManual(false);
   const handleShow = () => setCargaManual(true);
 
+  const handleCloseModal = () => setShowModal(false);
+
   // Single
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Token', token);
+    console.log('idType', tipoId);
     if (!token) {
       console.error("Token no disponible. No tienes acceso.");
       return;
     }
 
     const eventData = {
-      idType: tipoId,
-      idNumber: valueID,
-      fullName: nombre,
-      email: mail,
-      eventId: 12
+      idType: tipoId.trim(),
+      idNumber: valueID.trim(),
+      fullName: nombre.trim(),
+      email: mail.trim(),
+      eventId: eventId
     };
 
-    if (!eventData.idType || !eventData.idNumber || !eventData.fullName || !eventData.email) {
+    console.log('Datos ingresados:', {
+      idType: eventData.idType,
+      idNumber: eventData.idNumber,
+      fullName: eventData.fullName,
+      email: eventData.email,
+      eventId: eventData.eventId
+    });
+
+    if (!eventData.idType || !eventData.idNumber || !eventData.fullName || !eventData.email) { 
       setShowModal(true);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:20000/attendee/loadSingle", {
+      const response = await fetch("http://localhost:20000/attendee/loads", {
         method: "POST",
         headers: { "Content-Type": "application/json",
             "Authorization": `Bearer ${token}` },
         body: JSON.stringify(eventData),
       });
+
       if (response.ok) {
         console.log("Asistencia cargada con éxito.", await response.json());
+        handleCloseSuccess();
       } else {
         console.error("Error al cargar la asistencia.");
+        handleCloseFailed();
       }
     } catch (error) {
       console.error("Error en la petición:", error);
     }
+    console.log('idType2', tipoId);
   };
 
-  const handleCloseModal = () => setShowModal(false);
+  
 
   return (
     <div className="row">
-      <div className="homeDiv cargaAsis">
+      <SideMenu />
+      <div className='col-10 homeDiv cargaAsis'>
         <h1>Evento 1</h1>
         <div>
           <button className="buttonP">Carga por código</button>
@@ -94,7 +117,7 @@ function CargaAsistencia() {
       <Modal show={cargaManual} onHide={handleClose}>
         <Modal.Header >
           <Modal.Title className="modalTitle">
-            Cargar asistencia al evento
+            Cargar asistencia al evento: {eventId}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -103,9 +126,10 @@ function CargaAsistencia() {
               <label className="col-4" htmlFor="tipoId">
                 Tipo de ID
               </label>
-              <select className="col-5" name="tipoId" id="tipoId" onChange={(e) => setTipoId(e.target.value)}>
-                <option value="1">DNI</option>
-                <option value="2">TIUN</option>
+              <select className="col-5" name="tipoId" id="tipoId" value="tipoId" onChange={(e) => setTipoId(e.target.value)}>
+                <option value="">Selecciona un tipo de ID</option>
+                <option value="DNI">DNI</option>
+                <option value="TIUN">TIUN</option>
               </select>
             </div>
             <div className="row">
@@ -151,10 +175,10 @@ function CargaAsistencia() {
             
           
             <Modal.Footer style={{ width: '100%' }}>
-              <button type="submit" className="buttonP buttonModal" onClick={handleCloseSuccess}>
+              <button type="submit" className="buttonP buttonModal">
                 Guardar
               </button>
-              <button  type="submit" className="buttonS buttonModal" onClick={handleCloseFailed}>
+              <button  type="button" className="buttonS buttonModal" onClick={handleCloseFailed}>
                 Cancelar
               </button>
             </Modal.Footer>

@@ -4,7 +4,9 @@ import ModalComponent from '../../components/ModalComponent';
 import './CrearEvento.css'
 
 function CrearEvento() {
+
   const token = sessionStorage.getItem('token'); 
+
   const [username, setUsername] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -31,7 +33,7 @@ function CrearEvento() {
         eventName: e.target.nombre.value,
         eventDescription: e.target.descripcion.value,
         startDate: isoDate,
-        responsibleUserId: 10,
+        responsibleUserId: 1,
         createdAt: new Date().toISOString(),
       };
   
@@ -48,8 +50,11 @@ function CrearEvento() {
           body: JSON.stringify(eventData),
         });
         if (response.ok) {
+          const createdEvent = await response.json();
           setIsSuccess(true); 
-          console.log("Evento creado", await response.json());
+          console.log("Evento creado", createdEvent);
+          sessionStorage.setItem('eventId', createdEvent.eventId);
+          sessionStorage.setItem('eventName', createdEvent.eventName);
           e.target.reset();
         } else {
           setIsSuccess(false);
@@ -85,9 +90,13 @@ function CrearEvento() {
                     <label className='col-3' htmlFor="fechaF">Fecha final</label>
                     <input type="date" className='col-7'  name="fechaF" id="fechaF"/>
                 </div>
-                <div className='row formInput' >
+                {/* <div className='row formInput' >
                     <label className='col-3' htmlFor="responsable">Responsable</label>
                     <input type="text" className='col-7'  name="responsable" id="responsable" value={username} readOnly disabled={true} />
+                </div> */}
+                <div className='row formInput' >
+                    <label className='col-3' htmlFor="responsable">Responsable</label>
+                    <input type="text" className='col-7'  name="responsable" id="responsable" />
                 </div>
                 <button className='buttonP' id='crearBtn'>
                 Crear evento
