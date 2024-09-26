@@ -33,6 +33,7 @@ function CargaAsistencia() {
     }
   };
 
+  //Single
   const handleCloseSuccess = () => {
     setCargaManual(false)
     navigate('/cargaSuccess')
@@ -46,7 +47,7 @@ function CargaAsistencia() {
   const handleClose = () => setCargaManual(false);
   const handleShow = () => setCargaManual(true);
 
-
+  //Bulk
   const handleCloseSuccessBulk = () => {
     setCargaBulk(false)
     navigate('/cargaSuccess')
@@ -121,62 +122,68 @@ function CargaAsistencia() {
   // Bulk
   const handleSubmitBulk = async (e) => {
     e.preventDefault();
-    
-    const inputFile = document.getElementById("fileInput");
-    const file = inputFile.files[0];
 
     if (!file) {
-      setShowModal(true);
-      return;
+        setShowModalBulk(true); // Muestra el modal de error si no hay archivo
+        return;
     }
 
     const reader = new FileReader();
-    
     reader.onload = async (event) => {
-      try {
-        const data = JSON.parse(event.target.result);
-        const attendees = data.filter(attendee => attendee.eventId === parseInt(eventId));
+        try {
+            const jsonData = JSON.parse(event.target.result); // Convierte el contenido del archivo a objeto JSON
 
-        if (attendees.length === 0) {
-          console.warn("No hay asistentes para este evento en el archivo."); 
-          return;
+            // Prepara el token y la URL para la carga
+            const token = sessionStorage.getItem('token');
+            const url = "http://localhost:20000/attendee/loads"; // Cambia esto a la URL que necesites
+
+            // Itera sobre cada asistente y envía los datos
+            for (const attendee of jsonData) {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        idType: "DNI", // Ajusta según tus necesidades
+                        idNumber: attendee.idNumber,
+                        fullName: attendee.fullName,
+                        email: `${attendee.fullName.toLowerCase().replace(/ /g, '.')}@unal.edu.co`, // Genera un correo
+                        eventId: eventId // Usa el eventId adecuado
+                    }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error al cargar la asistencia para ${attendee.fullName}`);
+                }
+            }
+
+            handleCloseSuccessBulk(); // Muestra modal de éxito
+        } catch (error) {
+            console.error("Error en la carga del archivo:", error);
+            handleCloseFailedBulk(); // Muestra modal de error
         }
-
-        for (const attendee of attendees) {
-          const response = await fetch("http://localhost:20000/attendee/loads", {
-            method: "POST",
-            headers: { 
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${token}` 
-            },
-            body: JSON.stringify(attendee),
-          });
-
-          if (!response.ok) {
-            console.error("Error al cargar la asistencia:", attendee.idNumber);
-          }
-        }
-
-        console.log("Asistentes cargados con éxito.");
-        //handleCloseBulk(); // Cerrar el modal después de cargar
-        // Redirigir o mostrar un mensaje de éxito
-        handleCloseSuccessBulk();
-      } catch (error) {
-        console.error("Error al procesar el archivo:", error);
-        //setShowModal(true); // Mostrar mensaje de error si hay un problema
-        handleCloseFailedBulk();
-      }
     };
 
-    reader.readAsText(file); // Leer el archivo como texto
-  };
+    reader.readAsText(file); // Lee el archivo como texto
+};
+
+const [file, setFile] = useState(null); // Estado para almacenar el archivo
+
+const handleFileChange = (e) => {
+    const uploadedFile = e.target.files[0];
+    if (uploadedFile) {
+        setFile(uploadedFile);
+    }
+};
   
 
   return (
     <div className="row">
       <SideMenu />
       <div className='col-10 homeDiv cargaAsis'>
-        <h1>Evento 1</h1>
+        <h1>Evento {eventId}</h1>
         <div>
           <button className="buttonP" onClick={handleShowBulk}>Carga por código</button>
           <button className="buttonS" onClick={handleShow}>
@@ -273,7 +280,7 @@ function CargaAsistencia() {
 
             <div className="form-group">
               <label htmlFor="fileInput">Selecciona el archivo JSON:</label>
-              <input type="file" id="fileInput" accept=".json" required />
+              <input type="file" id="fileInput" accept=".json" onChange={handleFileChange} required />
             </div>
           
             <Modal.Footer style={{ width: '100%' }}>
