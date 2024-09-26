@@ -17,6 +17,7 @@ function CargaAsistencia() {
 
 
   const [cargaManual, setCargaManual] = React.useState(false);
+  const [cargaBulk, setCargaBulk] = React.useState(false);
   const [valueID, setValueID] = useState("");
   const [mail, setMail] = useState('');
   const [nombre, setNombre] = useState('');
@@ -45,6 +46,21 @@ function CargaAsistencia() {
   const handleClose = () => setCargaManual(false);
   const handleShow = () => setCargaManual(true);
 
+
+  const handleCloseSuccessBulk = () => {
+    setCargaBulk(false)
+    navigate('/cargaSuccess')
+  };
+
+  const handleCloseFailedBulk = () => {
+    setCargaBulk(false)
+    navigate('/cargaFailed')
+  };
+
+  const handleCloseBulk = () => setCargaBulk(false);
+  const handleShowBulk = () => setCargaBulk(true);
+  
+
   const handleCloseModal = () => setShowModal(false);
 
   // Single
@@ -58,25 +74,25 @@ function CargaAsistencia() {
     }
 
     const eventData = {
-      idType: tipoId.trim(),
+      //idType: tipoId.trim(),
       idNumber: valueID.trim(),
       fullName: nombre.trim(),
-      email: mail.trim(),
+      //email: mail.trim(),
       eventId: eventId
     };
 
     console.log('Datos ingresados:', {
-      idType: eventData.idType,
+      //idType: eventData.idType,
       idNumber: eventData.idNumber,
       fullName: eventData.fullName,
-      email: eventData.email,
+      //email: eventData.email,
       eventId: eventData.eventId
     });
 
-    if (!eventData.idType || !eventData.idNumber || !eventData.fullName || !eventData.email) { 
-      setShowModal(true);
-      return;
-    }
+    //if (!eventData.idType || !eventData.idNumber || !eventData.fullName || !eventData.email) { 
+      //setShowModal(true);
+      //return;
+    //}
 
     try {
       const response = await fetch("http://localhost:20000/attendee/loads", {
@@ -96,9 +112,64 @@ function CargaAsistencia() {
     } catch (error) {
       console.error("Error en la petición:", error);
     }
-    console.log('idType2', tipoId);
   };
 
+
+
+
+
+  // Bulk
+  const handleSubmitBulk = async (e) => {
+    e.preventDefault();
+    
+    const inputFile = document.getElementById("fileInput");
+    const file = inputFile.files[0];
+
+    if (!file) {
+      setShowModal(true);
+      return;
+    }
+
+    const reader = new FileReader();
+    
+    reader.onload = async (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        const attendees = data.filter(attendee => attendee.eventId === parseInt(eventId));
+
+        if (attendees.length === 0) {
+          console.warn("No hay asistentes para este evento en el archivo."); 
+          return;
+        }
+
+        for (const attendee of attendees) {
+          const response = await fetch("http://localhost:20000/attendee/loads", {
+            method: "POST",
+            headers: { 
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}` 
+            },
+            body: JSON.stringify(attendee),
+          });
+
+          if (!response.ok) {
+            console.error("Error al cargar la asistencia:", attendee.idNumber);
+          }
+        }
+
+        console.log("Asistentes cargados con éxito.");
+        //handleCloseBulk(); // Cerrar el modal después de cargar
+        // Redirigir o mostrar un mensaje de éxito
+        handleCloseSuccessBulk();
+      } catch (error) {
+        console.error("Error al procesar el archivo:", error);
+        //setShowModal(true); // Mostrar mensaje de error si hay un problema
+        handleCloseFailedBulk();
+      }
+    };
+
+    reader.readAsText(file); // Leer el archivo como texto
+  };
   
 
   return (
@@ -107,7 +178,7 @@ function CargaAsistencia() {
       <div className='col-10 homeDiv cargaAsis'>
         <h1>Evento 1</h1>
         <div>
-          <button className="buttonP">Carga por código</button>
+          <button className="buttonP" onClick={handleShowBulk}>Carga por código</button>
           <button className="buttonS" onClick={handleShow}>
             Carga manual
           </button>
@@ -122,7 +193,7 @@ function CargaAsistencia() {
         </Modal.Header>
         <Modal.Body>
           <form action="" className="manualForm" onSubmit={handleSubmit}>
-            <div className="row">
+            {/* <div className="row">
               <label className="col-4" htmlFor="tipoId">
                 Tipo de ID
               </label>
@@ -131,7 +202,7 @@ function CargaAsistencia() {
                 <option value="DNI">DNI</option>
                 <option value="TIUN">TIUN</option>
               </select>
-            </div>
+            </div> */}
             <div className="row">
               <label className="col-4" htmlFor="id">
                 ID
@@ -158,7 +229,7 @@ function CargaAsistencia() {
                 style={{ textTransform: "uppercase" }}
               />
             </div>
-            <div className="row">
+            {/* <div className="row">
               <label className="col-4" htmlFor="mail">
                 Mail
               </label>
@@ -171,7 +242,7 @@ function CargaAsistencia() {
                 style={{ textTransform: "lowercase" }}
               />
               <span className="col-4">@unal.edu.co</span>
-            </div>
+            </div> */}
             
           
             <Modal.Footer style={{ width: '100%' }}>
@@ -187,6 +258,38 @@ function CargaAsistencia() {
       </Modal>
 
       <ModalComponent className="z-3" show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
+
+
+
+
+      <Modal show={cargaBulk} onHide={handleCloseBulk}>
+        <Modal.Header >
+          <Modal.Title className="modalTitle">
+            Cargar asistencia al evento: {eventId}
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form action="" className="manualForm" onSubmit={handleSubmitBulk}>
+
+            <div className="form-group">
+              <label htmlFor="fileInput">Selecciona el archivo JSON:</label>
+              <input type="file" id="fileInput" accept=".json" required />
+            </div>
+          
+            <Modal.Footer style={{ width: '100%' }}>
+              <button type="submit" className="buttonP buttonModal">
+                Guardar
+              </button>
+              <button  type="button" className="buttonS buttonModal" onClick={handleCloseFailed}>
+                Cancelar
+              </button>
+            </Modal.Footer>
+          </form>
+        </Modal.Body>
+      </Modal>
+
+      <ModalComponent className="z-3" show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
+
     </div>
   );
 }
