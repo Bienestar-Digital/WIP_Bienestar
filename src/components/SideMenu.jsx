@@ -26,7 +26,7 @@ useEffect(() => {
           <IoIosMenu />
           Menú
         </ul>
-        <ul className="borderSec">
+        <ul className="borderSec" onClick={()=>{  navigate('/home');}}>
           <MdHomeFilled />
           Home
         </ul>
@@ -34,8 +34,8 @@ useEffect(() => {
         <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
           <HiMiniUsers />
           Usuarios
-        </ul>)}
-        <ul className="borderSec">
+        </ul>)}        
+        <ul className="borderSec" onClick={()=>{  navigate('/tusEventos');}}>
           <LuUserCheck />
           Eventos
         </ul>

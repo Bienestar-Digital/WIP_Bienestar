@@ -34,7 +34,8 @@ function Home() {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+      const data = await response.json();
+      console.log("Data fetch User:", data);
       // Manejar la respuesta como un archivo binario
       const contentType = response.headers.get('Content-Type');
       if (contentType && (contentType.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') || contentType.includes('application/octet-stream'))) {
@@ -102,6 +103,10 @@ function Home() {
     setCurrentPage(page);
   };
 
+  const handleClickCrearEvento = () => {
+    navigate('/crearEvento');
+  };
+
   return (
     <div className="row">
        <SideMenu userData={userData} /> {/* Pasa userData como prop */}
@@ -109,7 +114,7 @@ function Home() {
         <div className="header">
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {userData.lastLogin}</span>
-          <button className="buttonP crearHbtn">
+          <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
             <FaPlus />
             Crear evento
           </button>

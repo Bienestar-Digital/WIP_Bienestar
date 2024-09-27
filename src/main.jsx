@@ -20,6 +20,7 @@ import CrearFailed from "./pages/Crear/CrearFailed.jsx";
 import CargaSuccess from "./pages/CargaAsistencia/CargaSuccess.jsx";
 import CargaFailed from "./pages/CargaAsistencia/CargaFailed.jsx";
 import Perfil from "./pages/perfil/Perfil.jsx";
+import RegistroPorEvento from "./pages/TusEventos/RegistrosPorEvento.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,7 +56,7 @@ const router = createBrowserRouter([
         element: <TusEventos />
       },
       {
-        path: "/cargaAsistencia",
+        path: "/cargaAsistencia/:eventId",
         element: <CargaAsistencia />
       },
       {
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       {
         path: "/perfil",
         element: <Perfil/>
+      },
+      {
+        path: "/registroPorEvento/:eventId",
+        element: <RegistroPorEvento/>
       }
     ]
   },
