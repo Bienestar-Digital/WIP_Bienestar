@@ -13,6 +13,7 @@ function Home() {
   const [object, setObject] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [idUser, setIdUser] = useState(null);
   const token = sessionStorage.getItem('token'); 
   const navigate = useNavigate(); 
 
@@ -59,40 +60,43 @@ function Home() {
   
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch('http://localhost:20000/user/1', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`, // Agrega el token a los headers
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setTableData(data.events) // Actualiza el estado con los datos del usuario
-          setUserData(data)
-        } else if (response.status === 401) {
-          // Token no válido o no autorizado
-          sessionStorage.removeItem('token'); // Elimina el token del sessionStorage
-          navigate('/'); // Redirige al usuario a la página de inicio de sesión
-        } else {
-          console.error('Error:', response.statusText);
+    const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
+    setIdUser(storedIdUser); // Establecer el userId en el estado
+    
+    if (token && storedIdUser) { // Verificar que el token y el idUser existan
+      const fetchUser = async () => {
+        try {
+          const response = await fetch(`http://localhost:20000/user/${storedIdUser}`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+  
+          if (response.ok) {
+            const data = await response.json();
+            setTableData(data.events);
+            setUserData(data);
+            sessionStorage.setItem('userData', JSON.stringify(data));
+            sessionStorage.setItem('rolname', data.roleName);
+          } else if (response.status === 401) {
+            sessionStorage.removeItem('token');
+            navigate('/');
+          } else {
+            console.error('Error:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error:', error);
         }
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        //setLoading(false); // Cambia el estado de carga
-      }
-    };
-
-    if (token) {
-      fetchUser();
+      };
+  
+      fetchUser(); // Llama a la función fetchUser
     } else {
-      navigate('/'); // Redirige si no hay token
+      navigate('/'); // Redirige si no hay token o idUser
     }
-  }, [token, navigate]); // El efecto se ejecuta cuando el token cambia
+  }, [token, navigate]);
+  
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -100,7 +104,7 @@ function Home() {
 
   return (
     <div className="row">
-      <SideMenu />
+       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
         <div className="header">
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>

@@ -19,6 +19,7 @@ import CrearSuccess from "./pages/Crear/CrearSuccess.jsx";
 import CrearFailed from "./pages/Crear/CrearFailed.jsx";
 import CargaSuccess from "./pages/CargaAsistencia/CargaSuccess.jsx";
 import CargaFailed from "./pages/CargaAsistencia/CargaFailed.jsx";
+import Perfil from "./pages/perfil/Perfil.jsx";
 
 const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
       {
         path: "/cargaFailed",
         element: <CargaFailed/>
+      },
+      {
+        path: "/perfil",
+        element: <Perfil/>
       }
     ]
   },

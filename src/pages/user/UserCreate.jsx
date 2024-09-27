@@ -14,6 +14,7 @@ function UserCreate() {
     const [show, setShow] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [division, setDivision] = useState("");
+    const [userData, setUserData] = useState();
     const token = "your-auth-token"; // Añade aquí tu token correctamente
 
     const registerUser = async (event) => {
@@ -115,7 +116,7 @@ function UserCreate() {
             </Modal>
 
             <div className="row">
-                <SideMenu />
+            <SideMenu userData={"userData"} />
                 <div className="col-8 mx-auto homeDivP">
                     <div className="header"><h1>Nuevo Usuario</h1></div>
 
