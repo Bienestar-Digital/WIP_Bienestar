@@ -77,14 +77,16 @@ const Login = () => {
             const data = await response.json();
 
             if (data.token) {
-                sessionStorage.setItem('token', data.token);
-                sessionStorage.setItem('username', username);
+                sessionStorage.setItem('token', data.token);                
+                sessionStorage.setItem('userId', JSON.stringify(data.userId));
+                console.log("data.userId", data.userId);
                 console.log('Inicio de sesión exitoso:', data);
                 console.log('User:', username);
                 navigate('/home');
             } else {
                 alert('Error al recibir el token de autenticación.');
             }
+            
 
         } catch (error) {
             // Si ocurre un error de red o de conexión

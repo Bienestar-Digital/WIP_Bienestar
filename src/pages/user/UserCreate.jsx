@@ -14,6 +14,7 @@ function UserCreate() {
     const [show, setShow] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [division, setDivision] = useState("");
+    const [userData, setUserData] = useState();
     const token = "your-auth-token"; // Añade aquí tu token correctamente
 
     const registerUser = async (event) => {
@@ -24,8 +25,12 @@ function UserCreate() {
         const data = {
             name: formData.get('name'),
             username: formData.get('username'),
+            fullName: formData.get('username'),
+            email: formData.get('email'),
             roleName: formData.get('roleName'),
-            division: formData.get('division')
+            division: formData.get('division'),
+            password: formData.get('password'),
+
         };
 
         try {
@@ -33,7 +38,7 @@ function UserCreate() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    //'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(data)
             });
@@ -57,6 +62,13 @@ function UserCreate() {
             // Si la respuesta es exitosa
             // Aquí puedes manejar el caso exitoso, por ejemplo:
             // alert("Usuario registrado con éxito");
+            setTitulo("Usuario registrado con éxito");
+            setBodyMessage("El usuario ha sido registrado exitosamente.");
+            setShow(true);
+            setTimeout(() => {
+                setShow(false);
+                window.location.reload();
+            }, 2500);
         } catch (error) {
             // Aquí manejamos los errores de red, como si el servidor está caído
             setTitulo("Error de conexión");
@@ -104,7 +116,7 @@ function UserCreate() {
             </Modal>
 
             <div className="row">
-                <SideMenu />
+            <SideMenu userData={"userData"} />
                 <div className="col-8 mx-auto homeDivP">
                     <div className="header"><h1>Nuevo Usuario</h1></div>
 
@@ -118,7 +130,7 @@ function UserCreate() {
                                 <Form.Group as={Col} md="8">
                                     <Form.Control
                                         required
-                                        name="name" // Añadir name
+                                        name="username" // Añadir name
                                         type="text"
                                         placeholder="Nombre"
                                     />
@@ -159,7 +171,7 @@ function UserCreate() {
                                 <Form.Group as={Col} md="8">
                                     <Form.Control
                                         type="text"
-                                        name="role" // Añadir name
+                                        name="roleName" // Añadir name
                                         placeholder="Rol"
                                         required
                                     />
@@ -170,13 +182,13 @@ function UserCreate() {
                             </Row>
                             <Row className="mb-3 align-items-center">
                                 <Form.Group as={Col} md="4" controlId="validationCustom04">
-                                    <Form.Label>Contraseña</Form.Label>
+                                    <Form.Label>Cedula</Form.Label>
                                 </Form.Group>
                                 <Form.Group as={Col} md="8">
                                     <Form.Control
-                                        type="password"
+                                        type="text"
                                         name="password" // Añadir name
-                                        placeholder="Contraseña"
+                                        placeholder="Cedula"
                                         required
                                     />
                                     <Form.Control.Feedback type="invalid">
