@@ -19,15 +19,15 @@ const navigate = useNavigate();
           <IoIosMenu />
           Menú
         </ul>
-        <ul className="borderSec">
+        <ul className="borderSec" onClick={()=>{  navigate('/home');}}>
           <MdHomeFilled />
           Home
         </ul>
-        <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
+        <ul className="borderSec" onClick={()=>{  navigate('/crearUsuario');}}>
           <HiMiniUsers />
           Usuarios
         </ul>
-        <ul className="borderSec">
+        <ul className="borderSec" onClick={()=>{  navigate('/tusEventos');}}>
           <LuUserCheck />
           Eventos
         </ul>

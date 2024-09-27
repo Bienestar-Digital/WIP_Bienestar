@@ -1,49 +1,77 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
 import SideMenu from '../../components/SideMenu'
+import ModalComponent from '../../components/ModalComponent';
 import './CrearEvento.css'
 
 function CrearEvento() {
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+  const token = sessionStorage.getItem('token'); 
 
-        const token = "eyJhbGciOiJSUzI1NiJ9.eyJkaXZpc2lvbiI6IkJpZW5lc3RhciIsInN1YiI6IlByb2JhbmRvMTIiLCJyb2xlIjoiYWRtaW4iLCJpc3MiOiJtcy1hdXRoIiwiZXhwIjoxNzI1NTY5NzQ2LCJpYXQiOjE3MjU1NjYxNDZ9.pzddp_5knEFo4Sks6aFvxRHok6EFMrSAAJGeQMRENYXrwxk-JQp0tSxkQ0W-QsouObpYJT5pW6BiVRdgyxA37gdYL12YyMPa1CpF8Zxq_Ue0n7kfTE_GIRyfdF53gPKWeNJpRUNth8kqhRiwCquVMuMYkD_lfFFdzXiAZ6uq0mBhQTmtkIH2TTCjhP6laenF_luMNRwDvK4X3EbzFPkTlPmITFY5OXareQ-P0-8Ta_YbFD-B8PoGYmRA3cRcrT9HY9fuxk3KtW7fyTqE0IIZEM70zeFk920wHvupt2rIaqwcYk7m-gzDaz2_d-dKVDpg4KddCbvgZC9y1sg2PRvv1w";
-        if (!token) {
-        console.error("Token no disponible. No tienes acceso.");
-        return;
-        }
+  const [username, setUsername] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-        const dateString = e.target.fechaI.value;
-        console.log("Valor del campo de fecha:", dateString);
-        const isoDate = `${dateString}T00:00:00`;
-        console.log("Fecha en formato ISO:", isoDate)
+  useEffect(() => {
+    const storedUsername = sessionStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+  
+  const handleSubmit = async (e) => {
+      e.preventDefault();
 
-        const eventData = {
-          eventName: e.target.nombre.value,
-          eventDescription: e.target.descripcion.value,
-          startDate: isoDate,
-          responsibleUserId: e.target.responsable.value,
-          createdAt: new Date().toISOString(),
-        };
-    
-        try {
-          const response = await fetch("http://localhost:20000/event/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}` },
-            body: JSON.stringify(eventData),
-          });
-          response.ok ? console.log("Evento creado", await response.json()) : console.error("Error");
+      if (!token) {
+      console.error("Token no disponible. No tienes acceso.");
+      return;
+      }
 
-        } catch (error) {
-          console.error("Error en la petición:", error);
-        }
+      const dateString = e.target.fechaI.value;
+      const isoDate = `${dateString}T00:00:00`;
+
+      const eventData = {
+        eventName: e.target.nombre.value,
+        eventDescription: e.target.descripcion.value,
+        startDate: isoDate,
+        responsibleUserId: 1,
+        createdAt: new Date().toISOString(),
       };
+  
+      if (!eventData.eventName || !eventData.eventDescription || !eventData.startDate || !eventData.responsibleUserId) {
+        setShowModal(true);
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:20000/event/create", {
+          method: "POST",
+          headers: { "Content-Type": "application/json",
+              "Authorization": `Bearer ${token}` },
+          body: JSON.stringify(eventData),
+        });
+        if (response.ok) {
+          const createdEvent = await response.json();
+          setIsSuccess(true); 
+          console.log("Evento creado", createdEvent);
+          sessionStorage.setItem('eventId', createdEvent.eventId);
+          sessionStorage.setItem('eventName', createdEvent.eventName);
+          e.target.reset();
+        } else {
+          setIsSuccess(false);
+          console.error("Error al crear el evento");
+        }
+      } catch (error) {
+        console.error("Error en la petición:", error);
+      }
+    };
+
+  const handleCloseModal = () => setShowModal(false);
+  const handleIsSuccess = () => setIsSuccess(false);
 
   return (
     <div className='row'>
-        
-        <div className='homeDiv'>
+      <SideMenu />
+        <div className='col-10 homeDiv'>
             <h1>Nuevo Evento</h1>
             <form action="" onSubmit={handleSubmit}>
                 <div className='row formInput' >
@@ -62,20 +90,21 @@ function CrearEvento() {
                     <label className='col-3' htmlFor="fechaF">Fecha final</label>
                     <input type="date" className='col-7'  name="fechaF" id="fechaF"/>
                 </div>
+                {/* <div className='row formInput' >
+                    <label className='col-3' htmlFor="responsable">Responsable</label>
+                    <input type="text" className='col-7'  name="responsable" id="responsable" value={username} readOnly disabled={true} />
+                </div> */}
                 <div className='row formInput' >
                     <label className='col-3' htmlFor="responsable">Responsable</label>
-                    <input type="text" className='col-7'  name="responsable" id="responsable"/>
-                </div>
-                <div className='row formInput' >
-                    <label className='col-3' htmlFor="estudiantes">Estudiantes</label>
-                    <button className='col-7 attached' >Adjuntar archivo</button>
+                    <input type="text" className='col-7'  name="responsable" id="responsable" />
                 </div>
                 <button className='buttonP' id='crearBtn'>
                 Crear evento
                 </button>
             </form>
         </div>
-      
+      <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
+      <ModalComponent show={isSuccess} handleClose={handleIsSuccess} titulo="Evento Creado" bodyMessage={'Evento creado exitosamente.'} />
     </div>
   )
 }
