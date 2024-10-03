@@ -4,6 +4,7 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import Modal from "react-bootstrap/Modal";
 import SideMenu from '../../components/SideMenu';
 import Pager from "../home/Pager";
+import ModalComponent from '../../components/ModalComponent';
 import ImageModal from "../../assets/images/escudo2_unal.png"
 
 function RegistroPorEvento() {
@@ -15,9 +16,10 @@ function RegistroPorEvento() {
 
     const [tableData, setTableData] = useState([]);
     const [itemsPerPage] = useState(10);
-    const [selectedAttendee, setSelectedAttendee] = useState(null);
+    const [selectedAttendeeId, setSelectedAttendeeId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [show, setShow] = useState(false);
+    const [isEliminated, setIsEliminated] = useState(false);
     const navigate = useNavigate();
 
     const handleClickTusEventos = () => {
@@ -67,7 +69,10 @@ function RegistroPorEvento() {
                 
                 // Actualizar la tabla eliminando el asistente del estado
                 setTableData(prevData => prevData.filter(item => item.attendeeId !== attendeeId));
+                setShow(false);
+                setIsEliminated(true); 
             } else {
+                setIsEliminated(false); 
                 console.error("Error al eliminar el asistente", response.statusText);
                 throw new Error("Error en la respuesta del servidor");
             }
@@ -76,7 +81,11 @@ function RegistroPorEvento() {
         }
     }
 
-    //const handleClose = () => setShow(false);
+    const handleShow = (attendeeId) => {
+        setSelectedAttendeeId(attendeeId);
+        setShow(true);
+    };
+    const handleClose = () => setShow(false);
 
     
     useEffect(() => {
@@ -96,6 +105,8 @@ function RegistroPorEvento() {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
 
+    const handleIsEliminated = () => setIsEliminated(false);
+
 
     return (
         <>
@@ -105,7 +116,7 @@ function RegistroPorEvento() {
 
                     <div className="d-flex flex-column headerEvents">
                             <h1 className="bienvenida">
-                                Registros
+                                Registros del evento {eventId}: {eventName}
                             </h1>
                             <Link className='registro' onClick={handleClickTusEventos}>
                                 Atrás
@@ -123,19 +134,6 @@ function RegistroPorEvento() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {tableData.length > 0 ? (
-                                    tableData.map((data, index) => (
-                                        <tr key={index}>
-                                            <td>{data.attendeeId}</td>
-                                            <td>{data.idNumber}</td>
-                                            <td>{data.fullName}</td>
-                                            <td>
-                                            <FaRegTrashAlt onClick={() => handleDelete(data.attendeeId)} />
-                                            </td>
-                                        </tr>
-                                    ))
-                                ) : ( */}
-                                
                                 {currentItems.length > 0 ? (
                                     currentItems.map((data, index) => (
                                         <tr key={index}>
@@ -143,7 +141,7 @@ function RegistroPorEvento() {
                                             <td>{data.idNumber}</td>
                                             <td>{data.fullName}</td>
                                             <td>
-                                                <FaRegTrashAlt onClick={() => handleDelete(data.attendeeId)} />
+                                                <FaRegTrashAlt onClick={() => handleShow(data.attendeeId)} />
                                             </td>
                                         </tr>
                                     ))
@@ -164,12 +162,12 @@ function RegistroPorEvento() {
                         </nav>
                     </div>
 
-                    {/* <Modal show={show} onHide={handleClose}>
+                    <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title style={{ color: "#687D2A" }}>
                                 <strong>Confirmar eliminación</strong>{" "}
                             </Modal.Title>
-                        </Modal.Header>
+                        </Modal.Header>                        
                         <Modal.Body>
                             <img
                                 src={ImageModal}
@@ -181,12 +179,14 @@ function RegistroPorEvento() {
                             ¿Estás seguro de que deseas eliminar este asistente? Esta acción no se puede deshacer.
                             </strong>
                         </Modal.Body>
+                        
                         <Modal.Footer>
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" className="btn btn-danger" onClick={handleDelete}>Eliminar</button>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleClose}>Cancelar</button>
+                            <button type="button" className="btn btn-danger"  onClick={() => handleDelete(selectedAttendeeId)}>Eliminar</button>
                         </Modal.Footer>
-                    </Modal> */}
+                    </Modal>
 
+                    <ModalComponent show={isEliminated} handleClose={handleIsEliminated} titulo="Registro eliminado" bodyMessage={'Asistencia eliminada exitosamente.'} />
 
                 </div>
             </div>

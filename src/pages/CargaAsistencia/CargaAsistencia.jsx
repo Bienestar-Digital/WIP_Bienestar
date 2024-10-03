@@ -13,7 +13,7 @@ function CargaAsistencia() {
   const eventId = sessionStorage.getItem('eventId'); 
   console.log("eventId", eventId);
   const eventName = sessionStorage.getItem('eventName'); 
-  console.log("eventId", eventName);
+  console.log("eventName", eventName);
 
 
   const [cargaManual, setCargaManual] = React.useState(false);
@@ -222,7 +222,7 @@ const handleFileChange = (e) => {
     <div className="row">
       <SideMenu />
       <div className='col-10 homeDiv cargaAsis'>
-        <h1>Evento {eventId}</h1>
+        <h1>Evento {eventId}: {eventName}</h1>
         <div>
           <button className="buttonP" onClick={handleShowBulk}>Carga por lectora</button>
           <button className="buttonS" onClick={handleShow}>
@@ -234,7 +234,7 @@ const handleFileChange = (e) => {
       <Modal show={cargaManual} onHide={handleClose}>
         <Modal.Header >
           <Modal.Title className="modalTitle">
-            Cargar asistencia al evento: {eventId}
+            Cargar asistencia al evento {eventId}: {eventName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -243,9 +243,9 @@ const handleFileChange = (e) => {
               <label className="col-4" htmlFor="tipoId">
                 Tipo de ID
               </label>
-              <select className="col-5" name="tipoId" id="tipoId" value="tipoId" onChange={(e) => setTipoId(e.target.value)}>
+              <select className="col-5" name="tipoId" id="tipoId" onChange={(e) => setTipoId(e.target.value)}>
                 <option value="">Selecciona un tipo de ID</option>
-                <option value="DNI">CC</option>
+                <option value="CC">CC</option>
                 <option value="TIUN">TIUN</option>
               </select>
             </div>
@@ -311,7 +311,7 @@ const handleFileChange = (e) => {
       <Modal show={cargaBulk} onHide={handleCloseBulk}>
         <Modal.Header >
           <Modal.Title className="modalTitle">
-            Cargar asistencia al evento: {eventId}
+            Cargar asistencia al evento {eventId}: {eventName}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

@@ -50,13 +50,15 @@ function TusEventos() {
     }
   }, [token, navigate]); // El efecto se ejecuta cuando el token cambia
 
-  const handleClickCargarAsistencia = (eventId) => {
+  const handleClickCargarAsistencia = (eventId, eventName) => {
     sessionStorage.setItem('eventId', eventId);
+    sessionStorage.setItem('eventName', eventName);
     navigate('/cargaAsistencia/${eventId}');
   };
 
-  const handleClickRegistroPorEvento = (eventId) => {
+  const handleClickRegistroPorEvento = (eventId, eventName) => {
     sessionStorage.setItem('eventId', eventId);
+    sessionStorage.setItem('eventName', eventName);
     navigate('/registroPorEvento/${eventId}');
   };
 
@@ -78,14 +80,14 @@ function TusEventos() {
                     <span>{new Date(event.startDate).toLocaleDateString()} - {new Date(event.endDate).toLocaleDateString()}</span>
                     <button 
                       className='buttonP' 
-                      onClick={() => handleClickCargarAsistencia(event.eventId)} // Pasa el eventId aquí
+                      onClick={() => handleClickCargarAsistencia(event.eventId, event.eventName)} // Pasa el eventId aquí
                     >
                       <FaPlus />
                       Cargar asistencia
                     </button>
                     <Link 
                       className='registro' 
-                      onClick={() => handleClickRegistroPorEvento(event.eventId)} // Pasa el eventId aquí
+                      onClick={() => handleClickRegistroPorEvento(event.eventId, event.eventName)} // Pasa el eventId aquí
                     >
                       Ver registros
                     </Link>
