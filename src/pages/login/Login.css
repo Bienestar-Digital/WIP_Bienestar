@@ -3,7 +3,7 @@
     flex-direction: column; /* Alinea los hijos verticalmente */
     justify-content: center;
     align-items: center;
-    height: 50vh; /* Ajusta la altura según sea necesario */
+    padding: 100px 0; 
   }
   
 

@@ -1,0 +1,50 @@
+/* Centrar el contenido */
+.containers {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra horizontalmente el contenedor principal */
+    justify-content: center; /* Centra verticalmente */
+    height: 100vh; /* Ocupar el 100% de la altura de la pantalla */
+}
+
+.containers h1 {
+    color:#94B43B;
+
+}
+
+/* Título */
+.title {
+    margin-bottom: 20px; /* Espacio entre el título y el contenido */
+}
+
+/* Información del perfil */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5; /* Espacio entre las líneas */
+    width: 300px; /* Ancho opcional para un mejor control visual */
+}
+
+/* Filas para las etiquetas y valores */
+.profile-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between; /* Añade espacio entre la etiqueta y el valor */
+    margin-bottom: 10px; /* Espacio entre filas */
+}
+
+/* Etiquetas alineadas a la izquierda */
+.profile-info .label {
+    flex-basis: 100px; /* Controla el ancho de la columna de etiquetas */
+    text-align: left;
+    font-weight: bold;
+    color: #94B43B; /* Color para las etiquetas */
+    font-size: 1.2rem; /* Agranda el tamaño de la fuente de los valores */
+}
+
+/* Valores alineados a la derecha */
+.profile-info .value {
+    flex-grow: 1;
+    text-align: left; /* Alinea los valores a la derecha */
+    font-size: 1.2rem; /* Agranda el tamaño de la fuente de los valores */
+}
