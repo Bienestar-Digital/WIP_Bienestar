@@ -60,7 +60,7 @@ function Home() {
   
   
 
-  useEffect(() => {
+  /* useEffect(() => {
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
     
@@ -96,7 +96,7 @@ function Home() {
     } else {
       navigate('/'); // Redirige si no hay token o idUser
     }
-  }, [token, navigate]);
+  }, [token, navigate]); */
   
 
   const handlePageChange = (page) => {
@@ -111,7 +111,7 @@ function Home() {
     <div className="row">
        <SideMenu userData={userData} /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
-        <div className="header">
+        <div className="headerHome">
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {userData.lastLogin}</span>
           <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>

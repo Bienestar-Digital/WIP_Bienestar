@@ -7,7 +7,7 @@ function CrearUsuario() {
         
         <div className='homeDiv'>
             <h1>Nuevo usuario</h1>
-            <form action="">
+            <form className='formCrear' action="">
                 <div className='row formInput' >
                     <label className='col-3' htmlFor="nombre">Nombre</label>
                     <input type="text" className='col-7' name="nombre" id="nombre"/>

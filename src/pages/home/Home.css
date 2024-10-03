@@ -1,7 +1,7 @@
 .homeDivP {
   padding: calc(100vw * 0.05);
 }
-.header {
+.headerHome {
   display: grid;
 }
 .homeDivP h1 {

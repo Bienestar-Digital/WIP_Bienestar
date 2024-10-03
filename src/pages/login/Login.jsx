@@ -170,7 +170,7 @@ const Login = () => {
                         </Form.Group>
 
                         {/* Botón de envío */}
-                        <Button variant="primary" type="submit" className="full-width-button">
+                        <Button variant="primary" type="submit" className="full-width-button w-100">
                             Ingresar
                         </Button>
                     </Form>

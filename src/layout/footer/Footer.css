@@ -4,6 +4,7 @@
     border: 1px solid #ddd;
     background-position: center top;
     background-size: cover;
+    font-size: small;
 }
 
 .links-container {
@@ -12,7 +13,7 @@
     align-items: flex-start; 
     flex-wrap: nowrap; /* Evita que los elementos se envuelvan */
     gap: 20px; /* Espacio entre las listas */
-    padding-top: 20px;
+    padding: 20px 0;
     justify-content: center; /* Centra horizontalmente los elementos */
    
     
@@ -21,7 +22,8 @@
   .links-list {
     list-style-type: none; /* Elimina los puntos de la lista */    
     margin: 0; /* Elimina el margen de la lista */
-    line-height: 1;
+    line-height: 20px;
+    
   }
   
   .links-list li {
@@ -41,6 +43,7 @@
 
   .dark-overlay {
     position: relative; /* Para superponer sobre la imagen */
+    display: grid;
     top: 0;
     left: 0;
     right: 0;
@@ -56,9 +59,10 @@
     height: 3px; /* Grosor de la línea */
     background-color: #687D2A; /* Color de la línea */
     margin: 10px 0; /* Espacio arriba y abajo de la línea */
-    width: 100%; /* Ancho de la línea, puedes ajustar según sea necesario */
+    width: 90%; /* Ancho de la línea, puedes ajustar según sea necesario */
     align-self: center; /* Centra la línea horizontal en su contenedor */
     opacity: 1;
+    justify-self: center; /* Centra horizontalmente los elementos */
   }
   
 
@@ -67,15 +71,14 @@
     justify-content: center; /* Centra la lista horizontalmente */
     align-items: center; /* Alinea los elementos verticalmente */
     width: 100%; /* Asegura que el contenedor ocupe todo el ancho disponible */
-    padding: 0px; /* Opcional: agrega padding para mayor espacio alrededor */
-    margin: 0px;
+    padding: 12px; 
   }
   
   .links-list2 {
     display: flex; /* Establece la lista como un flexbox */
     list-style: none; /* Elimina los puntos de la lista */
     margin-bottom: 0px;
-    
+    padding: 12px; 
   }
   
   .links-list2 li {
@@ -105,8 +108,7 @@
   .social-icons {
     display: flex; /* Usa flexbox para alinear los iconos en una fila */
     justify-content: center; /* Centra los iconos horizontalmente */
-    padding: 0; /* Elimina el padding */
-    margin: 0; /* Elimina el margen */
+    padding-button: 8px; 
   }
 
   .social-icons li {
@@ -159,7 +161,7 @@
 
 .links-info p {
     color: #eeeeee; /* Color de los enlaces */
-    font-size: 16px; /* Tamaño de la fuente */
+    font-size: small; /* Tamaño de la fuente */
 }
 
 .vertical-line {

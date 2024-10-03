@@ -41,5 +41,10 @@ body{
     border-radius: 8px;
     border: 1px solid #0000004D;
   }
+  h1{
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--primary-color);
+  }
 
   
