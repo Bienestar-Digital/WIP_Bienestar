@@ -14,31 +14,30 @@ function Home() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [idUser, setIdUser] = useState(null);
-  const token = sessionStorage.getItem('token'); 
-  const navigate = useNavigate(); 
+  const token = sessionStorage.getItem('token');
+  const navigate = useNavigate();
 
 
   const handleDownloadClick = async (eventId) => {
     const token = sessionStorage.getItem('token');
-    
+
     try {
       const response = await fetch(`http://localhost:20000/event/download-event/${eventId}`, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
-          // Añadir más headers si es necesario
+          'Authorization': `Bearer ${token}`, // Incluye el token en el encabezado
+          // No incluyas 'Content-Type' en GET si no es necesario, ya que estás esperando un archivo
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-      const data = await response.json();
-      console.log("Data fetch User:", data);
-      // Manejar la respuesta como un archivo binario
+
+      // Verificamos si la respuesta es un archivo binario
       const contentType = response.headers.get('Content-Type');
       if (contentType && (contentType.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') || contentType.includes('application/octet-stream'))) {
+        // Descargar el archivo binario
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
@@ -47,23 +46,22 @@ function Home() {
         document.body.appendChild(link);
         link.click();
         link.remove();
-        window.URL.revokeObjectURL(url);
+        window.URL.revokeObjectURL(url); // Limpieza de la URL creada
       } else {
+        // Si no es un archivo binario, mostrar un error con el tipo de contenido recibido
         console.error('Unexpected content type:', contentType);
-        // Manejar casos en los que el tipo de contenido no es el esperado
       }
-  
+
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
-  
-  
+  };  
 
-  useEffect(() => {
+
+  useEffect(() => {        
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
-    
+
     if (token && storedIdUser) { // Verificar que el token y el idUser existan
       const fetchUser = async () => {
         try {
@@ -74,10 +72,10 @@ function Home() {
               'Content-Type': 'application/json',
             },
           });
-  
+
           if (response.ok) {
             const data = await response.json();
-            setTableData(data.events);
+            setTableData(data.events);           
             setUserData(data);
             sessionStorage.setItem('userData', JSON.stringify(data));
             sessionStorage.setItem('rolname', data.roleName);
@@ -91,13 +89,13 @@ function Home() {
           console.error('Error:', error);
         }
       };
-  
+
       fetchUser(); // Llama a la función fetchUser
     } else {
       navigate('/'); // Redirige si no hay token o idUser
     }
   }, [token, navigate]);
-  
+
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -109,11 +107,11 @@ function Home() {
 
   return (
     <div className="row">
-       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
+      <SideMenu  /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
         <div className="header">
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
-          <span>Último ingreso: {userData.lastLogin}</span>
+          <span>Último ingreso: {new Date(userData.lastLogin).toLocaleDateString()}</span> {/* Formatea la fecha */}
           <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
             <FaPlus />
             Crear evento
@@ -134,22 +132,15 @@ function Home() {
               {tableData.map((data, index) => (
                 <tr key={index}>
                   <td>{data.eventName}</td>
-                  <td>{data.startDate}</td>
+                  <td>{new Date(data.startDate).toLocaleDateString()}</td>
+                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
                   <td>
-                    {data.states.map((state, i) => (
-                      <div key={i}>{state.stateName}</div>
-                    ))}
-                  </td>
-                  <td>
-                    {data.actions ? (
-                      data.actions
-                    ) : (
-                      <GoDownload onClick={() => handleDownloadClick(data.eventId)} />
-                    )}
+                    {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>
                 </tr>
               ))}
             </tbody>
+
           </table>
           <nav className="paginationNav">
             <Pager
@@ -162,6 +153,7 @@ function Home() {
       </div>
     </div>
   );
+
 }
 
 export default Home;

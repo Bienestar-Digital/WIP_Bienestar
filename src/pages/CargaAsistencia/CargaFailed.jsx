@@ -12,7 +12,7 @@ function CargaFailed() {
 
   return (
     <div className="row">
-      <SideMenu />
+      <SideMenu  />
       <div className='col-10 homeDiv'>
         <div className='userProcess' id='error'>
           <IoWarningOutline />

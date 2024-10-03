@@ -70,7 +70,7 @@ function CrearEvento() {
 
   return (
     <div className='row'>
-      <SideMenu />
+      <SideMenu  />
         <div className='col-10 homeDiv'>
             <h1>Nuevo Evento</h1>
             <form action="" onSubmit={handleSubmit}>

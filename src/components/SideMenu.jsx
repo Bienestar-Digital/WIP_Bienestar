@@ -15,9 +15,7 @@ const [role, setRole] = useState(null);
 useEffect(() => {
     const role = sessionStorage.getItem('rolname');
     setRole(role);
-}, []);
-
-
+});
 
   return (
     <div className="col-2 sideMenu">
@@ -30,7 +28,7 @@ useEffect(() => {
           <MdHomeFilled />
           Home
         </ul>
-        {(userData.roleName === 'admin' || role == "admin") && (
+        {( role == "admin") && (
         <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
           <HiMiniUsers />
           Usuarios
@@ -45,7 +43,7 @@ useEffect(() => {
           <FaRegUserCircle />
           Perfil
         </ul>
-        <ul>Cerrar sesión</ul>
+        <ul  className="borderSec" onClick={()=>{sessionStorage.removeItem('token'); sessionStorage.removeItem('userId');  navigate('/')  }} >Cerrar sesión</ul>
       </nav>
     </div>
   );

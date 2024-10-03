@@ -17,6 +17,7 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
+    const [rolName , setRolName] = useState("");
     const [titulo, setTitulo] = useState("");
     const [showLoading, setShowLoading] = useState(false);
     const [bodyMessage, setBodyMessage] = useState("");
@@ -36,7 +37,8 @@ const Login = () => {
         }
 
         setValidated(true);
-    };
+    };    
+    
 
     const doCall = async () => {
         const loginData = { username, password };
@@ -80,6 +82,7 @@ const Login = () => {
                 sessionStorage.setItem('token', data.token);                
                 sessionStorage.setItem('userId', JSON.stringify(data.userId));
                 console.log("data.userId", data.userId);
+                getUserRole(data.userId, data.token);
                 console.log('Inicio de sesión exitoso:', data);
                 console.log('User:', username);
                 navigate('/home');
@@ -106,6 +109,36 @@ const Login = () => {
     };
     const handleClose = () => setShow(false);
 
+
+
+    const getUserRole = async (id, token) => {
+
+        try {
+            const response = await fetch(`http://localhost:20000/user/${id}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+  
+            if (response.ok) {
+              const data = await response.json();
+              setRolName(data.roleName); 
+              console.log("RolName", data.roleName); 
+              sessionStorage.setItem('rolname', data.roleName);        
+            
+            } else if (response.status === 401) {
+              sessionStorage.removeItem('token');
+              navigate('/');
+            } else {
+              console.error('Error:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+
+    }
 
     return (
         <>
