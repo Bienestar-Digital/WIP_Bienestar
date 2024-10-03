@@ -65,7 +65,10 @@ function TusEventos() {
     <div className='row'>
       <SideMenu />
         <div className='col-10 homeDiv'>
+          <div className="headerEvents">
             <h1>Tus eventos</h1>
+          </div>
+            
             <div className='eventsContainer'>
               {/* Mapeamos los eventos desde tableData */}
               {tableData.length > 0 ? (

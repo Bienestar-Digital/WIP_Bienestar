@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
+import { FaRegTrashAlt } from "react-icons/fa";
+import Modal from "react-bootstrap/Modal";
 import SideMenu from '../../components/SideMenu';
 import Pager from "../home/Pager";
+import ImageModal from "../../assets/images/escudo2_unal.png"
 
 function RegistroPorEvento() {
 
@@ -12,23 +15,25 @@ function RegistroPorEvento() {
 
     const [tableData, setTableData] = useState([]);
     const [itemsPerPage] = useState(10);
+    const [selectedAttendee, setSelectedAttendee] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    //const { eventId } = useParams();
+    const [show, setShow] = useState(false);
     const navigate = useNavigate();
 
     const handleClickTusEventos = () => {
         navigate('/tusEventos');
     };
 
+
     const fetchAttendeesByEventId = async () => {
         try {
-            const token = sessionStorage.getItem("token");  // O de donde obtienes el token
+            const token = sessionStorage.getItem("token");
 
             const response = await fetch(`http://localhost:20000/attendee/event/${eventId}`, {
-                method: "GET",  // Método GET para obtener datos
+                method: "GET",
                 headers: {
-                    "Content-Type": "application/json",  // Especificamos el tipo de contenido
-                    "Authorization": `Bearer ${token}`   // Agregamos el token si es necesario
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
             });
 
@@ -44,6 +49,35 @@ function RegistroPorEvento() {
             console.error("Error en la petición:", error);
         }
     };
+
+    const handleDelete = async (attendeeId) => {
+        try {    
+            const token = sessionStorage.getItem("token");
+
+            const response = await fetch(`http://localhost:20000/attendee/delete/${attendeeId}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+        
+            if (response.ok) {
+                console.log("Asistente eliminado con éxito");
+                
+                // Actualizar la tabla eliminando el asistente del estado
+                setTableData(prevData => prevData.filter(item => item.attendeeId !== attendeeId));
+            } else {
+                console.error("Error al eliminar el asistente", response.statusText);
+                throw new Error("Error en la respuesta del servidor");
+            }
+        } catch (error) {
+            console.error("Error en la petición de eliminación:", error);
+        }
+    }
+
+    //const handleClose = () => setShow(false);
+
     
     useEffect(() => {
         if (eventId) {
@@ -55,7 +89,13 @@ function RegistroPorEvento() {
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-      };
+    };
+
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
+
 
     return (
         <>
@@ -63,7 +103,7 @@ function RegistroPorEvento() {
                 <SideMenu />
                 <div className='col-10 homeDiv'>
 
-                    <div className="d-flex flex-column header">
+                    <div className="d-flex flex-column headerEvents">
                             <h1 className="bienvenida">
                                 Registros
                             </h1>
@@ -79,15 +119,32 @@ function RegistroPorEvento() {
                                     <th>Asistencia n°</th>
                                     <th>Identificación</th>
                                     <th>Nombre</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {tableData.length > 0 ? (
+                                {/* {tableData.length > 0 ? (
                                     tableData.map((data, index) => (
                                         <tr key={index}>
                                             <td>{data.attendeeId}</td>
                                             <td>{data.idNumber}</td>
                                             <td>{data.fullName}</td>
+                                            <td>
+                                            <FaRegTrashAlt onClick={() => handleDelete(data.attendeeId)} />
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : ( */}
+                                
+                                {currentItems.length > 0 ? (
+                                    currentItems.map((data, index) => (
+                                        <tr key={index}>
+                                            <td>{data.attendeeId}</td>
+                                            <td>{data.idNumber}</td>
+                                            <td>{data.fullName}</td>
+                                            <td>
+                                                <FaRegTrashAlt onClick={() => handleDelete(data.attendeeId)} />
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (
@@ -102,12 +159,33 @@ function RegistroPorEvento() {
                             totalItems={tableData.length}
                             itemsPerPage={itemsPerPage}
                             onPageChange={handlePageChange}
+                            currentPage={currentPage}
                             />
                         </nav>
                     </div>
 
-
-
+                    {/* <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title style={{ color: "#687D2A" }}>
+                                <strong>Confirmar eliminación</strong>{" "}
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <img
+                                src={ImageModal}
+                                alt="Descripción de la imagen"
+                                className="img-fluid"
+                                style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
+                            />
+                            <strong style={{ fontSize: "20px" }}>
+                            ¿Estás seguro de que deseas eliminar este asistente? Esta acción no se puede deshacer.
+                            </strong>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" className="btn btn-danger" onClick={handleDelete}>Eliminar</button>
+                        </Modal.Footer>
+                    </Modal> */}
 
 
                 </div>
