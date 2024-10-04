@@ -5,7 +5,11 @@
   margin-top: 20px;
   
 }
-
+.headerEvents h1 {
+  color: var(--primary-color);
+  font-size: 32px;
+  font-weight: bold;
+}
 .eventCard {
   width: 280px;
   height: 280px;

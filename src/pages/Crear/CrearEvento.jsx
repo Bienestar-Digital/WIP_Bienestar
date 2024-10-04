@@ -77,70 +77,48 @@ function CrearEvento() {
   return (
     <div className="row">
       <SideMenu />
-      <div className="col-10 homeDiv">
-        <h1>Nuevo Evento</h1>
-        <form className="formCrear" action="" onSubmit={handleSubmit}>
-          <div className="row formInput">
-            <label className="col-3" htmlFor="nombre">
-              Nombre
-            </label>
-            <input type="text" className="col-7" name="nombre" id="nombre" />
+
+        <div className='col-10 homeDivP'>
+          <div className="header">
+            <h1>Nuevo Evento</h1>
           </div>
-          <div className="row formInput">
-            <label className="col-3" htmlFor="descripcion">
-              Descripción
-            </label>
-            <textarea
-              className="col-7"
-              name="descripcion"
-              id=""
-              rows={5}
-            ></textarea>
-          </div>
-          <div className="row formInput">
-            <label className="col-3" htmlFor="fechaI">
-              Fecha inicial
-            </label>
-            <input type="date" className="col-7" name="fechaI" id="fechaI" />
-          </div>
-          <div className="row formInput">
-            <label className="col-3" htmlFor="fechaF">
-              Fecha final
-            </label>
-            <input type="date" className="col-7" name="fechaF" id="fechaF" />
-          </div>
-          {/* <div className='row formInput' >
+          <div className="form-alin">
+            <form action="" onSubmit={handleSubmit}>
+                <div className='row formInput mb-3' >
+                    <label className='col-3' htmlFor="nombre">Nombre</label>
+                    <input type="text" className='col-7' name="nombre" id="nombre"/>
+                </div>
+                <div className='row formInput mb-3' >
+                    <label className='col-3' htmlFor="descripcion">Descripción</label>
+                    <textarea className='col-7'  name="descripcion" id="" rows={5}></textarea>
+                </div>
+                <div className='row formInput mb-3' >
+                    <label className='col-3' htmlFor="fechaI">Fecha inicial</label>
+                    <input type="date" className='col-7'  name="fechaI" id="fechaI"/>
+                </div>
+                <div className='row formInput mb-3' >
+                    <label className='col-3' htmlFor="fechaF">Fecha final</label>
+                    <input type="date" className='col-7'  name="fechaF" id="fechaF"/>
+                </div>
+                {/* <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="responsable">Responsable</label>
                     <input type="text" className='col-7'  name="responsable" id="responsable" value={username} readOnly disabled={true} />
                 </div> */}
-          <div className="row formInput">
-            <label className="col-3" htmlFor="responsable">
-              Responsable
-            </label>
-            <input
-              type="text"
-              className="col-7"
-              name="responsable"
-              id="responsable"
-            />
+                <div className='row formInput mb-3' >
+                    <label className='col-3' htmlFor="responsable">Responsable</label>
+                    <input type="text" className='col-7'  name="responsable" id="responsable" />
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button className='buttonP' id='crearBtn'>
+                  Crear evento
+                  </button>
+                </div>
+            </form>
           </div>
-          <button className="buttonP" id="crearBtn">
-            Crear evento
-          </button>
-        </form>
-      </div>
-      <ModalComponent
-        show={showModal}
-        handleClose={handleCloseModal}
-        titulo="Error"
-        bodyMessage={"Por favor, rellena todos los campos."}
-      />
-      <ModalComponent
-        show={isSuccess}
-        handleClose={handleIsSuccess}
-        titulo="Evento Creado"
-        bodyMessage={"Evento creado exitosamente."}
-      />
+        </div>
+      <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
+      <ModalComponent show={isSuccess} handleClose={handleIsSuccess} titulo="Evento Creado" bodyMessage={'Evento creado exitosamente.'} />
+
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageModal from "../assets/images/escudo2_unal.png";
 
 const ModalComponent = ({ show, handleClose, titulo, bodyMessage }) => {
   const modalStyle = show ? { display: 'block', backgroundColor: 'rgba(0, 0, 0, 0.5)' } : { display: 'none' };
@@ -15,7 +16,7 @@ const ModalComponent = ({ show, handleClose, titulo, bodyMessage }) => {
           </div>
           <div className="modal-body">
             <img
-                src="src/assets/images/escudo2_unal.png"
+                src={ImageModal}
                 alt="Descripción de la imagen"
                 className="img-fluid"
                 style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
