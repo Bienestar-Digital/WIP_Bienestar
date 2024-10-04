@@ -78,7 +78,7 @@ function CrearEvento() {
     <div className="row">
       <SideMenu />
 
-        <div className='col-10 homeDivP'>
+        <div className='col-10 homeDivP'> {/* homeDiv? */}
           <div className="header">
             <h1>Nuevo Evento</h1>
           </div>
