@@ -48,3 +48,10 @@
     text-align: left; /* Alinea los valores a la derecha */
     font-size: 1.2rem; /* Agranda el tamaño de la fuente de los valores */
 }
+
+.avatar {
+    width: 100px;  /* Ajusta el ancho de la imagen */
+    height: 100px; /* Ajusta la altura de la imagen */
+    border-radius: 50%; /* Esto hará que la imagen sea redonda */
+}
+
