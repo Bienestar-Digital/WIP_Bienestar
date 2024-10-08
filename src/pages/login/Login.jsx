@@ -12,6 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
 import ImageModalPrevent from "../../assets/images/assignment_late.png"
+import ImageLogo from "../../assets/images/escudo2_unal.png"
 
 const Login = () => {
 
@@ -166,7 +167,7 @@ const Login = () => {
             <Header />
             <div className="center-container">
                 <img
-                    src="src/assets/images/escudo2_unal.png"
+                    src={ImageLogo}
                     alt="Escudo Unal"
                     className="responsive-image"
                 />
