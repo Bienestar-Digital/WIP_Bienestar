@@ -11,7 +11,7 @@ const Perfil = () => {
         setUserData(storedData);
     }, []);
 
-    return (
+    return ( 
         <div className="row">
            <SideMenu userData={"userData"} />
             <div className="col-10">

@@ -7,26 +7,19 @@ import { FaRegUserCircle } from "react-icons/fa";
 import "./SideMenu.css";
 import { useNavigate } from "react-router-dom";
 
-function SideMenu({ userData }) { 
-  const navigate = useNavigate(); 
+function SideMenu({ userData }) {
+  const navigate = useNavigate();
   const [role, setRole] = useState(null);
-  const [selectedMenu, setSelectedMenu] = useState(''); // Estado para el menú seleccionado
-  const [nextPath, setNextPath] = useState(null);
+  const [selectedMenu, setSelectedMenu] = useState(null);  // Estado para el menú seleccionado
 
   useEffect(() => {
     const role = sessionStorage.getItem('rolname');
     setRole(role);
   }, []);
 
-  useEffect(() => {
-    if (nextPath) {
-      navigate(nextPath); // Navega una vez que el estado del menú ha sido actualizado
-    }
-  }, [nextPath, navigate]);
-
-  const handleMenuClick = (menu, path) => {
-    setSelectedMenu(menu); // Cambiar el menú seleccionado
-    navigate(path);        // Navegar después de cambiar el estado
+  const handleClick = (menu, path) => {
+    setSelectedMenu(menu);
+    navigate(path);
   };
 
   return (
@@ -37,24 +30,36 @@ function SideMenu({ userData }) {
           Menú
         </ul>
         <ul 
-          className={`borderSec ${selectedMenu === 'home' ? 'selectedMenu' : ''}`} 
-          onClick={() => handleMenuClick('home', '/home')}
+          className="borderSec" 
+          onClick={() => handleClick('home', '/home')}
+          style={{
+            backgroundColor: selectedMenu === 'home' ? '#94B43B' : 'transparent',
+            color: selectedMenu === 'home' ? 'white' : 'black'
+          }}
         >
           <MdHomeFilled />
           Home
         </ul>
-        {role === "admin" && (
+        {(role === "admin") && (
           <ul 
-            className={`borderSec ${selectedMenu === 'usuarios' ? 'selectedMenu' : ''}`} 
-            onClick={() => handleMenuClick('usuarios', '/crearUsuario')}
+            className="borderSec" 
+            onClick={() => handleClick('usuarios', '/crearUsuario')}
+            style={{
+              backgroundColor: selectedMenu === 'usuarios' ? '#94B43B' : 'transparent',
+              color: selectedMenu === 'usuarios' ? 'white' : 'black'
+            }}
           >
             <HiMiniUsers />
             Usuarios
           </ul>
         )}
         <ul 
-          className={`borderSec ${selectedMenu === 'eventos' ? 'selectedMenu' : ''}`} 
-          onClick={() => handleMenuClick('eventos', '/tusEventos')}
+          className="borderSec" 
+          onClick={() => handleClick('eventos', '/tusEventos')}
+          style={{
+            backgroundColor: selectedMenu === 'eventos' ? '#94B43B' : 'transparent',
+            color: selectedMenu === 'eventos' ? 'white' : 'black'
+          }}
         >
           <LuUserCheck />
           Eventos
@@ -62,19 +67,23 @@ function SideMenu({ userData }) {
       </nav>
       <nav>
         <ul 
-          className={`borderSec ${selectedMenu === 'perfil' ? 'selectedMenu' : ''}`} 
-          onClick={() => handleMenuClick('perfil', '/perfil')}
+          className="borderSec" 
+          onClick={() => handleClick('perfil', '/perfil')}
+          style={{
+            backgroundColor: selectedMenu === 'perfil' ? '#94B43B' : 'transparent',
+            color: selectedMenu === 'perfil' ? 'white' : 'black'
+          }}
         >
           <FaRegUserCircle />
           Perfil
         </ul>
         <ul 
-          className={`borderSec ${selectedMenu === 'logout' ? 'selectedMenu' : ''}`} 
-          onClick={() => { 
-            sessionStorage.removeItem('token'); 
-            sessionStorage.removeItem('userId');  
+          className="borderSec" 
+          onClick={() => {
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('userId');
             navigate('/');
-          }} 
+          }}
         >
           Cerrar sesión
         </ul>
@@ -83,90 +92,4 @@ function SideMenu({ userData }) {
   );
 }
 
-
 export default SideMenu;
-
-/* function SideMenu({ userData }) {
-  const navigate = useNavigate(); 
-  const [role, setRole] = useState(null);
-  const [activeMenu, setActiveMenu] = useState('home');
-
-  useEffect(() => {
-      const role = sessionStorage.getItem('rolname');
-      setRole(role);
-  }, []);
-
-  const handleNavigation = (menu) => {
-    setActiveMenu(menu);
-    navigateToPage(menu);
-  };
-
-  const navigateToPage = (menu) => {
-    if (menu === 'home') navigate('/home');
-    else if (menu === 'usuarios') navigate('/crearUsuario');
-    else if (menu === 'eventos') navigate('/tusEventos');
-    else if (menu === 'perfil') navigate('/perfil');
-  };
-
-  const getButtonStyle = (menu) => ({
-    backgroundColor: activeMenu === menu ? 'blue' : '',
-    color: activeMenu === menu ? 'white' : '',
-  });
-
-    return (
-      <div className="col-2 sideMenu">
-      <nav>
-        <button className="menuButton">
-          <IoIosMenu />
-          Menú
-        </button>
-        <button 
-          className="menuButton" 
-          onClick={() => handleNavigation('home')} 
-          style={getButtonStyle('home')}
-        >
-          <MdHomeFilled /> Home
-        </button>
-        {role === "admin" && (
-          <button 
-            className="menuButton" 
-            onClick={() => handleNavigation('usuarios')} 
-            style={getButtonStyle('usuarios')}
-          >
-            <HiMiniUsers /> Usuarios
-          </button>
-        )}
-        <button 
-          className="menuButton" 
-          onClick={() => handleNavigation('eventos')} 
-          style={getButtonStyle('eventos')}
-        >
-          <LuUserCheck />
-          Eventos
-        </button>
-      </nav>
-      <nav>
-        <button 
-          className="menuButton" 
-          onClick={() => handleNavigation('perfil')} 
-          style={getButtonStyle('perfil')}
-        >
-          <FaRegUserCircle />
-          Perfil
-        </button>
-        <button 
-          className="menuButton" 
-          onClick={() => { 
-            sessionStorage.removeItem('token'); 
-            sessionStorage.removeItem('userId');  
-            navigate('/'); 
-          }}
-        >
-          Cerrar sesión
-        </button>
-      </nav>
-    </div>
-    );
-}
-
-export default SideMenu; */

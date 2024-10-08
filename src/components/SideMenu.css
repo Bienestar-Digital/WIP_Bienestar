@@ -30,19 +30,12 @@
   align-items: center;
   gap: 8px;
 }
-/* .sideMenu ul:hover {
-  background-color: var(--button-unavailable-color);
+.sideMenu ul:hover {
+  background-color: #94B43B;
   color: #fff;
-  cursor: pointer;
-
-} */
+}
 .borderSec {
   border-bottom: 1px solid var(--primary-color);
   font-size: 24px;
   border-radius: 20px;
-}
-
-.selectedMenu {
-  background-color: blue;
-  color: white;
 }

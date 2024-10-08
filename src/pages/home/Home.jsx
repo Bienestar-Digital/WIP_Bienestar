@@ -111,7 +111,7 @@ function Home() {
     <div className="row">
       <SideMenu  /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
-        <div className="headerHome"> {/* header? */}
+        <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {new Date(userData.lastLogin).toLocaleDateString()}</span> {/* Formatea la fecha */}
           <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
