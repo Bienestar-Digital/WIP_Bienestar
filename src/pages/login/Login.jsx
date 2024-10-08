@@ -11,6 +11,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
+import ImageModalPrevent from "../../assets/images/assignment_late.png"
 
 const Login = () => {
 
@@ -81,6 +82,9 @@ const Login = () => {
             if (data.token) {
                 sessionStorage.setItem('token', data.token);                
                 sessionStorage.setItem('userId', JSON.stringify(data.userId));
+                sessionStorage.setItem('userid', data.userId);
+                console.log("userid", data.userId);
+                sessionStorage.setItem('userName', username); 
                 console.log("data.userId", data.userId);
                 getUserRole(data.userId, data.token);
                 console.log('Inicio de sesión exitoso:', data);
@@ -142,7 +146,7 @@ const Login = () => {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: "#687D2A" }}>
                         <strong>{titulo}</strong>{" "}
@@ -150,7 +154,7 @@ const Login = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <img
-                        src="src/assets/images/escudo2_unal.png"
+                        src={ImageModalPrevent}
                         alt="Descripción de la imagen"
                         className="img-fluid"
                         style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}

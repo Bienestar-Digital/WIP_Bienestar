@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 
 function Home() {
   // Estados para almacenar los datos del usuario y de la tabla
+  const eventState = sessionStorage.getItem("eventState");
+  console.log("Estado evento: ", eventState);
   const [userData, setUserData] = useState({ name: '', lastLogin: '' });
   const [tableData, setTableData] = useState([]);
   const [object, setObject] = useState([]);
@@ -133,7 +135,8 @@ function Home() {
                 <tr key={index}>
                   <td>{data.eventName}</td>
                   <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
+                  {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
+                  <td>{sessionStorage.getItem("eventState") || "Cerrado"}</td>
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>

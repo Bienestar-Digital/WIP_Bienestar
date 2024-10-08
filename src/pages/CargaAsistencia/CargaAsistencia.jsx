@@ -4,12 +4,12 @@ import "./CargaAsistencia.css";
 import Modal from "react-bootstrap/Modal";
 import ModalComponent from '../../components/ModalComponent';
 import SideMenu from '../../components/SideMenu'
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom";
+import ImageModalPrevent from "../../assets/images/assignment_late.png"
 
 function CargaAsistencia() {
 
   const token = sessionStorage.getItem('token'); 
-  //const { eventId } = useParams();
   const eventId = sessionStorage.getItem('eventId'); 
   console.log("eventId", eventId);
   const eventName = sessionStorage.getItem('eventName'); 
@@ -32,6 +32,8 @@ function CargaAsistencia() {
       setValueID(newValue);
     }
   };
+
+  const handleCloseModal = () => setShowModal(false);
 
   //Single
   const handleCloseSuccess = () => {
@@ -62,16 +64,22 @@ function CargaAsistencia() {
   const handleShowBulk = () => setCargaBulk(true);
   
 
-  const handleCloseModal = () => setShowModal(false);
 
   // Single
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log('Token', token);
     console.log('idType', tipoId);
     if (!token) {
       console.error("Token no disponible. No tienes acceso.");
       return;
+    }
+
+    if (!tipoId || !valueID.trim() || !nombre.trim() || !mail.trim()) {
+      console.error("Todos los campos son obligatorios.");
+      setShowModal(true);
+      return; // No se continúa si faltan datos
     }
 
     const eventData = {
@@ -82,18 +90,7 @@ function CargaAsistencia() {
       eventId: eventId
     };
 
-    console.log('Datos ingresados:', {
-      idType: eventData.idType,
-      idNumber: eventData.idNumber,
-      fullName: eventData.fullName,
-      email: eventData.email,
-      eventId: eventData.eventId
-    });
-
-    //if (!eventData.idType || !eventData.idNumber || !eventData.fullName || !eventData.email) { 
-      //setShowModal(true);
-      //return;
-    //}
+    console.log('Datos ingresados:', eventData);
 
     try {
       const response = await fetch("http://localhost:20000/attendee/loads", {
@@ -112,9 +109,9 @@ function CargaAsistencia() {
       }
     } catch (error) {
       console.error("Error en la petición:", error);
+      handleCloseFailed();
     }
   };
-
 
 
 
@@ -123,92 +120,54 @@ function CargaAsistencia() {
   const handleSubmitBulk = async (e) => {
     e.preventDefault();
 
-    const bulkData = e.target.querySelector("textarea").value.trim(); // Obtener los datos del textarea
+    const bulkData = e.target.querySelector("textarea").value.trim();
+    
+    if (!bulkData) {
+      console.error("El área de texto está vacía.");
+      setShowModal(true);
+      return;
+    }
 
-    // Suponiendo que ya tienes los asistentes, debes crear una lista con el eventId
-    const eventId = sessionStorage.getItem('eventId'); // Obtener el eventId
+    const eventId = sessionStorage.getItem('eventId');
 
-    // Formatear los datos para incluir el eventId en cada línea
+
     const formattedData = bulkData.split("\n").map(attendeeLine => {
-        const parts = attendeeLine.split(";"); // Separar la línea por ";"
+        const parts = attendeeLine.split(";");
         if (parts.length === 2) {
-            return `${parts[0].trim()};${parts[1].trim()};${eventId}`; // Agregar el eventId al final
+            return `${parts[0].trim()};${parts[1].trim()};${eventId}`;
         }
-        return attendeeLine; // Devolver la línea sin cambios si no tiene el formato esperado
-    }).join("\n"); // Volver a unir las líneas
+        return attendeeLine;
+    }).join("\n");
 
-    console.log('Datos ingresados:', formattedData); // Mostrar el contenido para depuración
+    console.log('Datos ingresados:', formattedData);
 
     try {
         const token = sessionStorage.getItem("token");
 
-        // Hacer la solicitud POST al backend
         const response = await fetch("http://localhost:20000/attendee/bulk", {
             method: "POST",
             headers: {
-                "Content-Type": "text/plain", // Cambiar a text/plain
+                "Content-Type": "text/plain",
                 "Authorization": `Bearer ${token}`,
             },
-            body: formattedData, // Enviar el texto formateado
+            body: formattedData,
         });
 
         if (response.ok) {
-            console.log("Asistencia cargada con éxito.", await response.text()); // Cambiar a response.text() si el servidor devuelve texto
-            handleCloseSuccessBulk(); // Cambiar a la función adecuada para el éxito
+            console.log("Asistencia cargada con éxito.", await response.text());
+            handleCloseSuccessBulk();
         } else {
             console.error("Error al cargar la asistencia.");
-            handleCloseFailedBulk(); // Cambiar a la función adecuada para el fallo
+            handleCloseFailedBulk();
         }
     } catch (error) {
         console.error("Error en la petición:", error);
-        handleCloseFailedBulk(); // Cambiar a la función adecuada para el fallo
+        handleCloseFailedBulk();
     }
-
-    /* if (!file) {
-        setShowModalBulk(true);
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-        try {
-            const jsonData = JSON.parse(event.target.result);
-
-            
-            const token = sessionStorage.getItem('token');
-            const url = "http://localhost:20000/attendee/bulk";
-
-            
-            for (const attendee of jsonData) {
-                const response = await fetch(url, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        idType: "CC",
-                        idNumber: attendee.idNumber,
-                        fullName: attendee.fullName,
-                        email: `${attendee.fullName.toLowerCase().replace(/ /g, '.')}@unal.edu.co`,
-                        eventId: eventId
-                    }),
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Error al cargar la asistencia para ${attendee.fullName}`);
-                }
-            }
-
-            handleCloseSuccessBulk();
-        } catch (error) {
-            console.error("Error en la carga del archivo:", error);
-            handleCloseFailedBulk();
-        } */
   };
 
 
-const [file, setFile] = useState(null); // Estado para almacenar el archivo
+const [file, setFile] = useState(null);
 
 const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
@@ -231,27 +190,28 @@ const handleFileChange = (e) => {
         </div>
       </div>
 
-      <Modal show={cargaManual} onHide={handleClose}>
+      <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" imagen={ImageModalPrevent} bodyMessage={'Por favor, rellena todos los campos.' } />
+
+      <Modal show={cargaManual} onHide={handleClose} centered>
         <Modal.Header >
-          <Modal.Title className="modalTitle">
-            Cargar asistencia al evento {eventId}: {eventName}
+          <Modal.Title style={{ color: "#687D2A" }}>
+            <strong>Cargar asistencia al evento {eventId}: {eventName} </strong>{" "}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form action="" className="manualForm" onSubmit={handleSubmit}>
             <div className="row mb-3">
-              <label className="col-4" htmlFor="tipoId">
-                Tipo de ID
+              <label className="col-4" htmlFor="tipoId" style={{ fontSize: "20px", color: "black"  }}>
+              Tipo de ID
               </label>
               <select className="col-5" name="tipoId" id="tipoId" onChange={(e) => setTipoId(e.target.value)}>
-                <option value="">Selecciona un tipo de ID</option>
                 <option value="CC">CC</option>
                 <option value="TIUN">TIUN</option>
               </select>
             </div>
             <div className="row mb-3">
               <label className="col-4" htmlFor="id">
-                ID
+              <strong style={{ fontSize: "20px", color: "black"  }}>ID</strong>
               </label>
               <input
                 className="col-5"
@@ -263,8 +223,8 @@ const handleFileChange = (e) => {
               />
             </div>
             <div className="row mb-3">
-              <label className="col-4" htmlFor="nombre">
-                Nombre
+              <label className="col-4" htmlFor="nombre" style={{ fontSize: "20px", color: "black"  }}>
+              Nombre
               </label>
               <input
                 className="col-5"
@@ -276,8 +236,8 @@ const handleFileChange = (e) => {
               />
             </div>
             <div className="row mb-3">
-              <label className="col-4" htmlFor="mail">
-                Mail
+              <label className="col-4" htmlFor="mail" style={{ fontSize: "20px", color: "black"  }}>
+              Mail
               </label>
               <input
                 className="col-4"
@@ -295,7 +255,7 @@ const handleFileChange = (e) => {
               <button type="submit" className="buttonP buttonModal">
                 Guardar
               </button>
-              <button  type="button" className="buttonS buttonModal" onClick={handleCloseFailed}>
+              <button  type="button" className="buttonS buttonModal" onClick={handleClose}>
                 Cancelar
               </button>
             </Modal.Footer>
@@ -303,15 +263,15 @@ const handleFileChange = (e) => {
         </Modal.Body>
       </Modal>
 
-      <ModalComponent className="z-3" show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
+      
 
 
 
 
-      <Modal show={cargaBulk} onHide={handleCloseBulk}>
+      <Modal show={cargaBulk} onHide={handleCloseBulk} centered>
         <Modal.Header >
-          <Modal.Title className="modalTitle">
-            Cargar asistencia al evento {eventId}: {eventName}
+          <Modal.Title style={{ color: "#687D2A" }}>
+            <strong>Cargar asistencia al evento {eventId}: {eventName}</strong>{" "}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -321,24 +281,25 @@ const handleFileChange = (e) => {
               <label htmlFor="fileInput">Selecciona el archivo JSON:</label>
               <input type="file" id="fileInput" accept=".json" onChange={handleFileChange} required />
             </div> */}
-            <span className="input-group-text">Utiliza el lector de códigos para registrar la asistencia:</span>
+            <span className="input-group-text" style={{ whiteSpace: "normal" }}>
+              <strong style={{ fontSize: "20px" }}>Utiliza el lector de códigos para registrar la asistencia:
+              </strong>
+            </span>
             <div className="input">
-              <textarea className="form-control" aria-label="With textarea"></textarea>
+              <textarea className="form-control large-textarea" aria-label="With textarea"></textarea>
             </div>
           
             <Modal.Footer style={{ width: '100%' }}>
               <button type="submit" className="buttonP buttonModal">
                 Guardar
               </button>
-              <button  type="button" className="buttonS buttonModal" onClick={handleCloseFailed}>
+              <button  type="button" className="buttonS buttonModal" onClick={handleCloseBulk}>
                 Cancelar
               </button>
             </Modal.Footer>
           </form>
         </Modal.Body>
       </Modal>
-
-      <ModalComponent className="z-3" show={showModal} handleClose={handleCloseModal} titulo="Error" bodyMessage={'Por favor, rellena todos los campos.'} />
 
     </div>
   );

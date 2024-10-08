@@ -31,6 +31,7 @@
     }
 .manualForm{
     width: 100%;
+    color: black;
 }
 .modalTitle{
     color: var(--primary-color);
@@ -38,4 +39,8 @@
 }
 .buttonModal{
     width: 30%;
+}
+.large-textarea {
+    width: 100%;
+    height: 25vh;
 }

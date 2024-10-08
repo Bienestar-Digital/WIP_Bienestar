@@ -19,6 +19,7 @@
   margin-top: auto;
 }
 .sideMenu ul {
+  cursor: pointer;
   padding: 0;
   padding-left: 8px;
   border-radius: 0 20px 20px 0;
@@ -29,14 +30,19 @@
   align-items: center;
   gap: 8px;
 }
-.sideMenu ul:hover {
+/* .sideMenu ul:hover {
   background-color: var(--button-unavailable-color);
   color: #fff;
-  
+  cursor: pointer;
 
-}
+} */
 .borderSec {
   border-bottom: 1px solid var(--primary-color);
   font-size: 24px;
   border-radius: 20px;
+}
+
+.selectedMenu {
+  background-color: blue;
+  color: white;
 }
