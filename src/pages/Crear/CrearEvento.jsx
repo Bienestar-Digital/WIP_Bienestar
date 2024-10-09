@@ -77,49 +77,50 @@ function CrearEvento() {
   return (
     <div className="row">
       <SideMenu />
-      <div className="col-10 homeDiv">
+      <div className="col-9 homeDiv">
         <h1>Nuevo Evento</h1>
+
         <form className="formCrear" action="" onSubmit={handleSubmit}>
           <div className="row formInput">
-            <label className="col-3" htmlFor="nombre">
+            <label className="col-4" htmlFor="nombre">
               Nombre
             </label>
-            <input type="text" className="col-7" name="nombre" id="nombre" />
+            <input type="text" className="col-8" name="nombre" id="nombre" />
           </div>
           <div className="row formInput">
-            <label className="col-3" htmlFor="descripcion">
+            <label className="col-4" htmlFor="descripcion">
               Descripción
             </label>
             <textarea
-              className="col-7"
+              className="col-8"
               name="descripcion"
               id=""
               rows={5}
             ></textarea>
           </div>
           <div className="row formInput">
-            <label className="col-3" htmlFor="fechaI">
+            <label className="col-4" htmlFor="fechaI">
               Fecha inicial
             </label>
-            <input type="date" className="col-7" name="fechaI" id="fechaI" />
+            <input type="date" className="col-8" name="fechaI" id="fechaI" />
           </div>
           <div className="row formInput">
-            <label className="col-3" htmlFor="fechaF">
+            <label className="col-4" htmlFor="fechaF">
               Fecha final
             </label>
-            <input type="date" className="col-7" name="fechaF" id="fechaF" />
+            <input type="date" className="col-8" name="fechaF" id="fechaF" />
           </div>
           {/* <div className='row formInput' >
-                    <label className='col-3' htmlFor="responsable">Responsable</label>
-                    <input type="text" className='col-7'  name="responsable" id="responsable" value={username} readOnly disabled={true} />
+                    <label className='col-4' htmlFor="responsable">Responsable</label>
+                    <input type="text" className='col-8'  name="responsable" id="responsable" value={username} readOnly disabled={true} />
                 </div> */}
           <div className="row formInput">
-            <label className="col-3" htmlFor="responsable">
+            <label className="col-4" htmlFor="responsable">
               Responsable
             </label>
             <input
               type="text"
-              className="col-7"
+              className="col-8"
               name="responsable"
               id="responsable"
             />
@@ -128,6 +129,9 @@ function CrearEvento() {
             Crear evento
           </button>
         </form>
+        <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
+        </div>
       </div>
       <ModalComponent
         show={showModal}

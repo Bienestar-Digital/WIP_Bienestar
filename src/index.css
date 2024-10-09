@@ -27,6 +27,7 @@ body{
     border: none;
     border-radius: 8px;
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 24px;
   }
   input{
     border-radius: 8px;
@@ -42,7 +43,7 @@ body{
     border: 1px solid #0000004D;
   }
   h1{
-    font-size: 36px;
+    font-size: 42px;
     font-weight: 600;
     color: var(--primary-color);
   }

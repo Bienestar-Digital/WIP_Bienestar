@@ -51,7 +51,7 @@ const Footer = () => {
                             <li><a href="#link3">Accesibilidad</a></li>
                             <li><a href="#link4">Directiorio de Redes Sociales Institucionales</a></li>
                             <li><a href="#link5"><img src="https://agenciadenoticias.unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/logg_agencia.png" alt="logounal" style={{ width: "7vw", padding: "0px" }}/></a></li>
-                            <li><a href="#link5"><img src="https://agenciadenoticias.unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/logg_agencia.png" alt="logounal" style={{ width: "7vw", padding: "0px" }}/></a></li>
+                            /<li><a href="#link5"><img src="https://agenciadenoticias.unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/logg_agencia.png" alt="logounal" style={{ width: "7vw", padding: "0px" }}/></a></li>
                             
                             <li><a href="#link5">#SomosUnal</a></li>
                         </ul>

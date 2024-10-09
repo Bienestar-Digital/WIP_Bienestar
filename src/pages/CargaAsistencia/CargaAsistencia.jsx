@@ -190,6 +190,9 @@ const handleFileChange = (e) => {
             Carga manual
           </button>
         </div>
+        <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
+        </div>
       </div>
 
       <Modal show={cargaManual} onHide={handleClose}>
@@ -280,7 +283,8 @@ const handleFileChange = (e) => {
 
             <div className="form-group">
               <label htmlFor="fileInput">Selecciona el archivo JSON:</label>
-              <input type="file" id="fileInput" accept=".json" onChange={handleFileChange} required />
+              <input type="file" 
+              className="formArchivo" id="fileInput" accept=".json" onChange={handleFileChange} required />
             </div>
           
             <Modal.Footer style={{ width: '100%' }}>
