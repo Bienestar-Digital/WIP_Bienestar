@@ -50,8 +50,9 @@ const Footer = () => {
                             <li><a href="#link2">Mapa del Sitio</a></li>
                             <li><a href="#link3">Accesibilidad</a></li>
                             <li><a href="#link4">Directiorio de Redes Sociales Institucionales</a></li>
-                            <li><img src="src\assets\images\Logounal.png" alt="logounal" style={{ width: "3vw", padding: "0px" }} /><a href="#link5">Agencia</a></li>
-                            <li><img src="src\assets\images\Logounal.png" alt="logounal" style={{ width: "3vw", padding: "0px" }} /><a href="#link5">Orgullo</a></li>
+                            <li><a href="#link5"><img src="https://agenciadenoticias.unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/logg_agencia.png" alt="logounal" style={{ width: "7vw", padding: "0px" }}/></a></li>
+                            <li><a href="#link5"><img src="https://agenciadenoticias.unal.edu.co/typo3conf/ext/unal_skin_default/Resources/Public/images/logg_agencia.png" alt="logounal" style={{ width: "7vw", padding: "0px" }}/></a></li>
+                            
                             <li><a href="#link5">#SomosUnal</a></li>
                         </ul>
                     </div>
@@ -62,6 +63,7 @@ const Footer = () => {
                         <li><a href="https://www.instagram.com" target="_blank" title="Instagram"><i className="fab fa-instagram"></i></a></li>
                         <li><a href="https://www.linkedin.com" target="_blank" title="LinkedIn"><i className="fab fa-linkedin-in"></i></a></li>
                         <li><a href="https://www.youtube.com" target="_blank" title="YouTube"><i className="fab fa-youtube"></i></a></li>
+                        <li><a href="https://www.tiktok.com" target="_blank" title="tiktok"><i className="fab fa-tiktok"></i></a></li>
                     </ul>
 
 
