@@ -12,8 +12,10 @@ function CargaSuccess() {
 
   return (
     <div className="row">
+
       <SideMenu />
       <div className='col-10 homeDiv cargaToggle'>
+
         <div className='userProcess' id='success'>
           <FaRegCheckSquare className='successIcon' />
           <h1>Tu registro de asistencia se ha realizado correctamente</h1>

@@ -77,6 +77,7 @@ function CrearEvento() {
   return (
     <div className="row">
       <SideMenu />
+
       <div className="col-9 homeDiv">
         <h1>Nuevo Evento</h1>
 
@@ -145,6 +146,8 @@ function CrearEvento() {
         titulo="Evento Creado"
         bodyMessage={"Evento creado exitosamente."}
       />
+
+
     </div>
   );
 }
