@@ -12,13 +12,18 @@ function CargaFailed() {
 
   return (
     <div className="row">
-      <SideMenu  />
-      <div className='col-10 homeDiv'>
+
+      <SideMenu />
+      <div className='col-10 homeDiv cargaToggle'>
+
         <div className='userProcess' id='error'>
           <IoWarningOutline />
-          <h1>Ha ocurrido un error, por favor inténtalo nuevamente.</h1>
+          <h1 id='error'>Ha ocurrido un error, por favor inténtalo nuevamente.</h1>
           <button className='buttonP' onClick={handleClickRegresar}>Intentelo de nuevo</button>
           <a href="">Salir</a>
+        </div>
+        <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
         </div>
       </div>
     </div>
