@@ -11,9 +11,7 @@ function CargaAsistencia() {
 
   const token = sessionStorage.getItem('token'); 
   const eventId = sessionStorage.getItem('eventId'); 
-  console.log("eventId", eventId);
   const eventName = sessionStorage.getItem('eventName'); 
-  console.log("eventName", eventName);
 
 
   const [cargaManual, setCargaManual] = React.useState(false);
@@ -69,15 +67,12 @@ function CargaAsistencia() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Token', token);
-    console.log('idType', tipoId);
     if (!token) {
-      console.error("Token no disponible. No tienes acceso.");
+      throw new Error("Token no disponible. No tienes acceso.");
       return;
     }
 
     if (!tipoId || !valueID.trim() || !nombre.trim() || !mail.trim()) {
-      console.error("Todos los campos son obligatorios.");
       setShowModal(true);
       return; // No se continúa si faltan datos
     }
@@ -90,8 +85,6 @@ function CargaAsistencia() {
       eventId: eventId
     };
 
-    console.log('Datos ingresados:', eventData);
-
     try {
       const response = await fetch("http://localhost:20000/attendee/loads", {
         method: "POST",
@@ -101,14 +94,11 @@ function CargaAsistencia() {
       });
 
       if (response.ok) {
-        console.log("Asistencia cargada con éxito.", await response.json());
         handleCloseSuccess();
       } else {
-        console.error("Error al cargar la asistencia.");
         handleCloseFailed();
       }
     } catch (error) {
-      console.error("Error en la petición:", error);
       handleCloseFailed();
     }
   };
@@ -123,7 +113,6 @@ function CargaAsistencia() {
     const bulkData = e.target.querySelector("textarea").value.trim();
     
     if (!bulkData) {
-      console.error("El área de texto está vacía.");
       setShowModal(true);
       return;
     }
@@ -139,8 +128,6 @@ function CargaAsistencia() {
         return attendeeLine;
     }).join("\n");
 
-    console.log('Datos ingresados:', formattedData);
-
     try {
         const token = sessionStorage.getItem("token");
 
@@ -154,14 +141,11 @@ function CargaAsistencia() {
         });
 
         if (response.ok) {
-            console.log("Asistencia cargada con éxito.", await response.text());
             handleCloseSuccessBulk();
         } else {
-            console.error("Error al cargar la asistencia.");
             handleCloseFailedBulk();
         }
     } catch (error) {
-        console.error("Error en la petición:", error);
         handleCloseFailedBulk();
     }
   };

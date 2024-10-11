@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row';
 import SideMenu from '../../components/SideMenu';
 import Modal from "react-bootstrap/Modal";
 import './UserCreate.css';
-import ImageModalSuccess from "../../assets/images/assignment_turned_in.png"
+import ImageModalSuccess from "../../assets/images/assignment_turned_in.png";
+import ImageModalFailed from "../../assets/images/assignment_late.png"
 
 function UserCreate() {
     const [validated, setValidated] = useState(false);
@@ -15,6 +16,7 @@ function UserCreate() {
     const [show, setShow] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [division, setDivision] = useState("");
+    const [imagenModal, setImagenModal] = useState("");
     const [userData, setUserData] = useState();
     const token = "your-auth-token"; // Añade aquí tu token correctamente
 
@@ -48,9 +50,11 @@ function UserCreate() {
                 if (response.status === 401) {
                     setTitulo("Error agreando usuario");
                     setBodyMessage("Por favor, Intente nuevamente.");
+                    setImagenModal(ImageModalSuccess);
                 } else {
                     setTitulo("Ha ocurrido un error");
                     setBodyMessage("Por favor, Intente nuevamente.");
+                    setImagenModal(ImageModalFailed);
                 }
                 setShow(true);
                 setTimeout(() => {
@@ -65,6 +69,7 @@ function UserCreate() {
             // alert("Usuario registrado con éxito");
             setTitulo("Usuario registrado con éxito");
             setBodyMessage("El usuario ha sido registrado exitosamente.");
+            setImagenModal(ImageModalSuccess);
             setShow(true);
             setTimeout(() => {
                 setShow(false);
@@ -74,6 +79,7 @@ function UserCreate() {
             // Aquí manejamos los errores de red, como si el servidor está caído
             setTitulo("Error de conexión");
             setBodyMessage("No se pudo conectar con el servidor. Intente más tarde.");
+            setImagenModal(ImageModalFailed);
             setShow(true);
             setTimeout(() => {
                 setShow(false);
@@ -106,7 +112,7 @@ function UserCreate() {
                 </Modal.Header>
                 <Modal.Body>
                     <img
-                        src={ImageModalSuccess}
+                        src={imagenModal}
                         alt="Descripción de la imagen"
                         className="img-fluid"
                         style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}

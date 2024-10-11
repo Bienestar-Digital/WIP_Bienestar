@@ -11,9 +11,7 @@ import ImageModalSuccess from "../../assets/images/assignment_turned_in.png"
 function RegistroPorEvento() {
 
     const eventId = sessionStorage.getItem('eventId'); 
-    console.log("eventId", eventId);
     const eventName = sessionStorage.getItem('eventName'); 
-    console.log("eventName", eventName);
 
     const [tableData, setTableData] = useState([]);
     const [itemsPerPage] = useState(10);
@@ -27,6 +25,16 @@ function RegistroPorEvento() {
         navigate('/tusEventos');
     };
 
+    const handleError = (errorMessage) => {
+        // Esto anula el comportamiento de la consola para los mensajes de error o advertencias en producción
+        if (process.env.NODE_ENV === 'production') {
+            console.error = console.warn = console.log = () => {}; // Desactiva todos los logs
+        }
+        // Error en consola solo en modo de desarrollo
+        if (process.env.NODE_ENV === 'development') {
+            console.warn(errorMessage);
+        }
+    };
 
     const fetchAttendeesByEventId = async () => {
         try {
@@ -43,13 +51,15 @@ function RegistroPorEvento() {
             if (response.ok) {
                 const data = await response.json();
                 setTableData(data); 
-                console.log("Asistentes obtenidos", data);
             } else {
-                console.error("Error al obtener los asistentes", response.statusText);
-                throw new Error("Error en la respuesta del servidor");
+                if (response.status === 404) {
+                    handleError("Evento no encontrado (404).");
+                } else {
+                    handleError("Error en la respuesta del servidor.");
+                }
             }
         } catch (error) {
-            console.error("Error en la petición:", error);
+            handleError('No hay asistencias.');
         }
     };
 
@@ -65,20 +75,16 @@ function RegistroPorEvento() {
                 }
             });
         
-            if (response.ok) {
-                console.log("Asistente eliminado con éxito");
-                
+            if (response.ok) {                
                 // Actualizar la tabla eliminando el asistente del estado
                 setTableData(prevData => prevData.filter(item => item.attendeeId !== attendeeId));
                 setShow(false);
                 setIsEliminated(true); 
             } else {
-                setIsEliminated(false); 
-                console.error("Error al eliminar el asistente", response.statusText);
-                throw new Error("Error en la respuesta del servidor");
+                setIsEliminated(false);
             }
         } catch (error) {
-            console.error("Error en la petición de eliminación:", error);
+            handleError('Error al eliminar.');
         }
     }
 
@@ -93,7 +99,7 @@ function RegistroPorEvento() {
         if (eventId) {
             fetchAttendeesByEventId();
         } else {
-            console.error("No se ha encontrado el eventId en sessionStorage");
+            handleError("Error en la respuesta del servidor");
         }
     }, [eventId]);
 

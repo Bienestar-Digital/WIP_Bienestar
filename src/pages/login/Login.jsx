@@ -84,12 +84,8 @@ const Login = () => {
                 sessionStorage.setItem('token', data.token);                
                 sessionStorage.setItem('userId', JSON.stringify(data.userId));
                 sessionStorage.setItem('userid', data.userId);
-                console.log("userid", data.userId);
                 sessionStorage.setItem('userName', username); 
-                console.log("data.userId", data.userId);
                 getUserRole(data.userId, data.token);
-                console.log('Inicio de sesión exitoso:', data);
-                console.log('User:', username);
                 navigate('/home');
             } else {
                 alert('Error al recibir el token de autenticación.');
@@ -97,8 +93,6 @@ const Login = () => {
             
 
         } catch (error) {
-            // Si ocurre un error de red o de conexión
-            console.error('Error de red o servidor no disponible:', error);
             //alert('No se puede conectar al servidor. Por favor, intente más tarde.');
             setTitulo("No se puede conectar al servidor");
             setBodyMessage("Por favor, intente más tarde.");
@@ -130,17 +124,16 @@ const Login = () => {
             if (response.ok) {
               const data = await response.json();
               setRolName(data.roleName); 
-              console.log("RolName", data.roleName); 
               sessionStorage.setItem('rolname', data.roleName);        
             
             } else if (response.status === 401) {
               sessionStorage.removeItem('token');
               navigate('/');
             } else {
-              console.error('Error:', response.statusText);
+                throw new Error('No existe el usuario.');
             }
           } catch (error) {
-            console.error('Error:', error);
+            throw new Error('No existe el usuario.');
           }
 
     }
