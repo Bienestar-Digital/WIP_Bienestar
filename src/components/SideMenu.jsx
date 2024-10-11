@@ -8,44 +8,45 @@ import "./SideMenu.css";
 import { useNavigate } from "react-router-dom";
 
 function SideMenu({ userData }) {
-const navigate = useNavigate(); 
-const [role, setRole] = useState(null);
+  const navigate = useNavigate();
+  const [role, setRole] = useState(null);
 
-
-useEffect(() => {
+  useEffect(() => {
     const role = sessionStorage.getItem('rolname');
     setRole(role);
-});
+  }, []);
 
   return (
-    <div className="col-2 sideMenu">
-      <nav>
-        <ul>
-          <IoIosMenu />
-          Menú
-        </ul>
-        <ul className="borderSec" onClick={()=>{  navigate('/home');}}>
-          <MdHomeFilled />
-          Home
-        </ul>
-        {( role == "admin") && (
-        <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
-          <HiMiniUsers />
-          Usuarios
-        </ul>)}        
-        <ul className="borderSec" onClick={()=>{  navigate('/tusEventos');}}>
-          <LuUserCheck />
-          Eventos
-        </ul>
-      </nav>
-      <nav>
-        <ul className="borderSec"  onClick={()=>{  navigate('/perfil');}}>
-          <FaRegUserCircle />
-          Perfil
-        </ul>
-        <ul  className="borderSec" onClick={()=>{sessionStorage.removeItem('token'); sessionStorage.removeItem('userId');  navigate('/')  }} >Cerrar sesión</ul>
-      </nav>
-    </div>
+    <>
+      <div className="col-2 sideMenu">
+        <nav>
+          <ul>
+            <IoIosMenu />
+            Menú
+          </ul>
+          <ul className="borderSec" onClick={()=>{  navigate('/home');}}>
+            <MdHomeFilled />
+            Home
+          </ul>
+          {( role == "admin") && (
+          <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
+            <HiMiniUsers />
+            Usuarios
+          </ul>)}        
+          <ul className="borderSec" onClick={()=>{  navigate('/tusEventos');}}>
+            <LuUserCheck />
+            Eventos
+          </ul>
+        </nav>
+        <nav>
+          <ul className="borderSec"  onClick={()=>{  navigate('/perfil');}}>
+            <FaRegUserCircle />
+            Perfil
+          </ul>
+          <ul  className="borderSec" onClick={()=>{sessionStorage.removeItem('token'); sessionStorage.removeItem('userId');  navigate('/')  }} >Cerrar sesión</ul>
+        </nav>
+      </div>
+    </>
   );
 }
 

@@ -5,7 +5,8 @@ import Modal from "react-bootstrap/Modal";
 import SideMenu from '../../components/SideMenu';
 import Pager from "../home/Pager";
 import ModalComponent from '../../components/ModalComponent';
-import ImageModal from "../../assets/images/escudo2_unal.png"
+import ImageModalPrevent from "../../assets/images/assignment_late.png"
+import ImageModalSuccess from "../../assets/images/assignment_turned_in.png"
 
 function RegistroPorEvento() {
 
@@ -162,7 +163,7 @@ function RegistroPorEvento() {
                         </nav>
                     </div>
 
-                    <Modal show={show} onHide={handleClose}>
+                    <Modal show={show} onHide={handleClose} centered>
                         <Modal.Header closeButton>
                             <Modal.Title style={{ color: "#687D2A" }}>
                                 <strong>Confirmar eliminación</strong>{" "}
@@ -170,7 +171,7 @@ function RegistroPorEvento() {
                         </Modal.Header>                        
                         <Modal.Body>
                             <img
-                                src={ImageModal}
+                                src={ImageModalPrevent}
                                 alt="Descripción de la imagen"
                                 className="img-fluid"
                                 style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
@@ -186,7 +187,7 @@ function RegistroPorEvento() {
                         </Modal.Footer>
                     </Modal>
 
-                    <ModalComponent show={isEliminated} handleClose={handleIsEliminated} titulo="Registro eliminado" bodyMessage={'Asistencia eliminada exitosamente.'} />
+                    <ModalComponent show={isEliminated} handleClose={handleIsEliminated} titulo="Registro eliminado" imagen={ImageModalSuccess} bodyMessage={'Asistencia eliminada exitosamente.'} />
 
                 </div>
             </div>

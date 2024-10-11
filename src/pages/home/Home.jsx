@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 
 function Home() {
   // Estados para almacenar los datos del usuario y de la tabla
+  const eventState = sessionStorage.getItem("eventState");
+  console.log("Estado evento: ", eventState);
   const [userData, setUserData] = useState({ name: '', lastLogin: '' });
   const [tableData, setTableData] = useState([]);
   const [object, setObject] = useState([]);
@@ -132,7 +134,7 @@ function Home() {
             </Modal>
       <SideMenu  /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
-        <div className="headerHome"> {/* header? */}
+        <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {new Date(userData.lastLogin).toLocaleDateString()}</span> {/* Formatea la fecha */}
           <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
@@ -156,7 +158,8 @@ function Home() {
                 <tr key={index}>
                   <td>{data.eventName}</td>
                   <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
+                  {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
+                  <td>{sessionStorage.getItem("eventState") || "Cerrado"}</td>
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>
