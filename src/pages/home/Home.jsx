@@ -10,7 +10,6 @@ import Modal from "react-bootstrap/Modal";
 function Home() {
   // Estados para almacenar los datos del usuario y de la tabla
   const eventState = sessionStorage.getItem("eventState");
-  console.log("Estado evento: ", eventState);
   const [userData, setUserData] = useState({ name: '', lastLogin: '' });
   const [tableData, setTableData] = useState([]);
   const [object, setObject] = useState([]);
@@ -91,10 +90,10 @@ function Home() {
             sessionStorage.removeItem('token');
             navigate('/');
           } else {
-            console.error('Error:', response.statusText);
+            throw new Error('No existe el usuario.');
           }
         } catch (error) {
-          console.error('Error:', error);
+          throw new Error('No existe el usuario.');
         }
       };
 
@@ -159,7 +158,7 @@ function Home() {
                   <td>{data.eventName}</td>
                   <td>{new Date(data.startDate).toLocaleDateString()}</td>
                   {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
-                  <td>{sessionStorage.getItem("eventState") || "Cerrado"}</td>
+                  <td>{sessionStorage.getItem("eventState") || "Abierto"}</td>
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>

@@ -34,10 +34,10 @@ function TusEventos() {
           sessionStorage.removeItem('token');
           navigate('/');
         } else {
-          console.error('Error:', response.statusText);
+          throw new Error('No existe el usuario.');
         }
       } catch (error) {
-        console.error('Error:', error);
+        throw new Error('No existe el usuario.');
       } finally {
         //setLoading(false); // Cambia el estado de carga
       }

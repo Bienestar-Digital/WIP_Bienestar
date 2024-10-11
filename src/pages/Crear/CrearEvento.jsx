@@ -12,11 +12,6 @@ function CrearEvento() {
   const cleanedUserId = userId.trim();
   const parsedUserId = parseInt(parseInt(cleanedUserId));
   const userName = sessionStorage.getItem("userName");
-  console.log("id de usuario: ", userId);
-  console.log("Tipo de userId:", typeof userId);
-  console.log("id de usuarioparsed: ", parsedUserId);
-  console.log("Tipo de userId:", typeof parsedUserId);
-  console.log("nombre de usuario: ", userName);
 
   const [showModal, setShowModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -25,7 +20,7 @@ function CrearEvento() {
     e.preventDefault();
 
     if (!token) {
-      console.error("Token no disponible. No tienes acceso.");
+      throw new Error("Token no disponible. No tienes acceso.");
       return;
     }
 
@@ -35,7 +30,6 @@ function CrearEvento() {
     const createdAt = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}T00:00:00`;
 
     const parsedUserId = parseInt(userId, 10);
-    console.log("id de usuario después de parseInt: ", parsedUserId);
 
     const eventData = {
       eventName: e.target.nombre.value,
@@ -45,8 +39,6 @@ function CrearEvento() {
       createdAt: createdAt,
       state: "Abierto"
     };
-
-    console.log("Datos que se envían:", eventData);
 
     if (
       !eventData.eventName ||
@@ -69,17 +61,15 @@ function CrearEvento() {
       if (response.ok) {
         const createdEvent = await response.json();
         setIsSuccess(true);
-        console.log("Evento creado", createdEvent);
         sessionStorage.setItem("eventId", createdEvent.eventId);
         sessionStorage.setItem("eventName", createdEvent.eventName);
         sessionStorage.setItem("eventState", "Activo");
         e.target.reset();
       } else {
         setIsSuccess(false);
-        console.error("Error al crear el evento");
       }
     } catch (error) {
-      console.error("Error en la petición:", error);
+      throw new Error('Evento no creado.');
     }
   };
 
