@@ -5,6 +5,7 @@ import { GoDownload } from "react-icons/go";
 import "./Home.css";
 import Pager from "./Pager";
 import { useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
 
 function Home() {
   // Estados para almacenar los datos del usuario y de la tabla
@@ -16,6 +17,11 @@ function Home() {
   const [idUser, setIdUser] = useState(null);
   const token = sessionStorage.getItem('token');
   const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const [titulo, setTitulo] = useState("");
+  const [bodyMessage, setBodyMessage] = useState("");
+
+  const handleClose = () => setShow(false);
 
 
   const handleDownloadClick = async (eventId) => {
@@ -46,7 +52,7 @@ function Home() {
         document.body.appendChild(link);
         link.click();
         link.remove();
-        window.URL.revokeObjectURL(url); // Limpieza de la URL creada
+        window.URL.revokeObjectURL(url); // Limpieza de la URL creada        
       } else {
         // Si no es un archivo binario, mostrar un error con el tipo de contenido recibido
         console.error('Unexpected content type:', contentType);
@@ -107,6 +113,23 @@ function Home() {
 
   return (
     <div className="row">
+      <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title style={{ color: "#687D2A" }}>
+                        <strong>{titulo}</strong>{" "}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <img
+                        src="src/assets/images/escudo2_unal.png"
+                        alt="Descripción de la imagen"
+                        className="img-fluid"
+                        style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
+                    />
+                    <strong style={{ fontSize: "20px" }}>{bodyMessage}</strong>
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+            </Modal>
       <SideMenu  /> {/* Pasa userData como prop */}
       <div className="col-10 homeDivP">
         <div className="headerHome"> {/* header? */}

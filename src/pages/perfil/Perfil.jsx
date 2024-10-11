@@ -7,15 +7,18 @@ const Perfil = () => {
 
     useEffect(() => {
         const storedData = JSON.parse(sessionStorage.getItem('userData'));
-       
+
         setUserData(storedData);
     }, []);
 
     return (
         <div className="row">
-           <SideMenu userData={"userData"} />
+            <SideMenu />
             <div className="col-10">
                 <div className="containers">
+                    <div className="image-container">
+                        <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" className="avatar" />
+                    </div>
                     <h1 className="title">Tu Perfil</h1>
                     {userData ? (
                         <div className="profile-info">
