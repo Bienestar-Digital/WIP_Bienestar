@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -7,7 +7,8 @@ import Row from 'react-bootstrap/Row';
 import SideMenu from '../../components/SideMenu';
 import Modal from "react-bootstrap/Modal";
 import './UserCreate.css';
-import ImageModalSuccess from "../../assets/images/assignment_turned_in.png"
+import ImageModalSuccess from "../../assets/images/createdUser.svg";
+import ImageModalFailded from "../../assets/images/CreateUserFailed.svg";
 
 function UserCreate() {
     const [validated, setValidated] = useState(false);
@@ -16,6 +17,8 @@ function UserCreate() {
     const [titulo, setTitulo] = useState("");
     const [division, setDivision] = useState("");
     const [userData, setUserData] = useState();
+    const [imageModal, setImageModal] = useState("");
+    const [color, setColor] = useState("");
     const token = "your-auth-token"; // Añade aquí tu token correctamente
 
     const registerUser = async (event) => {
@@ -24,13 +27,13 @@ function UserCreate() {
         const form = event.currentTarget;
         const formData = new FormData(form);
         const data = {
-            name: formData.get('name'),
             username: formData.get('username'),
             fullName: formData.get('username'),
             email: formData.get('email'),
             roleName: formData.get('roleName'),
             division: formData.get('division'),
             password: formData.get('password'),
+            createdBy: userData.username
 
         };
 
@@ -46,38 +49,54 @@ function UserCreate() {
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    setTitulo("Error agreando usuario");
-                    setBodyMessage("Por favor, Intente nuevamente.");
-                } else {
-                    setTitulo("Ha ocurrido un error");
-                    setBodyMessage("Por favor, Intente nuevamente.");
+                    setTitulo("Creacion De Usuario");
+                    setImageModal(ImageModalFailded);
+                    setBodyMessage("Credenciales incorrectas. Por favor, verifica tu usuario y contraseña.");
+                    setColor("#AA0C00");
+                    
+                }
+                if (response.status === 409) {
+                    setTitulo("Creacion De Usuario");
+                    setImageModal(ImageModalFailded);
+                    setBodyMessage("El usuario ya existe. Por favor, Intente nuevamente.");
+                    setColor("#AA0C00");
+                }
+                else {
+                    setTitulo("Creacion De Usuario");
+                    setImageModal(ImageModalFailded);
+                    setBodyMessage("Ha ocurrido un error. Por favor, Intente nuevamente.");
+                    setColor("#AA0C00");
                 }
                 setShow(true);
-                setTimeout(() => {
+                /* setTimeout(() => {
                     setShow(false);
                     window.location.reload();
-                }, 2500);
+                }, 2500); */
                 return;
             }
 
             // Si la respuesta es exitosa
             // Aquí puedes manejar el caso exitoso, por ejemplo:
             // alert("Usuario registrado con éxito");
-            setTitulo("Usuario registrado con éxito");
-            setBodyMessage("El usuario ha sido registrado exitosamente.");
+            setTitulo("Creacion de Usuario");
+            setImageModal(ImageModalSuccess);
+            setBodyMessage("Usuario creado correctamente.");
+            setColor("#687D2A");
             setShow(true);
-            setTimeout(() => {
+            /* setTimeout(() => {
                 setShow(false);
                 window.location.reload();
-            }, 2500);
+            }, 2500); */
         } catch (error) {
             // Aquí manejamos los errores de red, como si el servidor está caído
-            setTitulo("Error de conexión");
-            setBodyMessage("No se pudo conectar con el servidor. Intente más tarde.");
+            setTitulo("Creacion De Usuario");
+            setBodyMessage("Ha ocurrido un error. Por favor, Intente nuevamente.");
+            setImageModal(ImageModalFailded);
+            setColor("#AA0C00");
             setShow(true);
-            setTimeout(() => {
+            /* setTimeout(() => {
                 setShow(false);
-            }, 2500);
+            }, 2500); */
         }
     };
 
@@ -94,30 +113,39 @@ function UserCreate() {
         setValidated(true);
     };
 
-    const handleClose = () => setShow(false);
+
+
+    const handleClose = () => { setShow(false); window.location.reload(); }
+
+
+    useEffect(() => {
+        const storedData = JSON.parse(sessionStorage.getItem('userData'));
+        setUserData(storedData);
+    }, []);
 
     return (
         <>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title style={{ color: "#687D2A" }}>
+                    <Modal.Title style={{  }}>
                         <strong>{titulo}</strong>{" "}
                     </Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ textAlign: "center" }}>
                     <img
-                        src={ImageModalSuccess}
+                        src={imageModal}
                         alt="Descripción de la imagen"
                         className="img-fluid"
-                        style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
+                        style={{ display: "block", margin: "0 auto", maxWidth: "20%", height: "auto", color: "#687D2A" }}
                     />
-                    <strong style={{ fontSize: "20px" }}>{bodyMessage}</strong>
+                    <strong style={{ fontSize: "20px", color  }}>{bodyMessage}</strong>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
 
+
             <div className="row">
-            <SideMenu />
+                <SideMenu />
                 <div className="col-8 mx-auto homeDivP">
                     <div className="header"><h1>Nuevo Usuario</h1></div>
 
@@ -172,15 +200,18 @@ function UserCreate() {
                                 <Form.Group as={Col} md="8">
                                     <Form.Control
                                         type="text"
-                                        name="roleName" // Añadir name
-                                        placeholder="Rol"
-                                        required
+                                        name="roleName"
+                                        value="Profesional" // Valor por defecto
+                                        readOnly // Campo de solo lectura
+                                        className="text-muted custom-readonly" // Clase para aplicar el fondo gris claro
                                     />
                                     <Form.Control.Feedback type="invalid">
                                         Por favor ingrese un rol.
                                     </Form.Control.Feedback>
                                 </Form.Group>
                             </Row>
+
+
                             <Row className="mb-3 align-items-center">
                                 <Form.Group as={Col} md="4" controlId="validationCustom04">
                                     <Form.Label>Cedula</Form.Label>

@@ -7,6 +7,7 @@ const Perfil = () => {
 
     useEffect(() => {
         const storedData = JSON.parse(sessionStorage.getItem('userData'));
+        console.log("userData", storedData);
 
         setUserData(storedData);
     }, []);
@@ -37,6 +38,10 @@ const Perfil = () => {
                             <div className="profile-row">
                                 <p className="label"><strong>División:</strong></p>
                                 <p className="value">{userData.division}</p>
+                            </div>
+                            <div className="profile-row">
+                                <p className="label"><strong>Creado por:</strong></p>
+                                <p className="value">{userData.createdBy}</p>
                             </div>
                         </div>
                     ) : (
