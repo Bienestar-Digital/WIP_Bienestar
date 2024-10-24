@@ -117,6 +117,7 @@ function UserCreate() {
 
             <div className="row">
             <SideMenu userData={"userData"} />
+            <span className="col-2"></span>
                 <div className="col-8 mx-auto homeDivP">
                     <div className="header"><h1>Nuevo Usuario</h1></div>
 

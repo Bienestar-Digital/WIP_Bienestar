@@ -8,6 +8,7 @@
   display: grid;
   padding: 0;
   background-image: url("../assets/images/wa1.png");
+  position: fixed;
 }
 .sideMenu nav {
   width: 100%;

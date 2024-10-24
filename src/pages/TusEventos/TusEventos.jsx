@@ -64,6 +64,7 @@ function TusEventos() {
   return (
     <div className='row'>
       <SideMenu />
+      <span className="col-2"></span>
         <div className='col-10 homeDiv'>
             <h1>Tus eventos</h1>
             <div className='eventsContainer'>

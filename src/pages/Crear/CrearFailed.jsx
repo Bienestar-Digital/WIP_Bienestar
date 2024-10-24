@@ -6,6 +6,7 @@ function CrearFailed() {
   return (
     <div className="row">
       <SideMenu />
+      <span className="col-2"></span>
       <div className="col-10 homeDiv userProcess" id="error">
         <FiUserX />
         <h1 id="error">Ha ocurrido un error, por favor inténtelo nuevamente.</h1>

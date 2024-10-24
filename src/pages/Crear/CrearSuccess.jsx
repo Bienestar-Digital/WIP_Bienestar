@@ -7,6 +7,7 @@ function CrearSuccess() {
   return (
     <div className="row">
       <SideMenu />
+      <span className="col-2"></span>
       <div className="col-10 homeDiv userProcess" id="success">
         <FiUserCheck className="successIcon" />
         <h1>El usuario se ha creado correctamente</h1>

@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center; /* Centra horizontalmente el contenedor principal */
     justify-content: center; /* Centra verticalmente */
-    height: 100vh; /* Ocupar el 100% de la altura de la pantalla */
+    padding: 20px;
 }
 
 .containers h1 {
@@ -60,18 +60,11 @@
   h2{
     color:#94B43B;
     text-align: center;
-    font-size: 2.5rem;
   }
-  .form-group {
+  .form-groupP {
     margin-bottom: 15px;
   }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
+    
   input[type="password"] {
     width: 100%;
     padding: 8px;
