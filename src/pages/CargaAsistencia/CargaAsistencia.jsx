@@ -180,6 +180,7 @@ const handleFileChange = (e) => {
   return (
     <div className="row">
       <SideMenu />
+      <span className="col-2"></span>
       <div className='col-10 homeDiv cargaAsis'>
         <h1>Evento {eventId}: {eventName}</h1>
         <div>
@@ -187,6 +188,9 @@ const handleFileChange = (e) => {
           <button className="buttonS" onClick={handleShow}>
             Carga manual
           </button>
+        </div>
+        <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
         </div>
       </div>
 
@@ -279,6 +283,7 @@ const handleFileChange = (e) => {
 
             {/* <div className="form-group">
               <label htmlFor="fileInput">Selecciona el archivo JSON:</label>
+
               <input type="file" id="fileInput" accept=".json" onChange={handleFileChange} required />
             </div> */}
             <span className="input-group-text" style={{ whiteSpace: "normal" }}>

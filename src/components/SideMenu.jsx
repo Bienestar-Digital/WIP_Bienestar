@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { IoIosMenu } from "react-icons/io";
 import { MdHomeFilled } from "react-icons/md";
@@ -8,12 +9,15 @@ import "./SideMenu.css";
 import { useNavigate } from "react-router-dom";
 
 function SideMenu({ userData }) {
-  const navigate = useNavigate();
-  const [role, setRole] = useState(null);
+
+const navigate = useNavigate(); 
+const [role, setRole] = useState(null);
+
 
   useEffect(() => {
     const role = sessionStorage.getItem('rolname');
     setRole(role);
+
   }, []);
 
   return (
@@ -47,6 +51,7 @@ function SideMenu({ userData }) {
         </nav>
       </div>
     </>
+
   );
 }
 

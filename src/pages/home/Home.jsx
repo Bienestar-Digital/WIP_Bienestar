@@ -66,7 +66,8 @@ function Home() {
   };  
 
 
-  useEffect(() => {        
+  useEffect(() => {
+
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
 
@@ -102,6 +103,7 @@ function Home() {
     } else {
       navigate('/'); // Redirige si no hay token o idUser
     }
+
   }, [token, navigate]);
 
 
@@ -115,6 +117,7 @@ function Home() {
 
   return (
     <div className="row">
+
       <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: "#687D2A" }}>
@@ -132,7 +135,9 @@ function Home() {
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-      <SideMenu  /> {/* Pasa userData como prop */}
+       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
+      <span className="col-2"></span>
+
       <div className="col-10 homeDivP">
         <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>

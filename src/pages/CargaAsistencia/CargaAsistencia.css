@@ -32,6 +32,7 @@
 .manualForm{
     width: 100%;
     color: black;
+
 }
 .modalTitle{
     color: var(--primary-color);
@@ -40,7 +41,18 @@
 .buttonModal{
     width: 30%;
 }
+
+.cargaToggle {
+    align-self: center;
+}
+.formArchivo{
+    padding: 16px;
+}
+.form-group {
+    padding: 16px 0;
+
 .large-textarea {
     width: 100%;
     height: 25vh;
+
 }
