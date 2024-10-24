@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import SideMenu from '../../components/SideMenu';
 import Modal from "react-bootstrap/Modal";
 import './UserCreate.css';
+import ImageModalSuccess from "../../assets/images/assignment_turned_in.png"
 
 function UserCreate() {
     const [validated, setValidated] = useState(false);
@@ -97,7 +98,7 @@ function UserCreate() {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: "#687D2A" }}>
                         <strong>{titulo}</strong>{" "}
@@ -105,7 +106,7 @@ function UserCreate() {
                 </Modal.Header>
                 <Modal.Body>
                     <img
-                        src="src/assets/images/escudo2_unal.png"
+                        src={ImageModalSuccess}
                         alt="Descripción de la imagen"
                         className="img-fluid"
                         style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
@@ -118,6 +119,7 @@ function UserCreate() {
             <div className="row">
             <SideMenu userData={"userData"} />
             <span className="col-2"></span>
+
                 <div className="col-8 mx-auto homeDivP">
                     <div className="header"><h1>Nuevo Usuario</h1></div>
 
@@ -212,9 +214,9 @@ function UserCreate() {
                                         onChange={(e) => setDivision(e.target.value)} // Asume que tienes un estado para 'division'
                                     >
                                         <option value="">Selecciona una Opción</option>
-                                        <option value="1">Bienestar</option>
-                                        <option value="2">Tesorería</option>
-                                        <option value="3">Otro</option>
+                                        <option value="Bienestar">Bienestar</option>
+                                        <option value="Tesorería">Tesorería</option>
+                                        <option value="Otro">Otro</option>
                                     </Form.Select>
                                     <Form.Control.Feedback type="invalid">
                                         Por favor selecciona una división.

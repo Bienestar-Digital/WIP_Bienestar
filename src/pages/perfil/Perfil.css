@@ -6,15 +6,17 @@
     justify-content: center; /* Centra verticalmente */
     padding: 20px;
 }
-
+/* 
 .containers h1 {
     color:#94B43B;
 
-}
+} */
 
 /* Título */
 .title {
     margin-bottom: 20px; /* Espacio entre el título y el contenido */
+    color: var(--primary-color);
+    font-size: 32px;
 }
 
 /* Información del perfil */
@@ -38,8 +40,9 @@
     flex-basis: 100px; /* Controla el ancho de la columna de etiquetas */
     text-align: left;
     font-weight: bold;
-    color: #94B43B; /* Color para las etiquetas */
+    /* color: #94B43B; */ /* Color para las etiquetas */
     font-size: 1.2rem; /* Agranda el tamaño de la fuente de los valores */
+    color: var(--primary-color);
 }
 
 /* Valores alineados a la derecha */
@@ -108,3 +111,11 @@
     cursor: not-allowed;
   }
   
+
+.avatar {
+    width: 100px;  /* Ajusta el ancho de la imagen */
+    height: 100px; /* Ajusta la altura de la imagen */
+    border-radius: 50%; /* Esto hará que la imagen sea redonda */
+}
+
+

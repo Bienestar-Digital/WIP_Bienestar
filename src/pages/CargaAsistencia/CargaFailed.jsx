@@ -12,9 +12,11 @@ function CargaFailed() {
 
   return (
     <div className="row">
+
       <SideMenu />
       <span className="col-2"></span>
       <div className='col-10 homeDiv cargaToggle'>
+
         <div className='userProcess' id='error'>
           <IoWarningOutline />
           <h1 id='error'>Ha ocurrido un error, por favor inténtalo nuevamente.</h1>

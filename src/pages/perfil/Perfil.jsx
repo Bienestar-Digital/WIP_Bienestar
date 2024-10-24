@@ -4,6 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import SideMenu from "../../components/SideMenu";
 
 const Perfil = () => {
+
   const [userData, setUserData] = useState(null);
   const [username, setusername] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -182,6 +183,7 @@ const Perfil = () => {
                 </p>
                 <p className="value">{userData.division}</p>
               </div>
+
             </div>
           ) : (
             <p>

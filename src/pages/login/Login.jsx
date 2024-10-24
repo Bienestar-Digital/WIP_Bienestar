@@ -11,12 +11,15 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
+import ImageModalPrevent from "../../assets/images/assignment_late.png"
+import ImageLogo from "../../assets/images/escudo2_unal.png"
 
 const Login = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
+    const [rolName , setRolName] = useState("");
     const [titulo, setTitulo] = useState("");
     const [showLoading, setShowLoading] = useState(false);
     const [bodyMessage, setBodyMessage] = useState("");
@@ -36,7 +39,8 @@ const Login = () => {
         }
 
         setValidated(true);
-    };
+    };    
+    
 
     const doCall = async () => {
         const loginData = { username, password };
@@ -79,7 +83,11 @@ const Login = () => {
             if (data.token) {
                 sessionStorage.setItem('token', data.token);                
                 sessionStorage.setItem('userId', JSON.stringify(data.userId));
+                sessionStorage.setItem('userid', data.userId);
+                console.log("userid", data.userId);
+                sessionStorage.setItem('userName', username); 
                 console.log("data.userId", data.userId);
+                getUserRole(data.userId, data.token);
                 console.log('Inicio de sesión exitoso:', data);
                 console.log('User:', username);
                 navigate('/home');
@@ -107,9 +115,39 @@ const Login = () => {
     const handleClose = () => setShow(false);
 
 
+
+    const getUserRole = async (id, token) => {
+
+        try {
+            const response = await fetch(`http://localhost:20000/user/${id}`, {
+              method: 'GET',
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            });
+  
+            if (response.ok) {
+              const data = await response.json();
+              setRolName(data.roleName); 
+              console.log("RolName", data.roleName); 
+              sessionStorage.setItem('rolname', data.roleName);        
+            
+            } else if (response.status === 401) {
+              sessionStorage.removeItem('token');
+              navigate('/');
+            } else {
+              console.error('Error:', response.statusText);
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+
+    }
+
     return (
         <>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: "#687D2A" }}>
                         <strong>{titulo}</strong>{" "}
@@ -117,7 +155,7 @@ const Login = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <img
-                        src="src/assets/images/escudo2_unal.png"
+                        src={ImageModalPrevent}
                         alt="Descripción de la imagen"
                         className="img-fluid"
                         style={{ display: 'block', margin: '0 auto', maxWidth: '20%', height: 'auto' }}
@@ -129,7 +167,7 @@ const Login = () => {
             <Header />
             <div className="center-container">
                 <img
-                    src="src/assets/images/escudo2_unal.png"
+                    src={ImageLogo}
                     alt="Escudo Unal"
                     className="responsive-image"
                 />

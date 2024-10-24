@@ -21,7 +21,11 @@
   margin-top: auto;
 }
 .sideMenu ul {
+
   font-size: 28px;
+
+  cursor: pointer;
+
   padding: 0;
   padding-left: 8px;
   border-radius: 0 20px 20px 0;
@@ -33,10 +37,8 @@
   gap: 8px;
 }
 .sideMenu ul:hover {
-  background-color: var(--button-unavailable-color);
+  background-color: #94B43B;
   color: #fff;
-  
-
 }
 .sideMenu svg{
   margin-left: 12px;
