@@ -14,6 +14,7 @@ function CrearEvento() {
   const userName = sessionStorage.getItem("userName");
 
   const [showModal, setShowModal] = useState(false);
+  const [showModalFecha, setShowModalFecha] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -21,11 +22,12 @@ function CrearEvento() {
 
     if (!token) {
       throw new Error("Token no disponible. No tienes acceso.");
-      return;
     }
 
-    const dateString = e.target.fechaI.value;
-    const isoDate = `${dateString}T00:00:00`;
+    const dateStringI = e.target.fechaI.value;
+    const isoDateI = `${dateStringI}T22:00:00`;
+    const dateStringF = e.target.fechaF.value;
+    const isoDateF = `${dateStringF}T23:59:59`;
     const today = new Date();
     const createdAt = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}T00:00:00`;
 
@@ -34,18 +36,27 @@ function CrearEvento() {
     const eventData = {
       eventName: e.target.nombre.value,
       eventDescription: e.target.descripcion.value,
-      startDate: isoDate,
+      startDate: isoDateI,
+      finalDate: isoDateF,
       responsibleUserId: parsedUserId,
       createdAt: createdAt,
       state: "Abierto"
     };
 
+    console.log("info enviada", eventData);
+    
     if (
       !eventData.eventName ||
       !eventData.eventDescription ||
-      !eventData.startDate
+      !eventData.startDate ||
+      !eventData.finalDate
     ) {
       setShowModal(true);
+      return;
+    }
+
+    if (eventData.finalDate < eventData.startDate) {
+      setShowModalFecha(true);
       return;
     }
 
@@ -63,7 +74,7 @@ function CrearEvento() {
         setIsSuccess(true);
         sessionStorage.setItem("eventId", createdEvent.eventId);
         sessionStorage.setItem("eventName", createdEvent.eventName);
-        sessionStorage.setItem("eventState", "Activo");
+        sessionStorage.setItem("eventState", "Abierto");
         e.target.reset();
       } else {
         setIsSuccess(false);
@@ -74,6 +85,7 @@ function CrearEvento() {
   };
 
   const handleCloseModal = () => setShowModal(false);
+  const handleCloseModalFecha = () => setShowModalFecha(false);
   const handleIsSuccess = () => setIsSuccess(false);
 
   return (
@@ -96,11 +108,11 @@ function CrearEvento() {
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="fechaI">Fecha inicial</label>
-                    <input type="date" className='col-7'  name="fechaI" id="fechaI"/>
+                    <input type="date" className='col-7'  name="fechaI" id="fechaI" min={new Date().toISOString().split("T")[0]}/>
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="fechaF">Fecha final</label>
-                    <input type="date" className='col-7'  name="fechaF" id="fechaF"/>
+                    <input type="date" className='col-7'  name="fechaF" id="fechaF" min={new Date().toISOString().split("T")[0]}/>
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="responsable">Responsable</label>
@@ -119,6 +131,7 @@ function CrearEvento() {
           
         </div>
       <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" imagen={ImageModalPrevent} bodyMessage={'Por favor, rellena todos los campos.'} />
+      <ModalComponent show={showModalFecha} handleClose={handleCloseModalFecha} titulo="Error en fechas" imagen={ImageModalPrevent} bodyMessage={'La fecha final no puede ser inferior a la fecha inicial.'} />
       <ModalComponent show={isSuccess} handleClose={handleIsSuccess} titulo="Evento Creado" imagen={ImageModalSuccess} bodyMessage={'Evento creado exitosamente.'} />
 
     </div>
