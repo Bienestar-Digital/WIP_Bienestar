@@ -123,7 +123,6 @@ const Perfil = () => {
 
     setUserData(storedData);
     setusername(storedData.username);
-    console.log(storedData);
   }, []);
 
   const handleClose = () => setShow(false);
@@ -152,38 +151,35 @@ const Perfil = () => {
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
-      <SideMenu userData={"userData"} />
-      <span className="col-2"></span>
+      <SideMenu />
       <div className="col-10">
         <div className="containers">
+          <div className="image-container">
+            <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" className="avatar" />
+          </div>
           <h1 className="title">Tu Perfil</h1>
           {userData ? (
             <div className="profile-info">
               <div className="profile-row">
-                <p className="label">
-                  <strong>Nombre:</strong>
-                </p>
+                <p className="label"><strong>Nombre:</strong></p>
                 <p className="value">{userData.username}</p>
               </div>
               <div className="profile-row">
-                <p className="label">
-                  <strong>Correo:</strong>
-                </p>
+                <p className="label"><strong>Correo:</strong></p>
                 <p className="value">{userData.email}</p>
               </div>
               <div className="profile-row">
-                <p className="label">
-                  <strong>Rol:</strong>
-                </p>
+                <p className="label"><strong>Rol:</strong></p>
                 <p className="value">{userData.roleName}</p>
               </div>
               <div className="profile-row">
-                <p className="label">
-                  <strong>División:</strong>
-                </p>
+                <p className="label"><strong>División:</strong></p>
                 <p className="value">{userData.division}</p>
               </div>
-
+              <div className="profile-row">
+                <p className="label"><strong>Creado por:</strong></p>
+                <p className="value">{userData.createdBy}</p>
+              </div>
             </div>
           ) : (
             <p>

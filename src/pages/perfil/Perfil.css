@@ -37,7 +37,7 @@
 
 /* Etiquetas alineadas a la izquierda */
 .profile-info .label {
-    flex-basis: 100px; /* Controla el ancho de la columna de etiquetas */
+    flex-basis: 110px; /* Controla el ancho de la columna de etiquetas */
     text-align: left;
     font-weight: bold;
     /* color: #94B43B; */ /* Color para las etiquetas */
