@@ -3,7 +3,8 @@
     flex-direction: column; /* Alinea los hijos verticalmente */
     justify-content: center;
     align-items: center;
-    padding: 100px 0; 
+    padding: 80px 0;
+    gap: 25px; 
   }
   
 
@@ -22,6 +23,7 @@
     right: 10px; /* Ajusta la posición dentro del campo */
     color: #6c757d; /* Color del texto adicional */
     pointer-events: none; /* Permite hacer clic en el campo sin afectar el texto */
+    padding: 5px 0;
   }
 
   .input-container {
@@ -40,6 +42,7 @@
 /* Asegúrate de que ambos campos tengan el mismo tamaño */
 .form-control {
     width: 100%; /* Asegúrate de que ocupe todo el ancho disponible */
+    border-radius: var(--bs-border-radius) !important;
 }
 .btn-primary {
 

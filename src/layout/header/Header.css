@@ -43,7 +43,7 @@
     background-color: #f5f3f3 !important;
     color: black !important;
     width: 100%; 
-    border: 1px solid #ddd;
+    border: 2px solid #c1bebe;
     border-radius: 0 0 100px 0;
     padding-left: 20px; /
  } 
@@ -86,7 +86,7 @@
 
 .circle-container {
     position: absolute;
-    top: 5%; /* Ajusta la distancia desde la parte superior */
+    top: 6%;
     left: 11%; /* Ajusta la posición horizontal */
     transform: translateX(-50%); /* Centra horizontalmente */
     width: 20vw; /* Tamaño relativo al ancho de la ventana */

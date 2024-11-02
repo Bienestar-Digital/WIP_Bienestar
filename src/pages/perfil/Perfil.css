@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center; /* Centra horizontalmente el contenedor principal */
     justify-content: center; /* Centra verticalmente */
-    height: 100vh; /* Ocupar el 100% de la altura de la pantalla */
+    padding: 20px;
 }
 /* 
 .containers h1 {
@@ -52,9 +52,70 @@
     font-size: 1.2rem; /* Agranda el tamaño de la fuente de los valores */
 }
 
+.change-password-form {
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    width: 85%;
+  }
+  h2{
+    color:#94B43B;
+    text-align: center;
+  }
+  .form-groupP {
+    margin-bottom: 15px;
+  }
+    
+  input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  
+  .password-strength {
+    margin-top: 5px;
+    font-weight: bold;
+  }
+  
+  .password-strength.débil {
+    color: red;
+  }
+  
+  .password-strength.media {
+    color: orange;
+  }
+  
+  .password-strength.fuerte {
+    color: green;
+  }
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #94B43B;
+    cursor: pointer;
+  }
+  
+  .submit-button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+
 .avatar {
     width: 100px;  /* Ajusta el ancho de la imagen */
     height: 100px; /* Ajusta la altura de la imagen */
     border-radius: 50%; /* Esto hará que la imagen sea redonda */
 }
+
 

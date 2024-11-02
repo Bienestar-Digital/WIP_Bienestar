@@ -9,6 +9,8 @@ import Modal from "react-bootstrap/Modal";
 import './UserCreate.css';
 import ImageModalSuccess from "../../assets/images/createdUser.svg";
 import ImageModalFailded from "../../assets/images/CreateUserFailed.svg";
+//import ImageModalSuccess from "../../assets/images/assignment_turned_in.png";
+//import ImageModalFailed from "../../assets/images/assignment_late.png" TODO: Check with Natalia
 
 function UserCreate() {
     const [validated, setValidated] = useState(false);
@@ -16,6 +18,7 @@ function UserCreate() {
     const [show, setShow] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [division, setDivision] = useState("");
+    const [imagenModal, setImagenModal] = useState("");
     const [userData, setUserData] = useState();
     const [imageModal, setImageModal] = useState("");
     const [color, setColor] = useState("");

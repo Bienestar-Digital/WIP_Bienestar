@@ -10,7 +10,6 @@ import Modal from "react-bootstrap/Modal";
 function Home() {
   // Estados para almacenar los datos del usuario y de la tabla
   const eventState = sessionStorage.getItem("eventState");
-  console.log("Estado evento: ", eventState);
   const [userData, setUserData] = useState({ name: '', lastLogin: '' });
   const [tableData, setTableData] = useState([]);
   const [object, setObject] = useState([]);
@@ -66,7 +65,8 @@ function Home() {
   };  
 
 
-  useEffect(() => {        
+  useEffect(() => {
+
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
 
@@ -83,6 +83,7 @@ function Home() {
 
           if (response.ok) {
             const data = await response.json();
+            console.log(data.events)
             setTableData(data.events);           
             setUserData(data);
             sessionStorage.setItem('userData', JSON.stringify(data));
@@ -91,10 +92,10 @@ function Home() {
             sessionStorage.removeItem('token');
             navigate('/');
           } else {
-            console.error('Error:', response.statusText);
+            throw new Error('No existe el usuario.');
           }
         } catch (error) {
-          console.error('Error:', error);
+          throw new Error('No existe el usuario.');
         }
       };
 
@@ -102,6 +103,7 @@ function Home() {
     } else {
       navigate('/'); // Redirige si no hay token o idUser
     }
+
   }, [token, navigate]);
 
 
@@ -109,12 +111,18 @@ function Home() {
     setCurrentPage(page);
   };
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
+
+
   const handleClickCrearEvento = () => {
     navigate('/crearEvento');
   };
 
   return (
     <div className="row">
+
       <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title style={{ color: "#687D2A" }}>
@@ -132,7 +140,9 @@ function Home() {
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-      <SideMenu  /> {/* Pasa userData como prop */}
+       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
+      <span className="col-2"></span>
+
       <div className="col-10 homeDivP">
         <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
@@ -154,25 +164,33 @@ function Home() {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((data, index) => (
+            {currentItems.length > 0 ? (
+              currentItems.map((data, index) => (
                 <tr key={index}>
                   <td>{data.eventName}</td>
                   <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
-                  <td>{sessionStorage.getItem("eventState") || "Cerrado"}</td>
+                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
+                  {/* <td>{sessionStorage.getItem("eventState")}</td> */}
+                  {/* <td>{data.eventState}</td> */}
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>
                 </tr>
-              ))}
+              ))
+            ) : (
+                <tr>
+                    <td colSpan="3">No hay Eventos.</td>
+                </tr>
+            )}
             </tbody>
 
           </table>
           <nav className="paginationNav">
             <Pager
-              totalItems={tableData.length}
-              itemsPerPage={itemsPerPage}
-              onPageChange={handlePageChange}
+            totalItems={tableData.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
             />
           </nav>
         </div>
