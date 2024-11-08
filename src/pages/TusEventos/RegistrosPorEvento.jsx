@@ -149,13 +149,17 @@ function RegistroPorEvento() {
                                             <td>{data.idNumber}</td>
                                             <td>{data.fullName}</td>
                                             <td>
-                                                <FaRegTrashAlt 
-                                                    onClick={() => handleShow(data.attendeeId)} 
-                                                    style={{
-                                                        cursor: sessionStorage.getItem(`event_${eventId}_closed`) ? 'not-allowed' : 'pointer', 
-                                                        color: sessionStorage.getItem(`event_${eventId}_closed`) ? 'gray' : 'black'
-                                                    }} 
-                                                />
+                                            <FaRegTrashAlt 
+                                                onClick={() => {
+                                                    if (!sessionStorage.getItem(`event_${eventId}_closed`)) {
+                                                        handleShow(data.attendeeId);
+                                                    }
+                                                }}
+                                                style={{
+                                                    cursor: sessionStorage.getItem(`event_${eventId}_closed`) ? 'not-allowed' : 'pointer', 
+                                                    color: sessionStorage.getItem(`event_${eventId}_closed`) ? 'gray' : 'black'
+                                                }} 
+                                            />
                                             </td>
                                         </tr>
                                     ))

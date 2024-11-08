@@ -80,9 +80,9 @@ function TusEventos() {
   };
 
   const renderEventStatus = (event) => {
-    const today = normalizeDate(new Date());
+    const today = new Date();
     const eventStartDate = normalizeDate(new Date(event.startDate));
-    const eventEndDate = normalizeDate(new Date(event.finalDate));
+    const eventEndDate = new Date(event.finalDate);
     
     // Si el evento aún no ha comenzado, simplemente mostrar "Evento abierto"
     if (today < eventStartDate) {
@@ -148,6 +148,7 @@ function TusEventos() {
                       disabled={event.isClosed}
                       style={{
                         backgroundColor: event.isClosed ? 'lightgray' : '', 
+                        color: event.isClosed ? 'gray' : '', 
                         cursor: event.isClosed ? 'not-allowed' : 'pointer' 
                       }}
                     >
