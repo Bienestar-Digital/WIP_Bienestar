@@ -44,7 +44,7 @@ const Login = () => {
 
     const doCall = async () => {
         const loginData = { username, password };
-
+        //console.log(loginData);
         try {
             const response = await fetch('http://localhost:8080/user/login', {
                 method: 'POST',

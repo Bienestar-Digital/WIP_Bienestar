@@ -7,6 +7,8 @@
   border-radius: 0 20px 20px 0;
   display: grid;
   padding: 0;
+  background-image: url("../assets/images/wa1.png");
+  position: fixed;
 }
 .sideMenu nav {
   width: 100%;
@@ -19,7 +21,11 @@
   margin-top: auto;
 }
 .sideMenu ul {
+
+  font-size: 28px;
+
   cursor: pointer;
+
   padding: 0;
   padding-left: 8px;
   border-radius: 0 20px 20px 0;
@@ -33,6 +39,9 @@
 .sideMenu ul:hover {
   background-color: #94B43B;
   color: #fff;
+}
+.sideMenu svg{
+  margin-left: 12px;
 }
 .borderSec {
   border-bottom: 1px solid var(--primary-color);
