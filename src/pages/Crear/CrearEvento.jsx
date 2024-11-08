@@ -92,7 +92,7 @@ function CrearEvento() {
     <div className="row">
       <SideMenu />
 
-        <div className='col-10 homeDiv'> {/* homeDiv? */}
+        <div className='col-10 homeDiv'>
           <div className="header">
             <h1>Nuevo Evento</h1>
           </div>
@@ -108,11 +108,11 @@ function CrearEvento() {
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="fechaI">Fecha inicial</label>
-                    <input type="date" className='col-7'  name="fechaI" id="fechaI" min={new Date().toISOString().split("T")[0]}/>
+                    <input type="date" className='col-7'  name="fechaI" id="fechaI" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0]}/>
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="fechaF">Fecha final</label>
-                    <input type="date" className='col-7'  name="fechaF" id="fechaF" min={new Date().toISOString().split("T")[0]}/>
+                    <input type="date" className='col-7'  name="fechaF" id="fechaF" min={new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split("T")[0]}/>
                 </div>
                 <div className='row formInput mb-3' >
                     <label className='col-3' htmlFor="responsable">Responsable</label>
