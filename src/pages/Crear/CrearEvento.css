@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
+    gap: 20px;
     width: 640px;
 }
 label{
@@ -17,7 +17,7 @@ label{
     align-content: baseline;
     margin-top: 20px;
     padding: 32px;
-
+    gap: 24px;
 }
 .formInput{
     width: 100%;
@@ -29,10 +29,10 @@ label{
 .homeDiv h1{
     text-align: center;
     margin-bottom: 32px;
-    font-size: 40px;
+    font-size: 48px;
 }
 label{
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 550;
     color: var(--primary-color);
 }
@@ -54,6 +54,7 @@ label{
     gap: 4rem;
     align-content: center;
     justify-items: center;
+    align-self: center;
 }
 .userProcess h1{
     font-size: 40px;
@@ -80,4 +81,20 @@ label{
     text-decoration: none;
     color: var(--button-color);
     font-size: 24px;
+}
+.logoUnal{
+    width: 110px;
+    height: 68px;
+    background-color: var(--button-color);
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    border-radius: 8px;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+
+.logoUnal img{
+    width: 90px;
 }

@@ -33,3 +33,9 @@ form{
     font-size: large;
 
 }
+
+.custom-readonly {
+    background-color: #e9ecef !important; /* Un gris claro */
+    color: #6c757d; /* Texto gris oscuro */
+  }
+  
