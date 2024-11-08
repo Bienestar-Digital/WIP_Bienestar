@@ -120,7 +120,6 @@ const Perfil = () => {
 
   useEffect(() => {
     const storedData = JSON.parse(sessionStorage.getItem("userData"));
-
     setUserData(storedData);
     setusername(storedData.username);
   }, []);
@@ -178,7 +177,7 @@ const Perfil = () => {
               </div>
               <div className="profile-row">
                 <p className="label"><strong>Creado por:</strong></p>
-                <p className="value">{userData.createdBy}</p>
+                <p className="value">{userData.createdBy?.fullName || "admin"}</p>
               </div>
             </div>
           ) : (

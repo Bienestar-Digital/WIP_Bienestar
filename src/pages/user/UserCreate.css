@@ -38,4 +38,32 @@ form{
     background-color: #e9ecef !important; /* Un gris claro */
     color: #6c757d; /* Texto gris oscuro */
   }
+
+  .narrow-table {
+    width: 50%;
+    margin: auto;
+  }
+  
+  .left-align {
+    text-align: left;
+    padding: 8px;
+  }
+  
+  .paginationNav {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente si es necesario */
+    margin-top: 20px; /* Opcional: agrega espacio entre la tabla y la paginación */
+  }
+
+  .mx-auto {
+    margin-right: unset !important;
+    margin-left: auto !important;
+}
+
+.pb-4 {
+    padding-bottom: 2rem !important;
+}
+
+  
   
