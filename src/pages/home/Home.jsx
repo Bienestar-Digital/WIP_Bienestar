@@ -83,7 +83,6 @@ function Home() {
 
           if (response.ok) {
             const data = await response.json();
-            console.log(data.events)
             setTableData(data.events);           
             setUserData(data);
             sessionStorage.setItem('userData', JSON.stringify(data));

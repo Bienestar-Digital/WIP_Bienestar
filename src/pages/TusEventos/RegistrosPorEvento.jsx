@@ -29,7 +29,7 @@ function RegistroPorEvento() {
     const handleError = (errorMessage) => {
         // Esto anula el comportamiento de la consola para los mensajes de error o advertencias en producción
         if (process.env.NODE_ENV === 'production') {
-            console.error = console.warn = console.log = () => {}; // Desactiva todos los logs
+            disableConsoleLogs();
         }
         // Error en consola solo en modo de desarrollo
         if (process.env.NODE_ENV === 'development') {
@@ -137,6 +137,7 @@ function RegistroPorEvento() {
                             <thead>
                                 <tr>
                                     <th>Asistencia n°</th>
+                                    <th>Tipo de documento</th>
                                     <th>Identificación</th>
                                     <th>Nombre</th>
                                     <th>Acciones</th>
@@ -147,6 +148,7 @@ function RegistroPorEvento() {
                                     currentItems.map((data, index) => (
                                         <tr key={index}>
                                             <td>{data.attendeeId}</td>
+                                            <td>{data.idType}</td>
                                             <td>{data.idNumber}</td>
                                             <td>{data.fullName}</td>
                                             <td>
