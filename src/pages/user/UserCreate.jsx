@@ -9,6 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import './UserCreate.css';
 import ImageModalSuccess from "../../assets/images/createdUser.svg";
 import ImageModalFailded from "../../assets/images/CreateUserFailed.svg";
+import Pager from '../home/Pager';
 //import ImageModalSuccess from "../../assets/images/assignment_turned_in.png";
 //import ImageModalFailed from "../../assets/images/assignment_late.png" TODO: Check with Natalia
 
@@ -16,13 +17,19 @@ function UserCreate() {
     const [validated, setValidated] = useState(false);
     const [bodyMessage, setBodyMessage] = useState("");
     const [show, setShow] = useState(false);
+    const [showAddUser, setShowAddUser] = useState(false);
     const [titulo, setTitulo] = useState("");
+    const [tableData, setTableData] = useState([]);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
     const [division, setDivision] = useState("");
     const [imagenModal, setImagenModal] = useState("");
     const [userData, setUserData] = useState();
     const [imageModal, setImageModal] = useState("");
-    const [color, setColor] = useState("");
-    const token = "your-auth-token"; // Añade aquí tu token correctamente
+    const [color, setColor] = useState("");    
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
 
     const registerUser = async (event) => {
         event.preventDefault(); // Evitar la recarga de la página por defecto
@@ -36,7 +43,7 @@ function UserCreate() {
             roleName: formData.get('roleName'),
             division: formData.get('division'),
             password: formData.get('password'),
-            createdBy: userData.username
+            createdBy: userData.id
 
         };
 
@@ -56,7 +63,7 @@ function UserCreate() {
                     setImageModal(ImageModalFailded);
                     setBodyMessage("Credenciales incorrectas. Por favor, verifica tu usuario y contraseña.");
                     setColor("#AA0C00");
-                    
+
                 }
                 if (response.status === 409) {
                     setTitulo("Creacion De Usuario");
@@ -116,21 +123,73 @@ function UserCreate() {
         setValidated(true);
     };
 
+    const handlePageChange = (page) => {
+        //setCurrentPage(page);
+    };
+
 
 
     const handleClose = () => { setShow(false); window.location.reload(); }
 
+    const handleDelete = (index) => {
+        /* const updatedItems = currentItems.filter((_, i) => i !== index);
+        setCurrentItems(updatedItems); // Actualiza el estado con los elementos restantes */
+    };
+
 
     useEffect(() => {
+        const token = sessionStorage.getItem('token');
+        const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
+        console.log(storedIdUser);       
+       
+        if (token && storedIdUser) { // Verificar que el token y el idUser existan
+          const fetchUser = async () => {
+            try {
+              const response = await fetch(`http://localhost:20000/user/${storedIdUser}`, {
+                method: 'GET',
+                headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json',
+                },
+              });
+    
+              if (response.ok) {                
+                const data = await response.json();
+                console.log(data)
+                setTableData(data.createdUsers);           
+                setUserData(data);
+                sessionStorage.setItem('userData', JSON.stringify(data));
+                sessionStorage.setItem('rolname', data.roleName);
+              } else if (response.status === 401) {
+                sessionStorage.removeItem('token');               
+              } else {
+                throw new Error('No existe el usuario.');
+              }
+            } catch (error) {
+              throw new Error('No existe el usuario.');
+            }
+          };    
+          fetchUser(); // Llama a la función fetchUser
+        } else {
+        
+        }
+    
+      }, []);
+
+
+
+    /* useEffect(() => {
         const storedData = JSON.parse(sessionStorage.getItem('userData'));
         setUserData(storedData);
-    }, []);
+        setTableData(storedData.createdUsers)
+        console.log(storedData);
+    }, []); */
 
     return (
         <>
             <Modal show={show} onHide={handleClose} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title style={{  }}>
+                    <Modal.Title style={{}}>
                         <strong>{titulo}</strong>{" "}
                     </Modal.Title>
                 </Modal.Header>
@@ -141,17 +200,17 @@ function UserCreate() {
                         className="img-fluid"
                         style={{ display: "block", margin: "0 auto", maxWidth: "20%", height: "auto", color: "#687D2A" }}
                     />
-                    <strong style={{ fontSize: "20px", color  }}>{bodyMessage}</strong>
+                    <strong style={{ fontSize: "20px", color }}>{bodyMessage}</strong>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-
-
-            <div className="row">
-                <SideMenu />
-                <div className="col-8 mx-auto homeDivP">
-                    <div className="header"><h1>Nuevo Usuario</h1></div>
-
+            <Modal show={showAddUser} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title style={{ color: "#687D2A" }}>
+                        <strong>Nuevo Usuario</strong>{" "}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{ textAlign: "center" }}>
                     <div className="form-alin">
                         <Form noValidate validated={validated} onSubmit={handleSubmit}>
                             {/* Nombre */}
@@ -260,8 +319,58 @@ function UserCreate() {
                                 <Button type="submit">Crear Usuario</Button>
                             </div>
                         </Form>
-
                     </div>
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+            </Modal>
+
+
+            <div className="row">
+                <SideMenu />
+                <div className="col-10 mx-auto homeDivP">
+                    <div>
+                        <div className="d-flex justify-content-end  pb-4" style={{ width: '70%', margin: 'auto' }}>
+                            <Button
+                                variant="primary"
+                                type="submit"
+                                className="w-auto"
+                                onClick={() => setShowAddUser(true)}
+                            >
+                                Agregar Manualmente
+                            </Button>
+                        </div>
+
+
+                        <table style={{ width: '70%', margin: 'auto' }}>
+                            <tbody>
+                                {currentItems.length > 0 ? (
+                                    currentItems.map((data, index) => (
+                                        <tr key={index}>
+                                            <td style={{ textAlign: 'left', padding: '8px' }}>{data.id}</td>
+                                            <td style={{ textAlign: 'left', padding: '8px' }}>{data.fullName}</td>
+                                            <td style={{ textAlign: 'left', padding: '8px' }}>
+                                                <button onClick={() => handleDelete(index)}>Borrar</button>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="3" style={{ textAlign: 'left', padding: '8px' }}>No hay Eventos.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+
+                        <nav className="paginationNav">
+                            <Pager
+                                totalItems={tableData.length}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
+                            />
+                        </nav>
+                    </div>
+
 
                 </div>
             </div>
@@ -270,3 +379,4 @@ function UserCreate() {
 }
 
 export default UserCreate;
+
