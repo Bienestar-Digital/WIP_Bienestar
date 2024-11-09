@@ -66,7 +66,7 @@ function TusEventos() {
 
   const normalizeDate = (date) => {
     const normalizedDate = new Date(date);
-    normalizedDate.setHours(0, 0, 0, 0); // Establecer horas, minutos, segundos y milisegundos a 0
+    normalizedDate.setUTCHours(0, 0, 0, 0); // Establecer horas, minutos, segundos y milisegundos a 0
     return normalizedDate;
   };
 
@@ -86,24 +86,32 @@ function TusEventos() {
     
     // Si el evento aún no ha comenzado, simplemente mostrar "Evento abierto"
     if (today < eventStartDate) {
+      /* return <span style={{ color: 'green' }}>Evento abierto</span>; */
+      event.isClosed = false;
       return <span style={{ color: 'green' }}>Evento abierto</span>;
     }
 
-    const isSameDay = today.toDateString() === eventEndDate.toDateString();
+    const isSameDay = today.getTime() === eventEndDate.getTime();
+    const daysRemaining = calculateDaysRemaining(event.finalDate);
 
     if (isSameDay) {
+      /* return <span style={{ color: 'orange' }}>El evento se cerrará hoy a la medianoche.</span>; */
+      event.isClosed = false;
       return <span style={{ color: 'orange' }}>El evento se cerrará hoy a la medianoche.</span>;
     }
 
-    const daysRemaining = calculateDaysRemaining(event.finalDate);
-
     if (daysRemaining === 0 || event.state === "Cerrado") {
+      event.isClosed = true;
+      sessionStorage.setItem(`event_${event.eventId}_closed`, 'true');
       return <span style={{ color: 'red' }}>Evento cerrado</span>;
     } else if (daysRemaining <= 3 && daysRemaining > 1) {
+      event.isClosed = false;
       return <span style={{ color: 'orange' }}>El evento se cerrará en {daysRemaining} día(s)</span>;
     } else if (daysRemaining === 1) {
-      return <span style={{ color: 'orange' }}>El evento se cerrará mañana.</span>;  // Mensaje para el día siguiente
+      event.isClosed = false;
+      return <span style={{ color: 'orange' }}>El evento se cerrará mañana.</span>;
     } else {
+      event.isClosed = false;
       return <span style={{ color: 'green' }}>Evento abierto</span>;
     }
   };
@@ -129,12 +137,21 @@ function TusEventos() {
               {currentItems.length > 0 ? (
                 currentItems.map((event) => (
                   <div key={event.eventId} className='eventCard'>
-                    <h3>{event.eventName}</h3>
+                    <h3>
+                      {event.eventName}
+                      <span className="tooltip px-3">{event.eventDescription}</span>
+                    </h3>
                     <span>{new Date(event.startDate).toLocaleDateString()} - {new Date(event.finalDate).toLocaleDateString()}</span>
                     {renderEventStatus(event)}
                     <button 
                       className='buttonP' 
                       onClick={() => handleClickCargarAsistencia(event.eventId, event.eventName)}
+                      disabled={event.isClosed}
+                      style={{
+                        backgroundColor: event.isClosed ? 'lightgray' : '', 
+                        color: event.isClosed ? 'gray' : '', 
+                        cursor: event.isClosed ? 'not-allowed' : 'pointer' 
+                      }}
                     >
                       <FaPlus />
                       Cargar asistencia

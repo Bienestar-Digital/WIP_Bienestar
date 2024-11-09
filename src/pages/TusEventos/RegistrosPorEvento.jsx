@@ -12,6 +12,7 @@ function RegistroPorEvento() {
 
     const eventId = sessionStorage.getItem('eventId'); 
     const eventName = sessionStorage.getItem('eventName'); 
+    const eventState = sessionStorage.getItem('event_${eventId}_closed'); 
 
     const [tableData, setTableData] = useState([]);
     const [itemsPerPage] = useState(10);
@@ -149,7 +150,17 @@ function RegistroPorEvento() {
                                             <td>{data.idNumber}</td>
                                             <td>{data.fullName}</td>
                                             <td>
-                                                <FaRegTrashAlt onClick={() => handleShow(data.attendeeId)} />
+                                            <FaRegTrashAlt 
+                                                onClick={() => {
+                                                    if (!sessionStorage.getItem(`event_${eventId}_closed`)) {
+                                                        handleShow(data.attendeeId);
+                                                    }
+                                                }}
+                                                style={{
+                                                    cursor: sessionStorage.getItem(`event_${eventId}_closed`) ? 'not-allowed' : 'pointer', 
+                                                    color: sessionStorage.getItem(`event_${eventId}_closed`) ? 'gray' : 'black'
+                                                }} 
+                                            />
                                             </td>
                                         </tr>
                                     ))
