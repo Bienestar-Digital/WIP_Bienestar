@@ -151,6 +151,7 @@ const Perfil = () => {
         <Modal.Footer></Modal.Footer>
       </Modal>
       <SideMenu />
+      <div className="col-2"></div>
       <div className="col-10">
         <div className="containers">
           <div className="image-container">
