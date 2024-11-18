@@ -168,9 +168,10 @@ function Home() {
               currentItems.map((data, index) => (
                 <tr key={index}>
                   <td>{data.eventName}</td>
-                  <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
-                  {/* <td>{sessionStorage.getItem("eventState")}</td> */}
+                  <td>{new Date(data.startDate).toLocaleDateString()} - {new Date(data.finalDate).toLocaleDateString()}</td>
+                  {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
+
+                  <td>{sessionStorage.getItem("eventState")}</td>
                   {/* <td>{data.eventState}</td> */}
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
