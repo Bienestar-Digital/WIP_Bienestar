@@ -44,7 +44,7 @@ const Login = () => {
 
     const doCall = async () => {
         const loginData = { username, password };
-        //console.log(loginData);
+        
         try {
             const response = await fetch('http://localhost:8080/user/login', {
                 method: 'POST',
@@ -77,16 +77,18 @@ const Login = () => {
                 }
                 return;
             }
-
             const data = await response.json();
 
             if (data.token) {
+                
                 sessionStorage.setItem('token', data.token);                
                 sessionStorage.setItem('userId', JSON.stringify(data.userId));
                 sessionStorage.setItem('userid', data.userId);
                 sessionStorage.setItem('userName', username); 
-                getUserRole(data.userId, data.token);
-                navigate('/home');
+                getUserRole(data.userId, data.token).then(() => {
+                    navigate('/home');
+                }
+                );
             } else {
                 alert('Error al recibir el token de autenticación.');
             }
@@ -124,7 +126,7 @@ const Login = () => {
             if (response.ok) {
               const data = await response.json();
               setRolName(data.roleName); 
-              sessionStorage.setItem('rolname', data.roleName);        
+              sessionStorage.setItem('rolname', data.roleName);  
             
             } else if (response.status === 401) {
               sessionStorage.removeItem('token');

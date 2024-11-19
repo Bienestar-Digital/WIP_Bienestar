@@ -21,6 +21,7 @@ function Home() {
   const [show, setShow] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [bodyMessage, setBodyMessage] = useState("");
+  const userRole = sessionStorage.getItem('rolname');
 
   const handleClose = () => setShow(false);
 
@@ -66,7 +67,7 @@ function Home() {
 
 
   useEffect(() => {
-
+    
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
 
@@ -140,7 +141,7 @@ function Home() {
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
+       <SideMenu /> 
       <span className="col-2"></span>
 
       <div className="col-10 homeDivP">

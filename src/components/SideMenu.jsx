@@ -11,9 +11,9 @@ import { useNavigate } from "react-router-dom";
 function SideMenu({ userData }) {
 
 const navigate = useNavigate(); 
-const [role, setRole] = useState(null);
-
-
+const [role, setRole] = useState(sessionStorage.getItem('rolname'));
+  /* console.log("userData", userData);
+  console.log("role", role); */
   useEffect(() => {
     const role = sessionStorage.getItem('rolname');
     setRole(role);
@@ -47,7 +47,11 @@ const [role, setRole] = useState(null);
             <FaRegUserCircle />
             Perfil
           </ul>
-          <ul  className="borderSec" onClick={()=>{sessionStorage.removeItem('token'); sessionStorage.removeItem('userId');  navigate('/')  }} >Cerrar sesión</ul>
+          <ul  className="borderSec" onClick={()=>{
+            sessionStorage.removeItem('token'); 
+            sessionStorage.removeItem('userId'); 
+            sessionStorage.clear(); // Limpia todos los datos de sessionStorage
+            navigate('/')  }} >Cerrar sesión</ul>
         </nav>
       </div>
     </>
