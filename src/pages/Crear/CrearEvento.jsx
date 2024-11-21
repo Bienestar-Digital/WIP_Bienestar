@@ -42,8 +42,6 @@ function CrearEvento() {
       createdAt: createdAt,
       state: "Abierto"
     };
-
-    console.log("info enviada", eventData);
     
     if (
       !eventData.eventName ||
