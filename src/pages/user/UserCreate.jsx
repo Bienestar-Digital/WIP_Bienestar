@@ -468,7 +468,7 @@ function UserCreate() {
                                         ))
                                     ) : (
                                         <tr>
-                                            <td colSpan="3" style={{ textAlign: 'left', padding: '8px' }}>No hay Eventos.</td>
+                                            <td colSpan="3" style={{ textAlign: 'left', padding: '8px',}}>No tiene usuarios registrados a su cargo.</td>
                                         </tr>
                                     )}
                                 </tbody>

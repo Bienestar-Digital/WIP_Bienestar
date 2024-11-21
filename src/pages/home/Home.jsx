@@ -83,6 +83,7 @@ function Home() {
 
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             setTableData(data.events);           
             setUserData(data);
             sessionStorage.setItem('userData', JSON.stringify(data));
@@ -145,7 +146,7 @@ function Home() {
       <div className="col-10 homeDivP">
         <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
-          <span>Último ingreso: {new Date(userData.lastLogin).toLocaleDateString()}</span> {/* Formatea la fecha */}
+          <span>Último ingreso: {new Date(userData.lastAccess).toLocaleDateString()}  a las {new Date(userData.lastAccess).toLocaleTimeString()} </span> {/* Formatea la fecha */}
           <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
             <FaPlus />
             Crear evento
@@ -168,18 +169,18 @@ function Home() {
                 <tr key={index}>
                   <td>{data.eventName}</td>
                   <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
+                 {/*  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
                   {/* <td>{sessionStorage.getItem("eventState")}</td> */}
-                  {/* <td>{data.eventState}</td> */}
+                  <td>{data.states.stateName}</td>
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
                   </td>
                 </tr>
               ))
             ) : (
-                <tr>
-                    <td colSpan="3">No hay Eventos.</td>
-                </tr>
+              <tr>             
+              <td colSpan="4" style={{ textAlign: "center" }}>No hay Eventos</td>
+            </tr>
             )}
             </tbody>
 
