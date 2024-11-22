@@ -228,14 +228,14 @@ const handleFileChange = (e) => {
               Mail
               </label>
               <input
-                className="col-4"
+                className="col-5"
                 onChange={(e) => setMail(e.target.value)}
                 type="text"
                 name="mail"
                 id="mail"
                 style={{ textTransform: "lowercase" }}
               />
-              <span className="col-4">@unal.edu.co</span>
+              {/* <span className="col-4">@unal.edu.co</span> */}
             </div>
             
           

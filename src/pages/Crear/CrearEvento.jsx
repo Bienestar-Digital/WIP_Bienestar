@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SideMenu from "../../components/SideMenu";
 import ModalComponent from "../../components/ModalComponent";
 import "./CrearEvento.css";
@@ -12,6 +13,7 @@ function CrearEvento() {
   const cleanedUserId = userId.trim();
   const parsedUserId = parseInt(parseInt(cleanedUserId));
   const userName = sessionStorage.getItem("userName");
+  const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
   const [showModalFecha, setShowModalFecha] = useState(false);
@@ -74,6 +76,7 @@ function CrearEvento() {
         sessionStorage.setItem("eventName", createdEvent.eventName);
         sessionStorage.setItem("eventState", "Abierto");
         e.target.reset();
+        navigate('/home');
       } else {
         setIsSuccess(false);
       }
