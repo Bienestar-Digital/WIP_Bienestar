@@ -23,8 +23,8 @@ function RegistroPorEvento() {
     const [isEliminated, setIsEliminated] = useState(false);
     const navigate = useNavigate();
 
-    const handleClickTusEventos = (eventId) => {
-        navigate(`/registroPorEvento/${eventId}`);
+    const handleClickTusEventos = () => {
+        navigate(`/tusEventos`);
     };
 
     const handleError = (errorMessage) => {
