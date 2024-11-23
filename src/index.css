@@ -11,8 +11,11 @@ body{
     width: 100%;
     max-width: 2500px;
   }
-  p, h1, h2, h3, h4, h5, h6{
-    font-family: Ancizar Sans;
+  *{
+    font-family: Ancizar Sans, sans-serif;
+  }
+  p, h1, h2, h3, h4, h5, h6, span, a, button, input, textarea, select {
+    font-family: 'Ancizar Sans', sans-serif;
   }
 
   :root {

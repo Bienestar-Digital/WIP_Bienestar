@@ -21,6 +21,7 @@ function Home() {
   const [show, setShow] = useState(false);
   const [titulo, setTitulo] = useState("");
   const [bodyMessage, setBodyMessage] = useState("");
+  const userRole = sessionStorage.getItem('rolname');
 
   const handleClose = () => setShow(false);
 
@@ -66,7 +67,7 @@ function Home() {
 
 
   useEffect(() => {
-
+    
     const storedIdUser = JSON.parse(sessionStorage.getItem('userId')); // Obtener userId del sessionStorage
     setIdUser(storedIdUser); // Establecer el userId en el estado
 
@@ -139,7 +140,7 @@ function Home() {
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-       <SideMenu userData={userData} /> {/* Pasa userData como prop */}
+       <SideMenu /> 
       <span className="col-2"></span>
 
       <div className="col-10 homeDivP">
@@ -167,9 +168,10 @@ function Home() {
               currentItems.map((data, index) => (
                 <tr key={index}>
                   <td>{data.eventName}</td>
-                  <td>{new Date(data.startDate).toLocaleDateString()}</td>
-                  <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td>
-                  {/* <td>{sessionStorage.getItem("eventState")}</td> */}
+                  <td>{new Date(data.startDate).toLocaleDateString()} - {new Date(data.finalDate).toLocaleDateString()}</td>
+                  {/* <td>{data.states.map((state, i) => <div key={i}>{state.stateName}</div>)}</td> */}
+
+                  <td>{sessionStorage.getItem("eventState")}</td>
                   {/* <td>{data.eventState}</td> */}
                   <td>
                     {data.actions ? data.actions : <GoDownload onClick={() => handleDownloadClick(data.eventId)} />}
