@@ -65,7 +65,18 @@ const Login = () => {
                         setShow(false);
                         window.location.reload();
                     }, 2500);
-                } else {
+                }else if (response.status === 403) {
+                    //alert('Credenciales incorrectas. Por favor, verifica tu usuario y contraseña.');
+                    setTitulo("Usuario Inactivo");
+                    setBodyMessage("Por favor, pongase en contacto con el administrador.");
+                    setShow(true);
+                    setTimeout(() => {
+                        setShow(false);
+                        window.location.reload();
+                    }, 4500);
+
+                }
+                 else {
                     //alert('Error al iniciar sesión. Código de estado: ' + response.status);
                     setTitulo("Usuario no encontrado");
                     setBodyMessage("Por favor, Intente nuevamente.");
@@ -78,6 +89,8 @@ const Login = () => {
                 return;
             }
             const data = await response.json();
+            getUserRole(data.userId, data.token);
+
 
             if (data.token) {
                 
