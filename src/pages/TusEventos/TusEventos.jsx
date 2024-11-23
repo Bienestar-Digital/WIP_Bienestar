@@ -55,13 +55,13 @@ function TusEventos() {
   const handleClickCargarAsistencia = (eventId, eventName) => {
     sessionStorage.setItem('eventId', eventId);
     sessionStorage.setItem('eventName', eventName);
-    navigate('/cargaAsistencia/${eventId}');
+    navigate(`/cargaAsistencia/${eventId}`);
   };
 
   const handleClickRegistroPorEvento = (eventId, eventName) => {
     sessionStorage.setItem('eventId', eventId);
     sessionStorage.setItem('eventName', eventName);
-    navigate('/registroPorEvento/${eventId}');
+    navigate(`/registroPorEvento/${eventId}`);
   };
 
   const normalizeDate = (date) => {

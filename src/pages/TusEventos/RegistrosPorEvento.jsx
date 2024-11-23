@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link} from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { BsArrowLeft } from "react-icons/bs";
 import Modal from "react-bootstrap/Modal";
 import SideMenu from '../../components/SideMenu';
 import Pager from "../home/Pager";
@@ -23,7 +24,7 @@ function RegistroPorEvento() {
     const navigate = useNavigate();
 
     const handleClickTusEventos = () => {
-        navigate('/tusEventos');
+        navigate(`/tusEventos`);
     };
 
     const handleError = (errorMessage) => {
@@ -99,6 +100,7 @@ function RegistroPorEvento() {
     useEffect(() => {
         if (eventId) {
             fetchAttendeesByEventId();
+            navigate(`/registroPorEvento/${eventId}`);
         } else {
             handleError("Error en la respuesta del servidor");
         }
@@ -127,9 +129,10 @@ function RegistroPorEvento() {
                             <h1 className="bienvenida">
                                 Registros del evento {eventId}: {eventName}
                             </h1>
-                            <Link className='registro' onClick={handleClickTusEventos}>
+                            <button className='buttonP d-flex justify-content-evenly' onClick={handleClickTusEventos}>
+                                <BsArrowLeft />
                                 Atrás
-                            </Link>
+                            </button>
                     </div>
 
                     <div>
