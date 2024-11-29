@@ -118,7 +118,7 @@ function Home() {
 
 
   const handleClickCrearEvento = () => {
-    navigate('/crearEvento');
+    navigate('/crear-evento');
   };
 
   return (
