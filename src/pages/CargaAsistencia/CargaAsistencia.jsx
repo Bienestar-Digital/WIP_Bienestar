@@ -36,12 +36,12 @@ function CargaAsistencia() {
   //Single
   const handleCloseSuccess = () => {
     setCargaManual(false)
-    navigate('/cargaSuccess')
+    navigate('/carga-success')
   };
 
   const handleCloseFailed = () => {
     setCargaManual(false)
-    navigate('/cargaFailed')
+    navigate('/carga-failed')
   };
 
   const handleClose = () => setCargaManual(false);
@@ -50,12 +50,12 @@ function CargaAsistencia() {
   //Bulk
   const handleCloseSuccessBulk = () => {
     setCargaBulk(false)
-    navigate('/cargaSuccess')
+    navigate('/carga-success')
   };
 
   const handleCloseFailedBulk = () => {
     setCargaBulk(false)
-    navigate('/cargaFailed')
+    navigate('/carga-failed')
   };
 
   const handleCloseBulk = () => setCargaBulk(false);

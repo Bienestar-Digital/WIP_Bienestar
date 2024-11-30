@@ -24,7 +24,7 @@ function RegistroPorEvento() {
     const navigate = useNavigate();
 
     const handleClickTusEventos = () => {
-        navigate(`/tusEventos`);
+        navigate(`/tus-eventos`);
     };
 
     const handleError = (errorMessage) => {
@@ -100,7 +100,7 @@ function RegistroPorEvento() {
     useEffect(() => {
         if (eventId) {
             fetchAttendeesByEventId();
-            navigate(`/registroPorEvento/${eventId}`);
+            navigate(`/registro-por-evento/${eventId}`);
         } else {
             handleError("Error en la respuesta del servidor");
         }

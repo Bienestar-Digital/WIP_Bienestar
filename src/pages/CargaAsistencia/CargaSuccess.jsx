@@ -7,7 +7,7 @@ function CargaSuccess() {
 
   const navigate = useNavigate(); 
   const handleClickRegresar = () => {
-    navigate('/cargaAsistencia/:eventId');
+    navigate('/carga-asistencia/:eventId');
   };
 
   return (

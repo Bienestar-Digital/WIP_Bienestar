@@ -33,11 +33,11 @@ const [role, setRole] = useState(sessionStorage.getItem('rolname'));
             Home
           </ul>
           {( role == "admin") && (
-          <ul className="borderSec"  onClick={()=>{  navigate('/crearUsuario');}}>
+          <ul className="borderSec"  onClick={()=>{  navigate('/crear-usuario');}}>
             <HiMiniUsers />
             Usuarios
           </ul>)}        
-          <ul className="borderSec" onClick={()=>{  navigate('/tusEventos');}}>
+          <ul className="borderSec" onClick={()=>{  navigate('/tus-eventos');}}>
             <LuUserCheck />
             Eventos
           </ul>

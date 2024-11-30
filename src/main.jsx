@@ -36,35 +36,35 @@ const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/crearEvento",
+        path: "/crear-evento",
         element: <CrearEvento />
       },
       {
-        path: "/crearUsuario",
+        path: "/crear-usuario",
         element: <CrearUsuario />
       },
       {
-        path: "/userSuccess",
+        path: "/user-success",
         element: <CrearSuccess />
       },
       {
-        path: "/userFailed",
+        path: "/user-failed",
         element: <CrearFailed />
       },
       {
-        path: "/tusEventos",
+        path: "/tus-eventos",
         element: <TusEventos />
       },
       {
-        path: "/cargaAsistencia/:eventId",
+        path: "/carga-asistencia/:eventId",
         element: <CargaAsistencia />
       },
       {
-        path: "/cargaSuccess",
+        path: "/carga-success",
         element: <CargaSuccess/>
       },
       {
-        path: "/cargaFailed",
+        path: "/carga-failed",
         element: <CargaFailed/>
       },
       {
@@ -72,7 +72,7 @@ const router = createBrowserRouter([
         element: <Perfil/>
       },
       {
-        path: "/registroPorEvento/:eventId",
+        path: "/registro-por-evento/:eventId",
         element: <RegistroPorEvento/>
       }
     ]
