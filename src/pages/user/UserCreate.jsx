@@ -13,26 +13,29 @@ import Pager from '../home/Pager';
 //import ImageModalSuccess from "../../assets/images/assignment_turned_in.png";
 //import ImageModalFailed from "../../assets/images/assignment_late.png" TODO: Check with Natalia
 import Desactivar from "../../assets/images/Desactivar.png";
+import { useNavigate } from "react-router-dom";
+import CustomModal from '../../components/CustomModal';
 
 function UserCreate() {
     const [validated, setValidated] = useState(false);
     const [bodyMessage, setBodyMessage] = useState("");
     const [show, setShow] = useState(false);
-    const [showUserStatus, setShowUserStatus] = useState(false);
-    const [showAddUser, setShowAddUser] = useState(false);
+    const [showUserStatus, setShowUserStatus] = useState(true);
+    //const [showAddUser, setShowAddUser] = useState(false);
     const [titulo, setTitulo] = useState("");
     const [tableData, setTableData] = useState([]);
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentUserstatus, setCurrentUserStatus] = useState(0);
     const [division, setDivision] = useState("");
-    const [imagenModal, setImagenModal] = useState("");
+    const [errorModal, setErrorModal] = useState(false);
     const [userData, setUserData] = useState();
     const [imageModal, setImageModal] = useState("");
     const [color, setColor] = useState("");
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = tableData.slice(indexOfFirstItem, indexOfLastItem);
+    const navigate = useNavigate();
 
     const registerUser = async (event) => {
         event.preventDefault(); // Evitar la recarga de la página por defecto
@@ -63,25 +66,26 @@ function UserCreate() {
 
             if (!response.ok) {
                 if (response.status === 401) {
-                    setTitulo("Creacion De Usuario");
                     setImageModal(ImageModalFailded);
                     setBodyMessage("Credenciales incorrectas. Por favor, verifica tu usuario y contraseña.");
                     setColor("#AA0C00");
+                    setErrorModal(true);
 
                 }
                 if (response.status === 409) {
-                    setTitulo("Creacion De Usuario");
                     setImageModal(ImageModalFailded);
                     setBodyMessage("El usuario ya existe. Por favor, Intente nuevamente.");
                     setColor("#AA0C00");
+                    setErrorModal(true);
                 }
                 else {
-                    setTitulo("Creacion De Usuario");
                     setImageModal(ImageModalFailded);
                     setBodyMessage("Ha ocurrido un error. Por favor, Intente nuevamente.");
                     setColor("#AA0C00");
+                    setErrorModal(true);
                 }
                 setShow(true);
+                setErrorModal(false);
                 /* setTimeout(() => {
                     setShow(false);
                     window.location.reload();
@@ -92,22 +96,22 @@ function UserCreate() {
             // Si la respuesta es exitosa
             // Aquí puedes manejar el caso exitoso, por ejemplo:
             // alert("Usuario registrado con éxito");
-            setTitulo("Creacion de Usuario");
             setImageModal(ImageModalSuccess);
-            setBodyMessage("Usuario creado correctamente.");
+            setBodyMessage("El usuario se ha creado correctamente.");
             setColor("#687D2A");
             setShow(true);
+            setErrorModal(false);
             /* setTimeout(() => {
                 setShow(false);
                 window.location.reload();
             }, 2500); */
         } catch (error) {
             // Aquí manejamos los errores de red, como si el servidor está caído
-            setTitulo("Creacion De Usuario");
             setBodyMessage("Ha ocurrido un error. Por favor, Intente nuevamente.");
             setImageModal(ImageModalFailded);
             setColor("#AA0C00");
             setShow(true);
+            setErrorModal(true);
             /* setTimeout(() => {
                 setShow(false);
             }, 2500); */
@@ -129,13 +133,15 @@ function UserCreate() {
         setValidated(true);
     };
 
-    const handlePageChange = (page) => {
-        //setCurrentPage(page);
+
+    const handleClose = () => { 
+        setShow(false); 
+        navigate('/home');
+    }
+    const handleReload = () => {
+        setShow(false);
+        window.location.reload();
     };
-
-
-
-    const handleClose = () => { setShow(false); window.location.reload(); }
 
     const handleUserStatusChange = (index) => {
         setTitulo("Cambio de Estado de Usuario");
@@ -144,7 +150,7 @@ function UserCreate() {
         setColor("#687D2A");
         setCurrentUserStatus(index);
         setShowUserStatus(true);
-
+        setErrorModal(false);
     };
 
 
@@ -172,6 +178,7 @@ function UserCreate() {
                 setBodyMessage("Estado de usuario cambiado correctamente.");
                 setColor("#687D2A");
                 setShow(true);
+                setErrorModal(false);
             } else if (response.status === 401) {
                 // Token inválido, se elimina de sessionStorage
                 sessionStorage.removeItem('token');
@@ -180,6 +187,7 @@ function UserCreate() {
                 setBodyMessage("Su sesión ha expirado. Por favor, inicie sesión nuevamente.");
                 setColor("#ff0000");
                 setShow(true);
+                setErrorModal(true);
             } else {
                 // Manejo de otros errores HTTP
                 const errorData = await response.json();
@@ -188,19 +196,19 @@ function UserCreate() {
                 setImageModal(ImageModalError);
                 setBodyMessage("No se pudo cambiar el estado del usuario. Intente nuevamente.");
                 setColor("#ff0000");
+                setErrorModal(true);
                 setShow(true);
             }
         } catch (error) {
             console.error("Error al realizar la solicitud:", error.message);
             setTitulo("Error de red");
-            setImageModal(ImageModalError);
+            setImageModal(ImageModalFailded);
             setBodyMessage("No se pudo establecer conexión con el servidor.");
             setColor("#ff0000");
+            setErrorModal(true);
             setShow(true);
         }
     };   
-
-
 
     useEffect(() => {
         const token = sessionStorage.getItem('token');
@@ -242,84 +250,24 @@ function UserCreate() {
     }, []);
 
 
-
-
-
-        /* useEffect(() => {
-            const storedData = JSON.parse(sessionStorage.getItem('userData'));
-            setUserData(storedData);
-            setTableData(storedData.createdUsers)
-            console.log(storedData);
-        }, []); */
-
         return (
             <>
-                <Modal show={show} onHide={handleClose} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title style={{}}>
-                            <strong>{titulo}</strong>{" "}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ textAlign: "center" }}>
-                        <img
-                            src={imageModal}
-                            alt="Descripción de la imagen"
-                            className="img-fluid"
-                            style={{ display: "block", margin: "0 auto", maxWidth: "20%", height: "auto", color: "#687D2A" }}
-                        />
-                        <strong style={{ fontSize: "20px", color }}>{bodyMessage}</strong>
-                    </Modal.Body>
-                    <Modal.Footer></Modal.Footer>
-                </Modal>
+                
+                <CustomModal
+                    show={show}
+                    onHide={handleClose}
+                    titulo={titulo}
+                    imageModal={imageModal}
+                    bodyMessage={bodyMessage}
+                    errorModal={errorModal}
+                    onHideReload={handleReload}
+                    color={color}
+                />
 
-                <Modal show={showUserStatus} onHide={handleClose} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title>
-                            <strong>{titulo}</strong>
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ textAlign: "center" }}>
-                        <strong style={{ fontSize: "20px", color }}>{bodyMessage}</strong>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <button
-                            style={{
-                                backgroundColor: "#687D2A",
-                                color: "#fff",
-                                border: "none",
-                                padding: "10px 20px",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                            }}
-                            onClick={handleConfirm}
-                        >
-                            Confirmar
-                        </button>
-                        <button
-                            style={{
-                                backgroundColor: "#6c757d",
-                                color: "#fff",
-                                border: "none",
-                                padding: "10px 20px",
-                                borderRadius: "5px",
-                                cursor: "pointer",
-                            }}
-                            onClick={handleClose}
-                        >
-                            Cancelar
-                        </button>
-                    </Modal.Footer>
-                </Modal>
-
-
-                <Modal show={showAddUser} onHide={handleClose} centered>
-                    <Modal.Header closeButton>
-                        <Modal.Title style={{ color: "#687D2A" }}>
-                            <strong>Nuevo Usuario</strong>{" "}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body style={{ textAlign: "center" }}>
-                        <div className="form-alin">
+                <div className="row">
+                    <SideMenu />
+                    <div className="col-10 mx-auto homeDivP">
+                        <div>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
                                 {/* Nombre */}
                                 <Row className="mb-3 align-items-center">
@@ -426,62 +374,13 @@ function UserCreate() {
                                 <div className="text-center">
                                     <Button type="submit">Crear Usuario</Button>
                                 </div>
+                                <div className="text-center ">
+                                    <Button type=""
+                                    className='secondaryBtn'
+                                    >Salir</Button>
+                                </div>
                             </Form>
-                        </div>
-                    </Modal.Body>
-                    <Modal.Footer></Modal.Footer>
-                </Modal>
 
-
-                <div className="row">
-                    <SideMenu />
-                    <div className="col-10 mx-auto homeDivP">
-                        <div>
-                            <div className="d-flex justify-content-end  pb-4" style={{ width: '70%', margin: 'auto' }}>
-                                <Button
-                                    variant="primary"
-                                    type="submit"
-                                    className="w-auto"
-                                    onClick={() => setShowAddUser(true)}
-                                >
-                                    Agregar Manualmente
-                                </Button>
-                            </div>
-
-                            <table style={{ width: '70%', margin: 'auto' }}>
-                                <tbody>
-                                    {currentItems.length > 0 ? (
-                                        currentItems.map((data, index) => (
-                                            <tr key={index}>
-                                                <td style={{ textAlign: 'left', padding: '8px' }}>{data.id}</td>
-                                                <td style={{ textAlign: 'left', padding: '8px' }}>{data.fullName}</td>
-                                                <td style={{ textAlign: 'left', padding: '8px' }}>{data.userStatus}</td>
-                                                <td style={{ textAlign: 'left', padding: '8px' }}>
-                                                    <img
-                                                        src={Desactivar}
-                                                        alt="Desactivar"
-                                                        style={{ width: '50px', height: '50px', cursor: 'pointer' }}
-                                                        onClick={() => handleUserStatusChange(data.id)}
-                                                    />
-                                                </td>
-                                            </tr>
-                                        ))
-                                    ) : (
-                                        <tr>
-                                            <td colSpan="3" style={{ textAlign: 'left', padding: '8px',}}>No tiene usuarios registrados a su cargo.</td>
-                                        </tr>
-                                    )}
-                                </tbody>
-                            </table>
-
-                            <nav className="paginationNav">
-                                <Pager
-                                    totalItems={tableData.length}
-                                    itemsPerPage={itemsPerPage}
-                                    onPageChange={handlePageChange}
-                                    currentPage={currentPage}
-                                />
-                            </nav>
                         </div>
 
 
