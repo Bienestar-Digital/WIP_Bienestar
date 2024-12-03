@@ -1,12 +1,15 @@
 .center-container {
     display: flex;
+    margin: 90px 0;
     flex-direction: column; /* Alinea los hijos verticalmente */
     justify-content: center;
     align-items: center;
     padding: 80px 0;
     gap: 25px; 
   }
-  
+  .username-input{
+    display: flex;
+  }
 
   .input-container {
     position: relative;
