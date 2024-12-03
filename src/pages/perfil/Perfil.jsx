@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./Perfil.css"; // Importa el archivo CSS
 import Modal from "react-bootstrap/Modal";
 import SideMenu from "../../components/SideMenu";
+import { useNavigate } from "react-router-dom";
 
 const Perfil = () => {
 
@@ -122,9 +123,11 @@ const Perfil = () => {
     const storedData = JSON.parse(sessionStorage.getItem("userData"));
     setUserData(storedData);
     setusername(storedData.username);
+    console.log(userData);
   }, []);
 
   const handleClose = () => setShow(false);
+  const navigate = useNavigate(); 
 
   return (
     <div className="row">
@@ -151,8 +154,8 @@ const Perfil = () => {
         <Modal.Footer></Modal.Footer>
       </Modal>
       <SideMenu />
-      <div className="col-2"></div>
-      <div className="col-10">
+      <div className="col-2 ghost-col"></div>
+      <div className="col-10 primary-col">
         <div className="containers">
           <div className="image-container">
             <img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" className="avatar" />
@@ -176,6 +179,7 @@ const Perfil = () => {
                 <p className="label"><strong>División:</strong></p>
                 <p className="value">{userData.division}</p>
               </div>
+              
               <div className="profile-row">
                 <p className="label"><strong>Creado por:</strong></p>
                 <p className="value">{userData.createdBy?.fullName || "admin"}</p>
@@ -249,7 +253,17 @@ const Perfil = () => {
               Cambiar contraseña
             </button>
           </form>
+          <button
+            className="logout-button"
+            onClick={()=>{
+              sessionStorage.removeItem('token'); 
+              sessionStorage.removeItem('userId'); 
+              sessionStorage.clear(); 
+              navigate('/')
+            }}
+          >Cerrar Sesión</button>
         </div>
+        
       </div>
     </div>
   );
