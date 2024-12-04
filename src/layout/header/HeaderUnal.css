@@ -90,7 +90,7 @@ input[type="checkbox"].input:checked {
   color: #fff;
 }
 .navbar-one {
-  height: 35px;
+  height: 30px;
   background-color: #666666;
   font-family: ancizar_sansregular, Tahoma, Geneva, sans-serif!important;
   font-weight: normal;
@@ -99,17 +99,14 @@ input[type="checkbox"].input:checked {
   position: absolute;
     top: 0;
     right: 0;
-    z-index: 1;
     width: 100%;
 }
-.btn-navbar-one-1,
-.btn-navbar-one-2,
-.btn-navbar-one-3,
-.btn-navbar-one-4,
-.btn-navbar-one-5{
-  background-color: #666666;
-  height: 35px;
+.nav-item {
+  border-right: 1px solid #3d3d3d;
+  font-size: 14px;
+  height: 30px;
 }
+
 .link-navbar-one{
   color: #fff;
 }
@@ -239,6 +236,9 @@ input[type="checkbox"].input:checked {
   font-size: 0.8rem;
   transition: all .5s;
   transform: scale(1);
+  position: relative;
+  top: 15px;
+
 }
 .site-url {
   /* background: no-repeat 0 0 url(../../assets/images/header/locDot.png); */
