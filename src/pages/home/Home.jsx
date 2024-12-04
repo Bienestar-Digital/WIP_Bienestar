@@ -155,7 +155,7 @@ function Home() {
         </div>
 
         <div>
-          <table>
+          <table className="tableHome">
             <thead>
               <tr>
                 <th>Nombre</th>

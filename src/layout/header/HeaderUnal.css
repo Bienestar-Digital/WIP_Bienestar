@@ -1,4 +1,4 @@
-.header {
+.headerP {
   position: absolute;
   top: 0;
   left: 0;
@@ -47,7 +47,6 @@ input[type="checkbox"].input {
   background-position: center;
   background-repeat: no-repeat;
   border: none;
-  border-radius: 0;
 }
 input[type="checkbox"].input:checked {
   background-image: url(src/assets/images/header/Servicios-right.png);
@@ -75,7 +74,6 @@ input[type="checkbox"].input:checked {
   color: #100f0f!important;
   transition: 0s;
 }
-
 .color-a {
   color: #fff;
 }
@@ -96,16 +94,8 @@ input[type="checkbox"].input:checked {
   font-weight: normal;
   font-size: 0.8rem;
   color: #fff;
-  position: absolute;
-    top: 0;
-    right: 0;
-    width: 100%;
 }
-.nav-item {
-  border-right: 1px solid #3d3d3d;
-  font-size: 14px;
-  height: 30px;
-}
+
 
 .link-navbar-one{
   color: #fff;
@@ -147,6 +137,7 @@ input[type="checkbox"].input:checked {
 .dropdown-toggle::after {
   content: none;
 }
+
 .btn-menu {
   font-family: ancizar_sansregular, Tahoma, Geneva, sans-serif!important;
   font-weight: normal;
@@ -236,9 +227,6 @@ input[type="checkbox"].input:checked {
   font-size: 0.8rem;
   transition: all .5s;
   transform: scale(1);
-  position: relative;
-  top: 15px;
-
 }
 .site-url {
   /* background: no-repeat 0 0 url(../../assets/images/header/locDot.png); */
@@ -422,8 +410,9 @@ input[type="checkbox"].input:checked {
     height: 25px;
     padding: 0px 0px 0px 5vw;
     text-align: left;
-    border: none;
+    border: none !important;
     background-color: transparent;
+    box-shadow: 0 0 !important;
   }
   .menu {
     width: 80vw;
@@ -464,4 +453,35 @@ input[type="checkbox"].input:checked {
   .seal {
     margin-right: 90px;
   }
+}
+.gsc-search-box tr {
+  border: none;
+  border-radius: 0px;
+
+}
+
+.btn-menu:focus {
+  outline: none;
+}
+
+/* Ocultar checkbox */
+#navbarDropdownMenuLink1-toggle,
+#navbarDropdownMenuLink2-toggle,
+#navbarDropdownMenuLink3-toggle,
+#navbarDropdownMenuLink4-toggle,
+#navbarDropdownMenuLink5-toggle,
+#navbarDropdownMenuLinklanguages-toggle {
+  display: none;
+}
+input[type="checkbox"] {
+  display: none;
+}
+/* Mostrar menú cuando el checkbox está activado */
+#navbarDropdownMenuLinklanguages-toggle:checked + label + .dropdown-menu,
+#navbarDropdownMenuLink1-toggle:checked + label + .dropdown-menu,
+#navbarDropdownMenuLink2-toggle:checked + label + .dropdown-menu,
+#navbarDropdownMenuLink3-toggle:checked + label + .dropdown-menu,
+#navbarDropdownMenuLink4-toggle:checked + label + .dropdown-menu, 
+#navbarDropdownMenuLink5-toggle:checked + .btn-menu + .dropdown-menu {
+  display: block;
 }
