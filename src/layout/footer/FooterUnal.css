@@ -1,0 +1,142 @@
+.row {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .footer {
+    height: auto;
+    background: #666;
+    color: #ddd;
+    font-size: 12.6px;
+    clear: both;
+    position: relative;
+    bottom: 0;
+    margin: 0 !important;
+    padding: 15px 0 15px 0;
+    padding-left: inherit !important;
+    padding-right: inherit !important;
+    line-height: 1.125em;
+    box-sizing: content-box;
+    font-family: "Ancizar sans", Tahoma, Geneva, sans-serif;
+  }
+  
+  .footer .gobiernoLinea {
+    text-align: left;
+    display: grid;
+    padding: 0 15px 0 15px;
+    height: fit-content;
+  }
+  .footer a {
+    text-decoration: none;
+    color: white;
+    height: auto;
+  }
+  .footer a:hover {
+    color: #eeeeee;
+    text-decoration: underline;
+  }
+  .footer .gobiernoLinea a {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .footer div.footer-info p {
+    margin: 0;
+    display: inline-block;
+  }
+  .footer div.footer-info p.contacto {
+    padding-left: 20px;
+    padding-right: 0;
+  }
+  .footer div.footer-info p.derechos {
+    border-right: 0;
+    padding-left: 20px;
+    padding-right: 0;
+    text-align: left;
+  }
+  .footer .logos {
+    
+    height: fit-content;
+  }
+  .footer .logos a {
+    text-align: center;
+    padding: 0;
+  }
+  .footer .logos a img {
+    max-height: 37px;
+    width: auto;
+    height: auto;
+    margin: auto;
+  }
+  .footer .logos .no-padding {
+    padding: 0;
+    justify-content: space-around;
+  }
+  @media (max-width: 575px) {
+    body .footer div.footer-info {
+      padding: 10px 15px;
+      margin: 10px auto;
+  
+      border-top: solid 1px #555555;
+      border-bottom: solid 1px #555555;
+    }
+    .footer .gobiernoLinea {
+      width: 50%;
+    }
+    .footer .gobiernoLinea:nth-child(2) {
+      text-align: right;
+    }
+    .footer div.footer-info p.contacto {
+      width: 50%;
+      padding-left: 0;
+    }
+    .footer div.footer-info p.derechos {
+      width: 50%;
+      text-align: right;
+    }
+    .footer .no-padding {
+      width: 50%;
+    }
+    .footer .logos a {
+      width: 50%;
+      height: auto;
+    }
+    .footer .logos .no-padding {
+      display: flex;
+    }
+  }
+  @media (max-width: 767px) and (min-width: 576px) {
+    .footer .logos .no-padding {
+      display: flex;
+      justify-content: space-around;
+    }
+    .footer div.footer-info {
+      border-left: solid 1px #555555;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .footer div.footer-info {
+      border-left: solid 1px #555555;
+      border-right: solid 1px #555555;
+    }
+    .footer .no-padding {
+      display: grid;
+    }
+  }
+  @media (min-width: 990px) {
+    .footer .gobiernoLinea {
+      display: flex;
+    }
+    .footer .logos a img {
+      max-height: 27px !important;
+    }
+    .footer div.footer-info p.contacto {
+      padding-left: 10px;
+      padding-right: 15px;
+    }
+    .footer div.footer-info p.derechos {
+      padding-left: 15px;
+      padding-right: 10px;
+    }
+  }

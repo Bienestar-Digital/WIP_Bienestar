@@ -5,6 +5,8 @@ import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './login.css';
 import Footer from '../../layout/footer/footer';
+import FooterUnal from '../../layout/footer/FooterUnal';
+import HeaderUnal from '../../layout/header/HeaderUnal';
 import { useNavigate } from 'react-router-dom';
 import Col from 'react-bootstrap/Col';
 import InputGroup from 'react-bootstrap/InputGroup';
@@ -172,8 +174,11 @@ const Login = () => {
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
             </Modal>
-            <Header />
+            <HeaderUnal/>
+            {/* <Header /> */}
+
             <div className="center-container">
+                <h2>Registro de asistencias - Dirección de Bienestar</h2>
                 <img
                     src={ImageLogo}
                     alt="Escudo Unal"
@@ -183,21 +188,22 @@ const Login = () => {
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         {/* Grupo de formulario para el nombre de usuario */}
                         <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <InputGroup hasValidation>
+                            <InputGroup hasValidation className='username-input'>
                                 <Form.Control
                                     type="text"
                                     placeholder="Usuario"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     required
-                                    className="input-with-addon"
+                                    className="input-with-addon "
                                 />
-                                {/* Texto adicional a la derecha del input */}
                                 <span className="input-addon" style={{ color: "#687D2A", fontSize: "20px", fontWeight: "bold", }}>@unal.edu.co</span>
                                 <Form.Control.Feedback type="invalid">
                                     Please choose a username.
                                 </Form.Control.Feedback>
+                                
                             </InputGroup>
+                            
                         </Form.Group>
 
                         {/* Grupo de formulario para la contraseña */}
@@ -223,7 +229,8 @@ const Login = () => {
                 </div>
             </div>
 
-            <Footer />
+            {/* <Footer /> */}
+            <FooterUnal />
 
         </>
 

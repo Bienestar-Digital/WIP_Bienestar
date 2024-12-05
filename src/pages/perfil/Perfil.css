@@ -58,7 +58,6 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #f9f9f9;
-    width: 85%;
   }
   h2{
     color:#94B43B;
@@ -117,5 +116,24 @@
     height: 100px; /* Ajusta la altura de la imagen */
     border-radius: 50%; /* Esto hará que la imagen sea redonda */
 }
+.logout-button{
+    background-color: #94B43B;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
 
 
+@media (max-width: 576px) {
+    .profile-info {
+        width: 100%; 
+    }
+    
+    .avatar {
+        width: 60px; 
+        height: 60px; 
+    }
+}
