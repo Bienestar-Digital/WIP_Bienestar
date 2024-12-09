@@ -195,9 +195,10 @@ function FormUserCreate() {
 
                 <div className="row">
                     <SideMenu />
-                    <div className="col-10 mx-auto homeDivP">
-                        <div>
-                            <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                    <div className="col-10 mx-auto homeDivP FormContainer">
+                        
+                            <h2>Nuevo Usuario</h2>
+                            <Form noValidate validated={validated} onSubmit={handleSubmit} className='formCreate'>
                                 {/* Nombre */}
                                 <Row className="mb-3 align-items-center">
                                     <Form.Group as={Col} md="4" controlId="validationCustom01">
@@ -306,11 +307,12 @@ function FormUserCreate() {
                                 <div className="text-center ">
                                     <Button type=""
                                     className='secondaryBtn'
+                                    onClick={() => navigate('/home')}
                                     >Salir</Button>
                                 </div>
                             </Form>
 
-                        </div>
+                        
 
 
                     </div>

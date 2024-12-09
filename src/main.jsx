@@ -21,6 +21,7 @@ import CargaSuccess from "./pages/CargaAsistencia/CargaSuccess.jsx";
 import CargaFailed from "./pages/CargaAsistencia/CargaFailed.jsx";
 import Perfil from "./pages/perfil/Perfil.jsx";
 import RegistroPorEvento from "./pages/TusEventos/RegistrosPorEvento.jsx";
+import FormUserCreate from "./pages/user/FormUserCreate.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: "/crear-usuario",
         element: <CrearUsuario />
+      },
+      {
+        path: "/crear-usuario-form",
+        element: <FormUserCreate />
       },
       {
         path: "/user-success",
@@ -74,7 +79,9 @@ const router = createBrowserRouter([
       {
         path: "/registro-por-evento/:eventId",
         element: <RegistroPorEvento/>
-      }
+      },
+      
+
     ]
   },
 ]);

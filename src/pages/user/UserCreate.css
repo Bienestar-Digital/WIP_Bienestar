@@ -21,7 +21,20 @@ form{
     align-items: center; 
 
 }
-
+.FormContainer{
+    display: grid;
+    justify-items: center;
+  min-height: 80vh;
+}
+.formCreate{
+    width: 80%;
+}
+.ButtonContainer {
+    text-align: center; 
+    width: 100%;
+    margin-top: auto; 
+   
+  }
 .text-center{
     padding-top: 30px;
 }
