@@ -202,7 +202,7 @@ function UserCreate() {
             <h2>Usuarios</h2>
 
             {currentItems.length > 0 ? (
-              <table style={{ width: "70%", margin: "auto" }}>
+              <table style={{  margin: "auto" }}>
                 <thead>
                   <tr>
                     <th>Nombre</th>
