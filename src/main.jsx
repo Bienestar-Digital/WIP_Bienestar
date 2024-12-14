@@ -21,6 +21,7 @@ import CargaSuccess from "./pages/CargaAsistencia/CargaSuccess.jsx";
 import CargaFailed from "./pages/CargaAsistencia/CargaFailed.jsx";
 import Perfil from "./pages/perfil/Perfil.jsx";
 import RegistroPorEvento from "./pages/TusEventos/RegistrosPorEvento.jsx";
+import CargaManual from "./pages/CargaAsistencia/CargaManual.jsx";
 
 const router = createBrowserRouter([
   {
@@ -58,6 +59,10 @@ const router = createBrowserRouter([
       {
         path: "/carga-asistencia/:eventId",
         element: <CargaAsistencia />
+      },
+      {
+        path: "/carga-manual",
+        element: <CargaManual/>
       },
       {
         path: "/carga-success",

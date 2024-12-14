@@ -7,12 +7,14 @@ form{
     display: flex;
     justify-content: center; /* Centra horizontalmente */
     align-items: center;     /* Centra verticalmente (opcional) */
-    margin-bottom: 50px;     /* Espacio debajo del encabezado, opcional */
+    margin-bottom: 6%;     /* Espacio debajo del encabezado, opcional */
+    top: 5%;
 }
 
 .header h1 {
     margin: 0; /* Elimina el margen predeterminado del h1 */
     font-weight: bold;
+    font-size: 36px;
 }
 
 .form-alin{
@@ -28,7 +30,7 @@ form{
 
 .text-center button{
     width: 100%;
-    height: 45px
+    height: 45px;
     font-weight: bold;
     font-size: large;
 

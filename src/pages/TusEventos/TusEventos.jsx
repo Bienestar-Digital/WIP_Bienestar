@@ -123,15 +123,27 @@ function TusEventos() {
     setCurrentPage(newPage);
   };
 
+  const handleClickCrearEvento = () => {
+    navigate('/crear-evento');
+  };
+
+
+
   return (
     <div className='row'>
       <SideMenu />
       <span className="col-2"></span>
         <div className='col-10 homeDiv'>
-          <div className="headerEvents">
+          <div className="header">
             <h1>Tus eventos</h1>
           </div>
-            
+
+          <div className="crearNuevoEvento">
+            <button className="buttonNE px-5" onClick={handleClickCrearEvento}>
+              Nuevo evento
+            </button>
+          </div>
+          
             <div className='eventsContainer'>
               {currentItems.length > 0 ? (
                 currentItems.map((event) => (
@@ -142,8 +154,15 @@ function TusEventos() {
                     </h3>
                     <span>{new Date(event.startDate).toLocaleDateString()} - {new Date(event.finalDate).toLocaleDateString()}</span>
                     {renderEventStatus(event)}
+                    
+                    <Link 
+                      className='registro' 
+                      onClick={() => handleClickRegistroPorEvento(event.eventId, event.eventName)}
+                    >
+                      Ver registros
+                    </Link>
                     <button 
-                      className='buttonP' 
+                      className='buttonP px-4' 
                       onClick={() => handleClickCargarAsistencia(event.eventId, event.eventName)}
                       disabled={event.isClosed}
                       style={{
@@ -152,15 +171,8 @@ function TusEventos() {
                         cursor: event.isClosed ? 'not-allowed' : 'pointer' 
                       }}
                     >
-                      <FaPlus />
-                      Cargar asistencia
+                      Registrar asistencia
                     </button>
-                    <Link 
-                      className='registro' 
-                      onClick={() => handleClickRegistroPorEvento(event.eventId, event.eventName)}
-                    >
-                      Ver registros
-                    </Link>
                   </div>
                 ))
               ) : (

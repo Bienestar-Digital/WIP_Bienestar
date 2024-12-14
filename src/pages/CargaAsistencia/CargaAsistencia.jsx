@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import { BsArrowLeft } from "react-icons/bs";
 import "./CargaAsistencia.css";
 import Modal from "react-bootstrap/Modal";
 import ModalComponent from '../../components/ModalComponent';
@@ -160,22 +161,45 @@ const handleFileChange = (e) => {
     }
 };
   
+const handleClickTusEventos = () => {
+  navigate(`/tus-eventos`);
+};
+
+const handleCargaManual = () => {
+  navigate(`/carga-manual`);
+};
 
   return (
     <div className="row">
       <SideMenu />
       <span className="col-2"></span>
-      <div className='col-10 homeDiv cargaAsis'>
-        <h1>Evento {eventId}: {eventName}</h1>
-        <div>
-          <button className="buttonP" onClick={handleShowBulk}>Carga por lectora</button>
-          <button className="buttonS" onClick={handleShow}>
-            Carga manual
+      <div className='col-10 homeDiv'>
+        <div className="header">
+          <h1>Evento {eventId}: {eventName}</h1>
+        </div>
+        <div className="atrasEvent">
+          <button className="btn px-5" onClick={handleClickTusEventos}>
+          <BsArrowLeft style={{ fontSize: '32px', color: '#677D29' }} />
           </button>
         </div>
-        <div className="logoUnal">
-          <img src="/src/assets/images/Logounal.png" alt="" />
+
+        <div className="d-flex flex-column mb-5 crearNuevoEvento">
+          <button className="buttonE" onClick={handleShowBulk}>Carga por lectora</button>
+          <button className="buttonSE" onClick={handleCargaManual}>
+            Agregar manualmente
+          </button>
         </div>
+
+        <div className="eventCardAsistencias">
+          <p>
+          Utiliza el lector de códigos para registrar la asistencia de cada estudiante.
+          </p>
+        </div>
+        {/* <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
+        </div> */}
+
+        <button className="buttonGuardarX px-5 mt-5" onClick={() => {alert('Em mantenimiento...');}}>Guardar</button>
       </div>
 
       <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" imagen={ImageModalPrevent} bodyMessage={'Por favor, rellena todos los campos.' } />
@@ -240,7 +264,7 @@ const handleFileChange = (e) => {
             
           
             <Modal.Footer style={{ width: '100%' }}>
-              <button type="submit" className="buttonP buttonModal">
+              <button type="submit" className="buttonP buttonModal" onClick={() => {alert('En mantenimiento...');}}>
                 Guardar
               </button>
               <button  type="button" className="buttonS buttonModal" onClick={handleClose}>
@@ -279,10 +303,10 @@ const handleFileChange = (e) => {
             </div>
           
             <Modal.Footer style={{ width: '100%' }}>
-              <button type="submit" className="buttonP buttonModal">
+              <button type="submit" className="buttonE buttonModal">
                 Guardar
               </button>
-              <button  type="button" className="buttonS buttonModal" onClick={handleCloseBulk}>
+              <button  type="button" className="buttonSE buttonModal" onClick={handleCloseBulk}>
                 Cancelar
               </button>
             </Modal.Footer>

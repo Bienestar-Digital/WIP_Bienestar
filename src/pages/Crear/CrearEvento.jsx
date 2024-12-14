@@ -89,6 +89,11 @@ function CrearEvento() {
   const handleCloseModalFecha = () => setShowModalFecha(false);
   const handleIsSuccess = () => setIsSuccess(false);
 
+
+  const handleClickSalir = () => {
+    navigate('/home');
+  };
+
   return (
     <div className="row">
       <SideMenu />
@@ -102,11 +107,11 @@ function CrearEvento() {
           
             <form className='formCrear' action="" onSubmit={handleSubmit}>
                 <div className='row formInput mb-3' >
-                    <label className='col-3' htmlFor="nombre">Nombre</label>
+                    <label className='col-3' htmlFor="nombre" placeholder="Nombre del evento">Nombre</label>
                     <input type="text" className='col-7' name="nombre" id="nombre"/>
                 </div>
                 <div className='row formInput mb-3' >
-                    <label className='col-3' htmlFor="descripcion">Descripción</label>
+                    <label className='col-3' htmlFor="descripcion" placeholder="Descripción del evento">Descripción</label>
                     <textarea className='col-7'  name="descripcion" id="" rows={5}></textarea>
                 </div>
                 <div className='row formInput mb-3' >
@@ -125,13 +130,18 @@ function CrearEvento() {
                     <label className='col-3' htmlFor="responsable">Responsable</label>
                     <input type="text" className='col-7'  name="responsable" id="responsable" />
                 </div> */}
-                <div className="d-flex justify-content-center">
-                  <button className='buttonP' id='crearBtn'>
+                <div className="d-flex flex-column justify-content-center buttonsEvents">
+                  <button className='buttonE mb-2' id='crearBtn'>
                   Crear evento
                   </button>
+                  
                 </div>
             </form>
-          
+            <div className='formCrear'>
+              <button className='buttonSE mb-2' id='salirBtn' onClick={handleClickSalir}>
+                    Salir
+              </button>
+            </div>
         </div>
       <ModalComponent show={showModal} handleClose={handleCloseModal} titulo="Error" imagen={ImageModalPrevent} bodyMessage={'Por favor, rellena todos los campos.'} />
       <ModalComponent show={showModalFecha} handleClose={handleCloseModalFecha} titulo="Error en fechas" imagen={ImageModalPrevent} bodyMessage={'La fecha final no puede ser inferior a la fecha inicial.'} />

@@ -249,6 +249,10 @@ function UserCreate() {
 
     }, []);
 
+    const handleClickHome = () => {
+        navigate(`/home`);
+    };
+
 
         return (
             <>
@@ -377,6 +381,7 @@ function UserCreate() {
                                 <div className="text-center ">
                                     <Button type=""
                                     className='secondaryBtn'
+                                    onClick={handleClickHome }
                                     >Salir</Button>
                                 </div>
                             </Form>

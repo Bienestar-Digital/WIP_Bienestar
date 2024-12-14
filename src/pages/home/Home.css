@@ -9,20 +9,20 @@
   font-size: 32px;
 }
 .buttonP {
-  background-color: var(--button-color);
+  background-color: var(--primary-color);
   color: #fff;
   padding: 6px;
   gap: 8px;
   display: flex;
   align-items: center;
-  width: 224px;
+  width: auto;
   justify-content: center;
   height: 48px;
   margin-top: 16px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .buttonP:hover {
-  background-color: var(--primary-color);
+  background-color: var(--button-color);
 }
 .bienvenida {
   margin: 0;
@@ -72,7 +72,8 @@ tr:last-child td {
   color: var(--primary-color);
 }
 .paginationNav{
-  display: grid
+  display: grid;
+  padding-top: 40px;
 }
 .pagination{
   gap: 16px;

@@ -11,11 +11,13 @@ function CrearSuccess() {
       <div className="col-10 homeDiv userProcess" id="success">
         <FiUserCheck className="successIcon" />
         <h1>El usuario se ha creado correctamente</h1>
-        <button className="buttonP">Salir</button>
-      </div>
-      <div className="logoUnal">
-          <img src="/src/assets/images/Logounal.png" alt="" />
+        <div className="d-flex flex-column justify-content-center buttonsEvents">
+          <button className="buttonE">Salir</button>
         </div>
+      </div>
+      {/* <div className="logoUnal">
+          <img src="/src/assets/images/Logounal.png" alt="" />
+        </div> */}
     </div>
   );
 }
