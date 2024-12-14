@@ -123,32 +123,32 @@ function RegistroPorEvento() {
             <div className='row'>
                 <SideMenu />
                 <span className="col-2"></span>
-                <div className='col-10 homeDiv'>
+                <div className='col-10 homeDivP'>
 
-                    <div className="d-flex flex-column headerEvents">
-                            <h1 className="bienvenida">
-                                Registros del evento {eventId}: {eventName}
-                            </h1>
-                            <button className='buttonP d-flex justify-content-evenly' onClick={handleClickTusEventos}>
-                                <BsArrowLeft />
-                                Atrás
-                            </button>
+                    <div className="header">
+                        <h1>Registros del evento {eventId}: {eventName}</h1>
+                    </div>
+
+                    <div className="atrasEvent">
+                        <button className="btn px-5" onClick={handleClickTusEventos}>
+                        <BsArrowLeft style={{ fontSize: '32px', color: '#677D29' }} />
+                        </button>
                     </div>
 
                     <div>
-                        <table>
-                            <thead>
+                        <table className="table tableHome table-hover">
+                            <thead className="thead-dark">
                                 <tr>
-                                    <th>Asistencia n°</th>
-                                    <th>Tipo de documento</th>
-                                    <th>Identificación</th>
-                                    <th>Nombre</th>
-                                    <th>Acciones</th>
+                                    <th style={{ color: '#677D29' }}>Asistencia n°</th>
+                                    <th style={{ color: '#677D29' }}>Tipo de documento</th>
+                                    <th style={{ color: '#677D29' }}>Identificación</th>
+                                    <th style={{ color: '#677D29' }}>Nombre</th>
+                                    <th style={{ color: '#677D29' }}>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {currentItems.length > 0 ? (
-                                    currentItems.map((data, index) => (
+                                    currentItems.reverse().map((data, index) => (
                                         <tr key={index}>
                                             <td>{data.attendeeId}</td>
                                             <td>{data.idType}</td>
@@ -175,16 +175,23 @@ function RegistroPorEvento() {
                                     </tr>
                                 )}
                             </tbody>
-                        </table>
-                        <nav className="paginationNav">
+                            </table>
+                        </div>
+
+                        <div className="cerrarEv">
+                            <button  type="button" className="buttonSE" onClick={() => {alert('Evento cerrado exitosamente!');}}>
+                                Cerrar Evento
+                            </button>
+                        </div>
+
+                        <nav className="paginationNav d-flex justify-content-center">
                             <Pager
-                            totalItems={tableData.length}
-                            itemsPerPage={itemsPerPage}
-                            onPageChange={handlePageChange}
-                            currentPage={currentPage}
+                                totalItems={tableData.length}
+                                itemsPerPage={itemsPerPage}
+                                onPageChange={handlePageChange}
+                                currentPage={currentPage}
                             />
                         </nav>
-                    </div>
 
                     <Modal show={show} onHide={handleClose} centered>
                         <Modal.Header closeButton>
@@ -213,6 +220,8 @@ function RegistroPorEvento() {
                     <ModalComponent show={isEliminated} handleClose={handleIsEliminated} titulo="Registro eliminado" imagen={ImageModalSuccess} bodyMessage={'Asistencia eliminada exitosamente.'} />
 
                 </div>
+
+                
             </div>
         </>
     )

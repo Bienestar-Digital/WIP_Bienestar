@@ -148,7 +148,7 @@ function Home() {
         <div className="headerHome"> {/* header? */} 
           <h1 className="bienvenida">¡Bienvenido, {userData.username}!</h1>
           <span>Último ingreso: {new Date(userData.lastAccess).toLocaleDateString()}  a las {new Date(userData.lastAccess).toLocaleTimeString()} </span> {/* Formatea la fecha */}
-          <button className="buttonP crearHbtn" onClick={handleClickCrearEvento}>
+          <button className="buttonP crearHbtn px-5" onClick={handleClickCrearEvento}>
             <FaPlus />
             Crear evento
           </button>

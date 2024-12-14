@@ -142,11 +142,17 @@ function UserCreate() {
         } catch (error) {
           throw new Error("No existe el usuario.");
         }
+
       };
       fetchUser(); // Llama a la función fetchUser
     } else {
+
     }
   }, []);
+
+    const handleClickHome = () => {
+        navigate(`/home`);
+    };
 
   return (
     <>

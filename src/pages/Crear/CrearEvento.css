@@ -1,45 +1,49 @@
-.formCrear{
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
+.homeDiv{
     justify-content: center;
+    align-content: baseline;
+    margin-top: 50px;
+    padding: 32px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+.formCrear{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 20px;
-    width: 640px;
+    width: 50%;
+}
+.formInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
 }
 label{
     color: var(--primary-color);
     font-weight: 500;
     font-size: 20px;
+    flex: 1;
+    text-align: left;
+    margin-right: 10px;
 }
-.homeDiv{
-    display: grid;
-    justify-content: center;
-    align-content: baseline;
-    margin-top: 20px;
-    padding: 32px;
-}
-.formInput{
-    width: 100%;
-    display: flex;
+input, textarea, select {
+    flex: 2;
+    padding: 10px;
+    font-size: 16px;
 }
 .row{ 
     margin: 0;
-}
-.homeDiv h1{
-    text-align: center;
-    margin-bottom: 32px;
-    font-size: 48px;
-}
-label{
-    font-size: 28px;
-    font-weight: 550;
-    color: var(--primary-color);
 }
 .attached{
     width: fit-content;
     background-color: var( --button-secondary-color);
     color: var(--primary-color);
-    
 }
 #crearBtn{
     margin-top: 28px;
@@ -64,12 +68,10 @@ label{
 #error{
     color: var(--error);
 }
-
 .userProcess svg{
     width: 180px;
     height: 180px;
 }
-
 .successIcon{
     color: var(--button-color);
 }
@@ -93,7 +95,34 @@ label{
     bottom: 12px;
     right: 12px;
 }
-
 .logoUnal img{
     width: 90px;
+}
+.buttonE {
+    width: 100%;
+    height: 45px;
+    font-weight: bold;
+    font-size: large;
+    background-color: #677D29 !important;
+    color: white;
+}
+.buttonE:hover {
+    background-color: #94b43b !important;
+    color: white;
+}
+.buttonSE {
+    width: 100%;
+    height: 45px;
+    font-weight: bold;
+    font-size: large;
+    border: 1px solid #687D2A;
+    background-color: white!important;
+    color: #677D29 !important;
+}
+.buttonSE:hover {
+    background-color: #94b43b !important;
+    color: white !important;;
+}
+.buttonsEvents {
+    margin-top: 10%;
 }

@@ -13,21 +13,21 @@
     color: var(--primary-color);
     font-size: 32px;
 }
-.buttonS {
-    background-color: var(--button-secondary-color);
-    color: var(--primary-color);
-    padding: 6px;
-    gap: 8px;
-    display: flex;
-    align-items: center;
-    width: 224px;
+.eventCardAsistencias {
+    position: relative;
+    width: 90%;
+    height: 420px;
+    margin: 10px;
+    background-color: #cccccc !important;
+    border-radius: 20px;
+    padding: 16px;
+    display: grid;
     justify-content: center;
-    height: 48px;
-    margin-top: 16px;
-    font-size: 20px;
-  }
-.buttonS:hover {
-    background-color: #94b43b30;
+    align-content: center;
+    gap: 2px;
+    border: 2px solid transparent;
+    outline: 2px dashed #94b43b;
+    outline-offset: -2px; /* Ajusta el borde al contenedor */
 }
 .manualForm{
     width: 100%;
@@ -55,4 +55,36 @@
 }
 .logoUnal {
     margin: 0 5% 5% 0;
+}
+.buttonGuardarX {
+    height: 45px;
+    font-weight: bold;
+    font-size: large;
+    background-color: #677D29 !important;
+    color: white; 
+}
+.buttonGuardarX:hover {
+    background-color: #94b43b !important;
+    color: white;
+}
+.cerrarEv {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto; 
+}
+.buttonCerrarEv {
+    height: 45px;
+    font-weight: bold;
+    font-size: large;
+    border: 1px solid #687D2A;
+    background-color: white!important;
+    color: #677D29 !important;
+    display: flex;
+}
+.buttonCerrarEv:hover {
+    background-color: #94b43b !important;
+    color: white !important;;
 }
